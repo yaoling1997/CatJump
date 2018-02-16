@@ -12,11 +12,15 @@ import loon.action.sprite.JumpObject;
 import loon.action.sprite.SpriteBatch;
 import loon.action.sprite.SpriteBatchScreen;
 import loon.canvas.LColor;
+import loon.component.LLayer;
 import loon.component.LPad;
+import loon.component.LTextArea;
 import loon.event.ActionKey;
 import loon.event.GameKey;
 import loon.event.GameTouch;
 import loon.event.SysKey;
+import loon.font.LFont;
+import loon.opengl.GLEx;
 
 /**
  * Created on 2018/2/14.
@@ -202,6 +206,11 @@ public class GameScreen extends SpriteBatchScreen {
                 }
             }
         };
+        Information information= new Information(this);
+        //information居于屏幕顶端
+        topOn(information);
+        //添加information到screen
+        add(information);
     }
     public void damage(){
         HP--;
@@ -293,4 +302,11 @@ public class GameScreen extends SpriteBatchScreen {
 
     }
 
+    public int getScore() {
+        return score;
+    }
+
+    public int getHP() {
+        return HP;
+    }
 }

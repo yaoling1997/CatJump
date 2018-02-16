@@ -12,8 +12,9 @@ public class MainActivity extends Loon{
         setting.width=480;
         setting.height=320;
         setting.logoPath="assets/block.png";
-        setting.isFPS=true;
-        setting.fontName="黑体";
+        //setting.isLogo=true;//是否在游戏进入前显示标志
+        setting.isFPS=true;//是否显示FPS
+        setting.fontName="黑体";//字体
         setting.appName=Macro.GAME_NAME;
         register(setting, new Data() {
             @Override
