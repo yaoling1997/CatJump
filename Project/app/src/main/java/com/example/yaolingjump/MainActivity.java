@@ -1,4 +1,4 @@
-package com.example.catjump;
+package com.example.yaolingjump;
 
 import loon.LSetting;
 import loon.Screen;

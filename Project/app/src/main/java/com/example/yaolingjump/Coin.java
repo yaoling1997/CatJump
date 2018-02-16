@@ -1,4 +1,4 @@
-package com.example.catjump;
+package com.example.yaolingjump;
 
 import loon.action.map.TileMap;
 import loon.action.sprite.ActionObject;

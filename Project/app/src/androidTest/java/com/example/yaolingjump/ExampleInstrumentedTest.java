@@ -1,4 +1,4 @@
-package com.example.catjump;
+package com.example.yaolingjump;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

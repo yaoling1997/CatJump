@@ -1,4 +1,4 @@
-package com.example.catjump;
+package com.example.yaolingjump;
 
 import android.util.Log;
 
@@ -52,7 +52,7 @@ public class GameScreen extends SpriteBatchScreen {
         accelAnimation=Animation.getDefaultAnimation("assets/accelerator.gif",32,32,200);
         jumperTwoAnimation=Animation.getDefaultAnimation("assets/jumper_two.gif",32,32,200);
         //获得主角动画
-        heroAnimation=Animation.getDefaultAnimation("assets/hero.png",20,20,150);
+        heroAnimation=Animation.getDefaultAnimation("assets/yaoling.png",122,173,150);
     }
     private boolean stepOn(ActionObject a,ActionObject b){//a是否踩了b
         return a.y()+a.getHeight()<b.y()+b.getHeight();
@@ -98,7 +98,7 @@ public class GameScreen extends SpriteBatchScreen {
                         break;
                 }
             }
-        hero=addJumpObject(192,32,gridLength,gridLength,heroAnimation);
+        hero=addJumpObject(192,32,20,28,heroAnimation);
         hero.setJumperTwo(true);//允许二级跳
         // 让地图跟随指定对象产生移动（无论插入有多少张数组地图，此跟随默认对所有地图生效）
         follow(hero);
