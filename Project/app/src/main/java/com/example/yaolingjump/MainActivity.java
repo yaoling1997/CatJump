@@ -11,7 +11,7 @@ public class MainActivity extends Loon{
         LSetting setting= new LSetting();
         setting.width=480;
         setting.height=320;
-        setting.logoPath="assets/block.png";
+        //setting.logoPath="assets/accelerator.gif";
         //setting.isLogo=true;//是否在游戏进入前显示标志
         setting.isFPS=true;//是否显示FPS
         setting.fontName="黑体";//字体

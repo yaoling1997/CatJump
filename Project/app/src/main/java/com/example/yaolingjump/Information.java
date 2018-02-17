@@ -1,5 +1,7 @@
 package com.example.yaolingjump;
 
+import loon.LTexture;
+import loon.LTextures;
 import loon.canvas.Canvas;
 import loon.canvas.Image;
 import loon.canvas.LColor;
@@ -25,7 +27,7 @@ public class Information extends LLayer {
         setActorDrag(false);
         //多久更新一次
         setDelay(200);
-        LPaper infoContent= new LPaper("assets/info_background.png"){
+        LPaper infoContent= new LPaper(MyAssets.INFO_BACKGROUND){
             @Override
             public void paint(GLEx g) {
                 LColor color= g.getColor();
@@ -38,6 +40,7 @@ public class Information extends LLayer {
                 g.setFont(LFont.getFont(size));
             }
         };
+
         add(infoContent);
     }
 }

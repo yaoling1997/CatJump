@@ -12,7 +12,7 @@ public class Coin extends ActionObject {
 
     private int score=1;
     public Coin(float v, float v1, Animation animation, TileMap tileMap) {
-        super(v, v1, animation, tileMap);
+        super(v, v1, GameScreen.gridLength, GameScreen.gridLength, animation, tileMap);
     }
 
     @Override

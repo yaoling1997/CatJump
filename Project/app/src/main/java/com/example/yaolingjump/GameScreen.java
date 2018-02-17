@@ -4,6 +4,7 @@ import android.util.Log;
 
 import loon.action.ActionBind;
 import loon.action.ActionListener;
+import loon.action.DelayTo;
 import loon.action.RotateTo;
 import loon.action.map.TileMap;
 import loon.action.sprite.ActionObject;
@@ -12,35 +13,35 @@ import loon.action.sprite.JumpObject;
 import loon.action.sprite.SpriteBatch;
 import loon.action.sprite.SpriteBatchScreen;
 import loon.canvas.LColor;
-import loon.component.LLayer;
 import loon.component.LPad;
-import loon.component.LTextArea;
 import loon.event.ActionKey;
 import loon.event.GameKey;
 import loon.event.GameTouch;
 import loon.event.SysKey;
-import loon.font.LFont;
-import loon.opengl.GLEx;
 
 /**
  * Created on 2018/2/14.
  */
 
 public class GameScreen extends SpriteBatchScreen {
-    public static final int gridLength=32;
+    public static final int gridLength=35;
     private static final int initHP=3;
     private TileMap tileMap;//绘制的地图
     private int [][]indexMap;//绘制地图对应的二维数组
-    private JumpObject hero;//玩家控制的主角
+    private Hero hero;//玩家控制的主角
     private Animation heroAnimation;//主角动画
     private Animation coinAnimation;//金币动画
     private Animation enemyAnimation;//敌人动画
-    private Animation accelAnimation;//加速道具动画
-    private Animation jumperTwoAnimation;//二级跳动画
-    private RotateTo rotate;//旋转
-
+    private Animation backgroundAnimation;//背景动画
+    private LPad pad;//玩家控制的键盘
     private int score=0;//得分
     private int HP=0;//角色当前生命值
+
+    public GameScreen() {
+        HP=initHP;
+        score=0;
+    }
+
     @Override
     public void onResume() {
 
@@ -51,30 +52,29 @@ public class GameScreen extends SpriteBatchScreen {
 
     }
     private void initAnimation(){
-        coinAnimation=Animation.getDefaultAnimation("assets/coin.png",32,32,200);
-        enemyAnimation=Animation.getDefaultAnimation("assets/enemy.gif",32,32,200);
-        accelAnimation=Animation.getDefaultAnimation("assets/accelerator.gif",32,32,200);
-        jumperTwoAnimation=Animation.getDefaultAnimation("assets/jumper_two.gif",32,32,200);
+        coinAnimation=Animation.getDefaultAnimation(MyAssets.COIN,32,32,200);
+        enemyAnimation=Animation.getDefaultAnimation(MyAssets.CHESTNUT,32,32,200);
         //获得主角动画
-        heroAnimation=Animation.getDefaultAnimation("assets/yaoling.png",122,173,150);
+        heroAnimation=Animation.getDefaultAnimation(MyAssets.HERO_STILL,122,173,150);
+        backgroundAnimation=Animation.getDefaultAnimation(MyAssets.GAME_BACKGROUND,(int)tileMap.getWidth(),(int)tileMap.getHeight(),150);
     }
     private boolean stepOn(ActionObject a,ActionObject b){//a是否踩了b
-        return a.y()+a.getHeight()<b.y()+b.getHeight();
+        return a.y()+a.getHeight()<b.y()+b.getHeight()/2;
     }
     @Override
     public void create() {
-        initAnimation();
-        putReleases(coinAnimation,enemyAnimation,accelAnimation,jumperTwoAnimation,hero);
-        HP=initHP;
-        score=0;
+        //setBackground("assets/game_background.jpg");
         //读取地图
-        tileMap =TileMap.loadCharsMap("assets/map.chr",gridLength,gridLength);
+        tileMap =TileMap.loadCharsMap(MyAssets.MAP,gridLength,gridLength);
+        initAnimation();
+        putReleases(coinAnimation,enemyAnimation);
+        setBackground(LColor.black);
         //哪些地方不能走
         tileMap.setLimit(new int[]{'B','C','i','c'});
         //设置字符对应图片
-        tileMap.putTile('B',"assets/block.png");
-        tileMap.putTile('C',"assets/coin_block.gif");
-        int imgId= tileMap.putTile('c',"assets/coin_block2.gif");
+        tileMap.putTile('B',MyAssets.BLOCK);
+        tileMap.putTile('C',MyAssets.QUESTION_BLOCK);
+        int imgId= tileMap.putTile('c',MyAssets.EMPTY_BLOCK);
         tileMap.putTile('i',imgId);
         //加载地图
         putTileMap(tileMap);
@@ -87,8 +87,6 @@ public class GameScreen extends SpriteBatchScreen {
         //添加物品到窗体
         for (int i=0;i<rowNum;i++)
             for (int j=0;j<colNum;j++) {
-                Log.i("yaoling1997","i: "+i);
-                Log.i("yaoling1997","j: "+j);
                 switch (indexMap[i][j]) {
                     case 'o':
                         Coin coin= new Coin(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
@@ -98,11 +96,12 @@ public class GameScreen extends SpriteBatchScreen {
                     case 'k':
                         Enemy enemy= new Enemy(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
                                 new Animation(enemyAnimation),tileMap);
-                        addTileObject(enemy);
+                        add(enemy);
                         break;
                 }
             }
-        hero=addJumpObject(192,32,20,28,heroAnimation);
+        hero= new Hero(200,50,Hero.stillWidth,Hero.stillHeight,heroAnimation,tileMap);
+        add(hero);
         hero.setJumperTwo(true);//允许二级跳
         // 让地图跟随指定对象产生移动（无论插入有多少张数组地图，此跟随默认对所有地图生效）
         follow(hero);
@@ -138,6 +137,7 @@ public class GameScreen extends SpriteBatchScreen {
         ActionKey goLeftKey= new ActionKey(){
             @Override
             public void act(long l) {
+                hero.setDown(false);
                 hero.setMirror(true);
                 hero.accelerateLeft();
             }
@@ -147,6 +147,7 @@ public class GameScreen extends SpriteBatchScreen {
         ActionKey goRightKey= new ActionKey(){
             @Override
             public void act(long l) {
+                hero.setDown(false);
                 hero.setMirror(false);
                 hero.accelerateRight();
             }
@@ -159,7 +160,15 @@ public class GameScreen extends SpriteBatchScreen {
             }
         };
         addActionKey(SysKey.UP, jumpKey);
-        LPad pad= new LPad(10,180);
+        // 对应向右行走的键盘事件
+        ActionKey downKey= new ActionKey(){
+            @Override
+            public void act(long l) {
+                hero.setDown(true);
+            }
+        };
+        addActionKey(SysKey.DOWN, downKey);
+        pad= new LPad(10,180);
         pad.setListener(new LPad.ClickListener() {
             @Override
             public void up() {
@@ -180,6 +189,7 @@ public class GameScreen extends SpriteBatchScreen {
             @Override
             public void other() {
                 releaseActionKeys();
+                hero.setDown(false);
             }
         });
         add(pad);
@@ -212,38 +222,53 @@ public class GameScreen extends SpriteBatchScreen {
         //添加information到screen
         add(information);
     }
-    public void damage(){
+    public void damage(){//主角被敌人干了
+        if (hero.isDead)//无敌状态
+            return;
         HP--;
-        //主角被敌人干了
-        if (rotate==null){
-            //总共转多少度，每帧累加多少度
-            rotate= new RotateTo(360f,5f);
-            rotate.setActionListener(new ActionListener() {
-                @Override
-                public void start(ActionBind actionBind) {
-                    hero.setFilterColor(LColor.gold);
-                    hero.setForceJump(true);
-                    hero.jump();
-                }
+        releaseActionKeys();
+        pad.setListener(null);
+        follow(null);
+        hero.dead();
+        RotateTo rotate= new RotateTo(180f,30f);
+        //总共转多少度，每帧累加多少度
+        rotate.setActionListener(new ActionListener() {
+            @Override
+            public void start(ActionBind actionBind) {
+                hero.setForceJump(true);
+                hero.jump();
 
-                @Override
-                public void process(ActionBind actionBind) {
+            }
 
-                }
+            @Override
+            public void process(ActionBind actionBind) {
 
-                @Override
-                public void stop(ActionBind actionBind) {
-                    hero.setFilterColor(LColor.white);
-                    hero.setRotation(0);
-                }
-            });
-            addAction(rotate,hero);
-        }else if (rotate.isComplete()){
-            //重置rotate对象
-            rotate.start(hero);
-            // 重新插入(LGame的方针是Action事件触发且结束后，自动删除该事件，所以需要重新插入)
-            addAction(rotate,hero);
-        }
+            }
+
+            @Override
+            public void stop(ActionBind actionBind) {
+                DelayTo delayTo= new DelayTo(1.5f);
+                delayTo.setActionListener(new ActionListener() {
+                    @Override
+                    public void start(ActionBind actionBind) {
+
+                    }
+
+                    @Override
+                    public void process(ActionBind actionBind) {
+
+                    }
+
+                    @Override
+                    public void stop(ActionBind actionBind) {
+                        hero.setFilterColor(LColor.white);
+                        setScreen(new RestartScreen(GameScreen.this));
+                    }
+                });
+                addAction(delayTo,hero);
+            }
+        });
+        addAction(rotate,hero);
     }
     @Override
     public void after(SpriteBatch spriteBatch) {
