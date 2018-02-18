@@ -1,6 +1,7 @@
-package com.example.yaolingjump;
+package com.example.yaolingjump.screen;
 
-import loon.Screen;
+import com.example.yaolingjump.Macro.MyAssets;
+
 import loon.action.sprite.SpriteBatch;
 import loon.action.sprite.SpriteBatchScreen;
 import loon.canvas.LColor;
@@ -9,7 +10,6 @@ import loon.event.GameKey;
 import loon.event.GameTouch;
 import loon.font.LFont;
 import loon.opengl.GLEx;
-import loon.utils.timer.LTimerContext;
 
 /**
  * Created on 2018/2/17.
@@ -44,9 +44,9 @@ public class RestartScreen extends SpriteBatchScreen {
                 g.setColor(LColor.white);
                 g.setFont(LFont.getFont(18));
                 if (gs.getHP()<=0)
-                    g.drawString("Score "+gs.getScore(),165,1);
+                    g.drawString("Score "+gs.getScore(),155,5);
                 else
-                    g.drawString("HP "+gs.getHP(),165,1);
+                    g.drawString("HP "+gs.getHP(),155,5);
                 g.setColor(color);
                 g.setFont(LFont.getFont(size));
             }

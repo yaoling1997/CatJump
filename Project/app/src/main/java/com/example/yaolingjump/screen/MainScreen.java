@@ -1,8 +1,9 @@
-package com.example.yaolingjump;
+package com.example.yaolingjump.screen;
+
+import com.example.yaolingjump.Macro.MyAssets;
 
 import loon.Screen;
 import loon.component.LButton;
-import loon.component.LLayer;
 import loon.event.ActionKey;
 import loon.event.GameTouch;
 import loon.opengl.GLEx;

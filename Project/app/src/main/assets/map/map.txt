@@ -1,0 +1,22 @@
+20
+120
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+B                                                                                                                      B
+B     h                                                                                                                B
+B                                                                              BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGBBBBBBBB
+B                                                                             BB                                B      B
+B                                                                            BB                      t          B      B
+B                                                           BBBBBBBBBBBBBBBBBB                       BBBBBBBBBBBB      B
+B       ook                                        B   k   BB           ooooo               BBBBBBBBBB                 B
+B     BBBBB                                     BBBBBBBBBBBB            ooooo              BBBBBBBBBB                  B
+B                  k                    B k B                                             BB                           B
+B                  ooo                 BBBBBBBBB                          B              BB               oooooooooo   B
+B             k                BBBBB                                        B           BB                oooooooooo   B
+B                                                                             B        BB                              B
+B                        CKC                      C                                   BB         BBBBBBBBBBBBBBBBBBBBBBB
+B                  BBB                                           BBBBBBBB      B     BB                                B
+B                                                          B      o     BCKCB     BKBB                                 B
+B    BCB     BCB            ooo          B   oo   oo  oo   B     o o             BBooooo                               B
+B                        BCBBBBBBB       B   oo   oo  oo   B      o          B BBB ooooo     B BCBCBCBCBCBCBCBCBCBCBCBKB
+B       k                             t  B     k      k    B                 B               B                        gB
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
