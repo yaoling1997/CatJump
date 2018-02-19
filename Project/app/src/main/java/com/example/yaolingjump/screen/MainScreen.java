@@ -1,5 +1,7 @@
 package com.example.yaolingjump.screen;
 
+import android.util.Log;
+
 import com.example.yaolingjump.Macro.MyAssets;
 
 import loon.Screen;
@@ -21,6 +23,7 @@ public class MainScreen extends Screen {
 
     @Override
     public void onLoad() {
+        Log.i("yaoling1997","screenNum: "+getScreenCount());
         LButton btn= new LButton(MyAssets.GAME_START){
             ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
 

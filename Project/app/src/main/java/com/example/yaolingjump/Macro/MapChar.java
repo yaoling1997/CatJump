@@ -16,4 +16,5 @@ public class MapChar {
     public static final char CHESTNUT='k';//板栗
     public static final char TORTOISE='t';//乌龟
     public static final char GREEN_KEY='g';//绿色钥匙
+    public static final char PASS_GATE='n';//通往下一关的门
 }

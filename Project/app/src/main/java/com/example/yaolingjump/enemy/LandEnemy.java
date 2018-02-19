@@ -13,12 +13,9 @@ import static java.lang.Math.max;
  * Created on 2018/2/14.
  */
 
-public abstract class LandEnemy extends ActionObject {//陆地上的敌人，在地上走的那种
-    public int speed =1;//起始速度
-    public float vx;//横向速度
-    public float vy;//纵向速度
+public abstract class LandEnemy extends Enemy {//陆地上的敌人，在地上走的那种
     public LandEnemy(float v, float v1, Animation animation, TileMap tileMap) {
-        super(v, v1, GameScreen.gridLength, GameScreen.gridLength,animation, tileMap);
+        super(v, v1, animation, tileMap);
         vx=-speed;
         vy=0;
     }
@@ -53,13 +50,8 @@ public abstract class LandEnemy extends ActionObject {//陆地上的敌人，在
             }
             vx=-vx;
         }
-        animation.update(l);
         //注入新坐标
         setLocation(x,y);
-        //设置镜像
-        if (vx<0)
-            setMirror(true);
-        else
-            setMirror(false);
+        super.update(l);
     }
 }

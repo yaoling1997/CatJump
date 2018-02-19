@@ -7,10 +7,13 @@ import com.example.yaolingjump.Information;
 import com.example.yaolingjump.Macro.MapChar;
 import com.example.yaolingjump.Macro.MyAssets;
 import com.example.yaolingjump.enemy.Chestnut;
-import com.example.yaolingjump.enemy.LandEnemy;
+import com.example.yaolingjump.enemy.Enemy;
 import com.example.yaolingjump.enemy.Tortoise;
 import com.example.yaolingjump.item.Coin;
 import com.example.yaolingjump.item.Key;
+import com.example.yaolingjump.item.PassGate;
+
+import java.util.ArrayList;
 
 import loon.action.ActionBind;
 import loon.action.ActionListener;
@@ -37,7 +40,7 @@ import static java.lang.Math.abs;
 
 public class GameScreen extends SpriteBatchScreen {
     public static final int gridLength=35;
-    public static final int maxSpeed=10;//物品运动速度不能超过每帧多少像素
+    public static final int maxSpeed=20;//物品运动速度不能超过每帧多少像素
     public static final int coinToHP=100;//100个硬币换一条命
     private static final int initHP=3;
     private TileMap tileMap;//绘制的地图
@@ -51,9 +54,16 @@ public class GameScreen extends SpriteBatchScreen {
 
     private int world=1;//当前世界
     private int level=1;//当前世界的关卡
+
+    private ArrayList<Enemy> enemyManager;
+    public ArrayList<String> maps;//
+
     public GameScreen() {
         HP=initHP;
         score=0;
+        maps= new ArrayList<>();
+        maps.add(MyAssets.MAP1_1);
+        maps.add(MyAssets.MAP1_2);
     }
 
     @Override
@@ -75,9 +85,22 @@ public class GameScreen extends SpriteBatchScreen {
         return a.y()+a.getHeight()<b.y()+b.getHeight()/2;
     }
 
+    private void addEnemy(Enemy e){
+        enemyManager.add(e);
+        add(e);
+    }
+    private void removeEnemy(final Enemy e){
+        addScore(e.getScore());
+        enemyManager.remove(e);
+        removeTileObject(e);
+    }
     private void initMap(){
         //读取地图
-        tileMap =TileMap.loadCharsMap(MyAssets.MAP,gridLength,gridLength);
+        if (!maps.isEmpty())
+            tileMap =TileMap.loadCharsMap(maps.get(0),gridLength,gridLength);
+        else {//通关了
+            return;
+        }
         //哪些地方不能走
         tileMap.setLimit(new int[]{
                 MapChar.BLOCK,
@@ -100,6 +123,7 @@ public class GameScreen extends SpriteBatchScreen {
         Log.i("yaoling1997","rowNum"+rowNum);
         Log.i("yaoling1997","colNum"+colNum);
         //添加物品到窗体
+
         for (int i=0;i<rowNum;i++)
             for (int j=0;j<colNum;j++) {
                 switch (indexMap[i][j]) {
@@ -111,17 +135,22 @@ public class GameScreen extends SpriteBatchScreen {
                     case MapChar.CHESTNUT:
                         Chestnut chestnut= new Chestnut(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
                                 new Animation(emptyAnimation),tileMap);
-                        add(chestnut);
+                        addEnemy(chestnut);
                         break;
                     case MapChar.TORTOISE:
                         Tortoise tortoise= new Tortoise(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
                                 new Animation(emptyAnimation),tileMap);
-                        add(tortoise);
+                        addEnemy(tortoise);
                         break;
                     case MapChar.GREEN_KEY:
                         Key key= new Key(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
                                 new Animation(emptyAnimation),tileMap,MapChar.GREEN_KEY);
                         add(key);
+                        break;
+                    case MapChar.PASS_GATE:
+                        PassGate passGate= new PassGate(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
+                                new Animation(emptyAnimation),tileMap);
+                        add(passGate);
                         break;
                     case MapChar.HERO:
                         hero= new Hero(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),Hero.stillWidth,Hero.stillHeight,emptyAnimation,tileMap);
@@ -224,7 +253,7 @@ public class GameScreen extends SpriteBatchScreen {
     @Override
     public void create() {
         //setBackground("assets/game_background.jpg");
-
+        enemyManager= new ArrayList<>();
         initAnimation();
         initMap();
         //putReleases(coinAnimation,enemyAnimation);
@@ -254,8 +283,7 @@ public class GameScreen extends SpriteBatchScreen {
                         if (stepOn(hero,chestnut)||hero.isBall){
                             hero.setForceJump(true);
                             hero.jump();
-                            addScore(Chestnut.score);
-                            removeTileObject(chestnut);
+                            removeEnemy(chestnut);
                         }else {
                             damage();
                         }
@@ -285,6 +313,12 @@ public class GameScreen extends SpriteBatchScreen {
                         Key k=(Key)actionObject;
                         openDoor(k.color);
                         removeTileObject(k);
+                    }else if (actionObject instanceof PassGate){//与过关门相撞
+                        //PassGate p= (PassGate)actionObject;
+                        addScore(PassGate.score);
+                        maps.remove(0);
+                        level++;
+                        setScreen(new RestartScreen(GameScreen.this));
                     }
                 }
             }
@@ -337,9 +371,9 @@ public class GameScreen extends SpriteBatchScreen {
                 break;
             case MapChar.CHESTNUT_BLOCK:
                 tileMap.setTileID(x,y,MapChar.EMPTY_BLOCK);
-                Chestnut enemy= new Chestnut(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y-1),
+                Chestnut chestnut= new Chestnut(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y-1),
                         new Animation(emptyAnimation),tileMap);
-                add(enemy);
+                addEnemy(chestnut);
                 // 标注地图已脏，强制缓存刷新
                 tileMap.setDirty(true);
                 break;
@@ -384,7 +418,7 @@ public class GameScreen extends SpriteBatchScreen {
 
                     @Override
                     public void stop(ActionBind actionBind) {
-                        hero.setFilterColor(LColor.white);
+                        //hero.setFilterColor(LColor.white);
                         setScreen(new RestartScreen(GameScreen.this));
                     }
                 });
@@ -413,10 +447,110 @@ public class GameScreen extends SpriteBatchScreen {
 
     }
 
+
+    public void eMeetE(Enemy a, Enemy b){//敌人撞敌人，改变横向方向
+        if (a.vx==0) {
+            Enemy t=a;
+            a=b;
+            b=t;
+        }
+        if (a.vx==0)//a，b速度都为0
+            return;
+        else {//a速度不为0
+            float directionA = a.vx / abs(a.vx);
+            float directionC = b.getX() - a.getX();//b相对于a的方向，1右边，-1左边，0重合
+            directionC = directionC == 0 ? 0 : directionC / abs(directionC);
+            float directionB = b.vx==0?0:b.vx / abs(b.vx);//b的移动方向，1右边，-1左边，0静止
+            //b速度为0归为以下哪一类均可
+            if (directionA == directionB) {//相向行走
+                if (directionC == directionA)
+                    a.vx *= -1;
+                else
+                    b.vx *= -1;
+            } else {//反向行走
+                if (directionC == directionA) {//速度反向将他们分开
+                    a.vx *= -1;
+                    b.vx *= -1;
+                }
+            }
+        }
+    }
+
+    public void cMeetC(Chestnut a, Chestnut b){//板栗撞板栗
+        eMeetE(a, b);
+    }
+    public void cMeetT(Chestnut a, Tortoise b){//板栗撞乌龟
+        if (b.isDefense&&b.vx!=0){//乌龟是防御状态且横向速度不为0
+            a.isDead=true;//板栗死了
+        }else{
+            eMeetE(a, b);
+        }
+    }
+    public void tMeetT(Tortoise a, Tortoise b){//乌龟a撞乌龟b
+        if (!a.isDefense&&b.isDefense) {//a行走,b防御
+            Tortoise c=a;
+            a=b;
+            b=c;
+        }
+        if (a.isDefense) {//a防御状态，b防御或行走
+            if (a.vx!=0){//横向速度不为0
+                if (b.isDefense){//b防御状态
+                    if (b.vx!=0){
+                        eMeetE(a,b);
+                    }else {
+                        b.vx=a.vx;
+                        a.vx=0;
+                    }
+                }else{//b在行走，被撞死
+                    b.isDead=true;
+                }
+            }else {//横向速度为0
+                if (b.isDefense){//b防御状态
+                    if (b.vx!=0){
+                        a.vx=b.vx;
+                        b.vx=0;
+                    }
+                }else{//b在行走，转向
+                    eMeetE(a,b);
+                }
+            }
+        }else {//a和b在行走
+            eMeetE(a,b);
+        }
+    }
     @Override
     public void update(long l) {
         if (hero!=null){
             hero.stop();
+        }
+        if (enemyManager!=null){//判断相撞
+            int len= enemyManager.size();
+            ArrayList<Enemy> removeEnemyManager= new ArrayList<>();//一轮判断后哪些敌人要移走
+            for (int i=0;i<len;i++) {
+                Enemy u = enemyManager.get(i);
+                for (int j = i + 1; j < len; j++) {
+                    Enemy v = enemyManager.get(j);
+                    if (!u.isCollision(v))//没相撞，跳过
+                        continue;
+                    if (u instanceof Chestnut) {
+                        if (v instanceof Chestnut) {//板栗撞板栗
+                            cMeetC((Chestnut)u, (Chestnut)v);
+                        } else if (v instanceof Tortoise) {//板栗撞乌龟
+                            cMeetT((Chestnut)u, (Tortoise)v);
+                        }
+                    } else if (u instanceof Tortoise) {
+                        if (v instanceof Chestnut) {//乌龟撞板栗
+                            cMeetT((Chestnut)v, (Tortoise)u);
+                        } else if (v instanceof Tortoise) {//乌龟撞乌龟
+                            tMeetT((Tortoise)u, (Tortoise)v);
+                        }
+                    }
+                }
+                if (u.isDead)
+                    removeEnemyManager.add(u);
+            }
+            for (Enemy e:removeEnemyManager)
+                removeEnemy(e);
         }
     }
 

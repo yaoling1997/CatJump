@@ -1,12 +1,14 @@
 package com.example.yaolingjump;
 
 import com.example.yaolingjump.Macro.MyAssets;
+import com.example.yaolingjump.screen.GameScreen;
 
 import loon.action.map.TileMap;
 import loon.action.sprite.Animation;
 import loon.action.sprite.JumpObject;
 
 import static java.lang.Math.max;
+import static java.lang.Math.min;
 
 /**
  * Created on 2018/2/16.
@@ -62,7 +64,12 @@ public class Hero extends JumpObject {
     }
     @Override
     public void update(long l) {
+        vy=min(vy, GameScreen.maxSpeed);
         stillTime+= l;
+
+        if (vx!=0||vy!=0)//运动状态下不能趴下
+            isDown=false;
+
         if (isDead) {
             stillTime=0;
             setSize(stillWidth,stillHeight);

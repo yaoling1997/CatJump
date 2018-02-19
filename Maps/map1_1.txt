@@ -1,8 +1,8 @@
 20
 120
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-B                                                                                                                      B
-B     h                                                                                                                B
+B                                                                                                                    n B
+B     h                                                                        B t                                B    B
 B                                                                              BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBGBBBBBBBB
 B                                                                             BB                                B      B
 B                                                                            BB                      t          B      B
@@ -10,8 +10,8 @@ B                                                           BBBBBBBBBBBBBBBBBB  
 B       ook                                        B   k   BB           ooooo               BBBBBBBBBB                 B
 B     BBBBB                                     BBBBBBBBBBBB            ooooo              BBBBBBBBBB                  B
 B                  k                    B k B                                             BB                           B
-B                  ooo                 BBBBBBBBB                          B              BB               oooooooooo   B
-B             k                BBBBB                                        B           BB                oooooooooo   B
+B                  ooo                 BBBBBBBBB                          B o            BB               oooooooooo   B
+B             k                BBBBB                                        B o         BB                oooooooooo   B
 B                                                                             B        BB                              B
 B                        CKC                      C                                   BB         BBBBBBBBBBBBBBBBBBBBBBB
 B                  BBB                                           BBBBBBBB      B     BB                                B

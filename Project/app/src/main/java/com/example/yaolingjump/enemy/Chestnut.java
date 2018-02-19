@@ -10,11 +10,11 @@ import loon.action.sprite.Animation;
  */
 
 public class Chestnut extends LandEnemy {//板栗
-    public static final int score=100;
     private Animation runAnimation;
     public Chestnut(float v, float v1, Animation animation, TileMap tileMap) {
         super(v, v1, animation, tileMap);
-        runAnimation=Animation.getDefaultAnimation(MyAssets.CHESTNUT,32,32,200);
+        runAnimation=Animation.getDefaultAnimation(MyAssets.CHESTNUT_RUN,75,80,200);
         setAnimation(runAnimation);
+        score=100;
     }
 }

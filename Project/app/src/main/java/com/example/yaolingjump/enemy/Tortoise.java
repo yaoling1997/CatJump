@@ -10,7 +10,6 @@ import loon.action.sprite.Animation;
  */
 
 public class Tortoise extends LandEnemy{//乌龟
-    public static final int score=200;
     public static final int maxDefenseTime=10000;//最大的防御时间
     public static final int defenseSpeed=7;//防御时被踢飞的速度
     private Animation runAnimation;
@@ -23,6 +22,7 @@ public class Tortoise extends LandEnemy{//乌龟
         defenseAnimation=Animation.getDefaultAnimation(MyAssets.TORTOISE_DEFENSE,257,148,200);
         setAnimation(runAnimation);
         isDefense=false;
+        score=200;//干掉一个敌人加多少分
     }
 
     @Override
@@ -34,9 +34,13 @@ public class Tortoise extends LandEnemy{//乌龟
             vx= direction*speed;//还原速度，乌龟从壳里出来了
         }
         if (isDefense) {//防御状态
-            defenseTime+=l;//累加相邻两帧的时间
+            if (vx==0)
+                defenseTime+=l;//累加相邻两帧的时间
+            else
+                defenseTime=0;
             setAnimation(defenseAnimation);
         }else {
+            defenseTime=0;
             setAnimation(runAnimation);
         }
         super.update(l);
@@ -46,10 +50,6 @@ public class Tortoise extends LandEnemy{//乌龟
     }
     public void stop(){
         vx=0;
-    }
-
-    public static int getScore() {
-        return score;
     }
 
 }
