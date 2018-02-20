@@ -7,9 +7,11 @@ package com.example.yaolingjump.Macro;
 public class MyAssets {//管理assets文件夹里的资源
     public static final String EMPTY="assets/empty.png";
     public static final String BLOCK="assets/block/block.png";
+    public static final String THORN="assets/item/thorn.png";
     public static final String COIN="assets/item/coin.png";
     public static final String QUESTION_BLOCK="assets/block/question_block.gif";
     public static final String EMPTY_BLOCK="assets/block/empty_block.gif";
+    public static final String MOVE_BLOCK= "assets/block/move_block.png";
     public static final String CHESTNUT_RUN="assets/enemy/chestnut/chestnut_run.png";
     public static final String TORTOISE_RUN="assets/enemy/tortoise/tortoise_run.png";
     public static final String TORTOISE_DEFENSE="assets/enemy/tortoise/tortoise_defense.png";

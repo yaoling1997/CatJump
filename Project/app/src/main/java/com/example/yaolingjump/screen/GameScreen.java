@@ -11,7 +11,9 @@ import com.example.yaolingjump.enemy.Enemy;
 import com.example.yaolingjump.enemy.Tortoise;
 import com.example.yaolingjump.item.Coin;
 import com.example.yaolingjump.item.Key;
+import com.example.yaolingjump.item.MoveBlock;
 import com.example.yaolingjump.item.PassGate;
+import com.example.yaolingjump.item.Thorn;
 
 import java.util.ArrayList;
 
@@ -55,15 +57,16 @@ public class GameScreen extends SpriteBatchScreen {
     private int world=1;//当前世界
     private int level=1;//当前世界的关卡
 
-    private ArrayList<Enemy> enemyManager;
+    private ArrayList<Enemy> enemyManager;//管理敌人
+    private ArrayList<ActionObject> hardItemManager;//管理英雄不能通过的物品
     public ArrayList<String> maps;//
 
     public GameScreen() {
         HP=initHP;
         score=0;
         maps= new ArrayList<>();
-        maps.add(MyAssets.MAP1_1);
         maps.add(MyAssets.MAP1_2);
+        maps.add(MyAssets.MAP1_1);
     }
 
     @Override
@@ -94,6 +97,10 @@ public class GameScreen extends SpriteBatchScreen {
         enemyManager.remove(e);
         removeTileObject(e);
     }
+    private void addHardItem(ActionObject e){
+        hardItemManager.add(e);
+        add(e);
+    }
     private void initMap(){
         //读取地图
         if (!maps.isEmpty())
@@ -107,7 +114,8 @@ public class GameScreen extends SpriteBatchScreen {
                 MapChar.COIN_BLOCK,
                 MapChar.CHESTNUT_BLOCK,
                 MapChar.EMPTY_BLOCK,
-                MapChar.GREEN_DOOR
+                MapChar.GREEN_DOOR,
+                MapChar.THORN,
         });
         //设置字符对应图片
         int tmp;
@@ -151,6 +159,16 @@ public class GameScreen extends SpriteBatchScreen {
                         PassGate passGate= new PassGate(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
                                 new Animation(emptyAnimation),tileMap);
                         add(passGate);
+                        break;
+                    case MapChar.THORN:
+                        Thorn thorn= new Thorn(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
+                                new Animation(emptyAnimation),tileMap);
+                        addHardItem(thorn);
+                        break;
+                    case MapChar.MOVE_BLOCK_VERTICAL:
+                        MoveBlock moveBlock= new MoveBlock(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
+                                new Animation(emptyAnimation),tileMap,MapChar.MOVE_BLOCK_VERTICAL);
+                        addHardItem(moveBlock);
                         break;
                     case MapChar.HERO:
                         hero= new Hero(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),Hero.stillWidth,Hero.stillHeight,emptyAnimation,tileMap);
@@ -254,6 +272,7 @@ public class GameScreen extends SpriteBatchScreen {
     public void create() {
         //setBackground("assets/game_background.jpg");
         enemyManager= new ArrayList<>();
+        hardItemManager = new ArrayList<>();
         initAnimation();
         initMap();
         //putReleases(coinAnimation,enemyAnimation);
@@ -518,39 +537,99 @@ public class GameScreen extends SpriteBatchScreen {
             eMeetE(a,b);
         }
     }
+
+    private void dealEnemyManager(){
+        int len= enemyManager.size();
+        ArrayList<Enemy> removeEnemyManager= new ArrayList<>();//一轮判断后哪些敌人要移走
+        for (int i=0;i<len;i++) {
+            Enemy u = enemyManager.get(i);
+            for (int j = i + 1; j < len; j++) {
+                Enemy v = enemyManager.get(j);
+                if (!u.isCollision(v))//没相撞，跳过
+                    continue;
+                if (u instanceof Chestnut) {
+                    if (v instanceof Chestnut) {//板栗撞板栗
+                        cMeetC((Chestnut)u, (Chestnut)v);
+                    } else if (v instanceof Tortoise) {//板栗撞乌龟
+                        cMeetT((Chestnut)u, (Tortoise)v);
+                    }
+                } else if (u instanceof Tortoise) {
+                    if (v instanceof Chestnut) {//乌龟撞板栗
+                        cMeetT((Chestnut)v, (Tortoise)u);
+                    } else if (v instanceof Tortoise) {//乌龟撞乌龟
+                        tMeetT((Tortoise)u, (Tortoise)v);
+                    }
+                }
+            }
+            if (u.isDead)
+                removeEnemyManager.add(u);
+        }
+        for (Enemy e:removeEnemyManager)
+            removeEnemy(e);
+    }
+
+    private int adjustLocation(ActionObject a,ActionObject b){//固定a，调整b的位置
+        float x1= a.getX()+a.getWidth();
+        float x2= a.getX()-b.getWidth();
+        float y1= a.getY()+a.getHeight();
+        float y2= a.getY()-b.getHeight();
+        float newX,newY;
+        if (abs(x1-b.getX())>abs(x2-b.getX()))
+            newX=x2;
+        else
+            newX=x1;
+        if (abs(y1-b.getY())>abs(y2-b.getY()))
+            newY=y2;
+        else
+            newY=y1;
+        if (abs(newX-b.getX())<abs(newY-b.getY())) {
+            b.setLocation(newX, b.getY());
+            return 0;//0表示将b横向移动
+        }else {
+            b.setLocation(b.getX(), newY);
+            return 1;//1表示将b纵向移动
+        }
+    }
+
+    private void dealHardItemManager(){
+        for (ActionObject e:hardItemManager)
+            if (e instanceof Thorn){
+                //处理地刺
+                Thorn thorn= (Thorn)e;
+                float y2=hero.getY()+hero.getHeight();
+                if (y2>=thorn.getY()-2&&y2<=thorn.getY()+2)
+                    if (hero.getX()<e.getX()+e.getWidth()-10&&e.getX()+10<hero.getX()+hero.getWidth())
+                        damage();
+            }else if (e instanceof MoveBlock){
+                //处理移动砖块
+                if (e.isCollision(hero)){
+                    if (adjustLocation(e,hero)==0)
+                        hero.setVx(0);
+                    else {
+                        hero.setVy(0);
+                        hero.setForceJump(true);
+                    }
+                }
+                for (Enemy v:enemyManager)
+                    if (e.isCollision(v)){
+                        if (adjustLocation(e,v)==0)
+                            v.vx=-v.vx;
+                        else
+                            v.vy= 0;
+                    }
+            }
+    }
+
     @Override
     public void update(long l) {
         if (hero!=null){
             hero.stop();
         }
         if (enemyManager!=null){//判断相撞
-            int len= enemyManager.size();
-            ArrayList<Enemy> removeEnemyManager= new ArrayList<>();//一轮判断后哪些敌人要移走
-            for (int i=0;i<len;i++) {
-                Enemy u = enemyManager.get(i);
-                for (int j = i + 1; j < len; j++) {
-                    Enemy v = enemyManager.get(j);
-                    if (!u.isCollision(v))//没相撞，跳过
-                        continue;
-                    if (u instanceof Chestnut) {
-                        if (v instanceof Chestnut) {//板栗撞板栗
-                            cMeetC((Chestnut)u, (Chestnut)v);
-                        } else if (v instanceof Tortoise) {//板栗撞乌龟
-                            cMeetT((Chestnut)u, (Tortoise)v);
-                        }
-                    } else if (u instanceof Tortoise) {
-                        if (v instanceof Chestnut) {//乌龟撞板栗
-                            cMeetT((Chestnut)v, (Tortoise)u);
-                        } else if (v instanceof Tortoise) {//乌龟撞乌龟
-                            tMeetT((Tortoise)u, (Tortoise)v);
-                        }
-                    }
-                }
-                if (u.isDead)
-                    removeEnemyManager.add(u);
-            }
-            for (Enemy e:removeEnemyManager)
-                removeEnemy(e);
+            dealEnemyManager();//处理敌人管理器
+        }
+        if (hardItemManager!=null){
+            dealHardItemManager();//处理不能通过物品管理器
         }
     }
 

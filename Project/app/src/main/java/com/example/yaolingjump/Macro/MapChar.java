@@ -11,6 +11,8 @@ public class MapChar {
     public static final char CHESTNUT_BLOCK='K';//板栗砖
     public static final char EMPTY_BLOCK='I';//空的问号砖
     public static final char GREEN_DOOR='G';//绿色门
+    public static final char THORN='T';//地刺
+    public static final char MOVE_BLOCK_VERTICAL='V';//垂直移动的砖块
     public static final char HERO='h';//英雄
     public static final char COIN='o';//金币
     public static final char CHESTNUT='k';//板栗

@@ -15,7 +15,7 @@ int n,m,coins;
 int main()
 {
 #ifndef ONLINE_JUDGE	
-	freopen("map.txt","r",stdin);
+	freopen("map1_2.txt","r",stdin);
 	freopen("mapCheck.out","w",stdout);
 #endif
 	scanf("%d%d\n",&n,&m);

@@ -87,8 +87,9 @@ public class Hero extends JumpObject {
             if (canBall) {
                 setAnimation(heroAnimation_ball);
                 isBall=true;
-            }else
+            }else {
                 setAnimation(heroAnimation_jump);
+            }
         }else {
             isBall=false;
             if (vx != 0) {
@@ -117,5 +118,11 @@ public class Hero extends JumpObject {
         float targetY=getY()+getHeight()-i1;
         setY(targetY);
         super.setSize(i, i1);
+    }
+    public void setVx(float vx){
+        this.vx=vx;
+    }
+    public void setVy(float vy){
+        this.vy=vy;
     }
 }
