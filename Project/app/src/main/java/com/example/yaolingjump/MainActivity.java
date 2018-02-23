@@ -2,6 +2,7 @@ package com.example.yaolingjump;
 
 import com.example.yaolingjump.Macro.Macro;
 import com.example.yaolingjump.screen.GameScreen;
+import com.example.yaolingjump.screen.MainScreen;
 
 import loon.LSetting;
 import loon.Screen;
@@ -22,7 +23,7 @@ public class MainActivity extends Loon{
         register(setting, new Data() {
             @Override
             public Screen onScreen() {
-                return new GameScreen();
+                return new MainScreen();
             }
         });
     }

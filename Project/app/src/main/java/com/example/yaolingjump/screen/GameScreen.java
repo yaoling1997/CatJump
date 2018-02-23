@@ -6,10 +6,15 @@ import com.example.yaolingjump.Hero;
 import com.example.yaolingjump.Information;
 import com.example.yaolingjump.Macro.MapChar;
 import com.example.yaolingjump.Macro.MyAssets;
+import com.example.yaolingjump.enemy.Bat;
 import com.example.yaolingjump.enemy.Chestnut;
 import com.example.yaolingjump.enemy.Enemy;
+import com.example.yaolingjump.enemy.FireBoss;
 import com.example.yaolingjump.enemy.Tortoise;
 import com.example.yaolingjump.item.Coin;
+import com.example.yaolingjump.item.Emplacement;
+import com.example.yaolingjump.item.Fire;
+import com.example.yaolingjump.item.HpPotion;
 import com.example.yaolingjump.item.Key;
 import com.example.yaolingjump.item.MoveBlock;
 import com.example.yaolingjump.item.PassGate;
@@ -33,6 +38,7 @@ import loon.event.ActionKey;
 import loon.event.GameKey;
 import loon.event.GameTouch;
 import loon.event.SysKey;
+import loon.geom.Vector2f;
 
 import static java.lang.Math.abs;
 
@@ -46,7 +52,8 @@ public class GameScreen extends SpriteBatchScreen {
     public static final int coinToHP=100;//100个硬币换一条命
     private static final int initHP=3;
     private TileMap tileMap;//绘制的地图
-    private Hero hero;//玩家控制的主角
+    public Hero hero;//玩家控制的主角
+
     private Animation emptyAnimation;//空动画(无奈用它的引擎必须要往构造函数里丢动画)
     private Animation backgroundAnimation;//背景动画
     private LPad pad;//玩家控制的键盘
@@ -65,8 +72,9 @@ public class GameScreen extends SpriteBatchScreen {
         HP=initHP;
         score=0;
         maps= new ArrayList<>();
-        maps.add(MyAssets.MAP1_2);
-        maps.add(MyAssets.MAP1_1);
+        //maps.add(MyAssets.MAPS[2]);
+        for (int i=0;i<MyAssets.MAPS.length;i++)
+            maps.add(MyAssets.MAPS[i]);
     }
 
     @Override
@@ -84,6 +92,10 @@ public class GameScreen extends SpriteBatchScreen {
         //backgroundAnimation=Animation.getDefaultAnimation(MyAssets.GAME_BACKGROUND,(int)tileMap.getWidth(),(int)tileMap.getHeight(),150);
     }
 
+    public Animation getEmptyAnimation() {
+        return emptyAnimation;
+    }
+
     private boolean stepOn(ActionObject a,ActionObject b){//a是否踩了b
         return a.y()+a.getHeight()<b.y()+b.getHeight()/2;
     }
@@ -97,10 +109,15 @@ public class GameScreen extends SpriteBatchScreen {
         enemyManager.remove(e);
         removeTileObject(e);
     }
-    private void addHardItem(ActionObject e){
+    public void addHardItem(ActionObject e){
         hardItemManager.add(e);
         add(e);
     }
+    private void removeHardItem(final ActionObject e){
+        hardItemManager.remove(e);
+        removeTileObject(e);
+    }
+
     private void initMap(){
         //读取地图
         if (!maps.isEmpty())
@@ -111,19 +128,23 @@ public class GameScreen extends SpriteBatchScreen {
         //哪些地方不能走
         tileMap.setLimit(new int[]{
                 MapChar.BLOCK,
+                MapChar.HP_POTION_BLOCK,
                 MapChar.COIN_BLOCK,
                 MapChar.CHESTNUT_BLOCK,
                 MapChar.EMPTY_BLOCK,
                 MapChar.GREEN_DOOR,
+                MapChar.YELLOW_DOOR,
                 MapChar.THORN,
         });
         //设置字符对应图片
         int tmp;
         tileMap.putTile(MapChar.BLOCK,MyAssets.BLOCK);
-        tmp= tileMap.putTile(MapChar.COIN_BLOCK,MyAssets.QUESTION_BLOCK);
+        tmp= tileMap.putTile(MapChar.HP_POTION_BLOCK,MyAssets.QUESTION_BLOCK);
+        tileMap.putTile(MapChar.COIN_BLOCK,tmp);
         tileMap.putTile(MapChar.CHESTNUT_BLOCK,tmp);
         tileMap.putTile(MapChar.EMPTY_BLOCK,MyAssets.EMPTY_BLOCK);
         tileMap.putTile(MapChar.GREEN_DOOR,MyAssets.GREEN_DOOR);
+        tileMap.putTile(MapChar.YELLOW_DOOR,MyAssets.YELLOW_DOOR);
         //获得地图对应的二维数组
         int [][]indexMap=tileMap.getMap();
         int colNum=tileMap.getRow();//得到宽度，列数
@@ -131,6 +152,18 @@ public class GameScreen extends SpriteBatchScreen {
         Log.i("yaoling1997","rowNum"+rowNum);
         Log.i("yaoling1997","colNum"+colNum);
         //添加物品到窗体
+
+        hero=null;
+        for (int i=0;i<rowNum;i++) {//先放主角
+            for (int j = 0; j < colNum; j++)
+                if (indexMap[i][j] == MapChar.HERO) {
+                    hero = new Hero(tileMap.tilesToPixelsX(j), tileMap.tilesToPixelsY(i), Hero.stillWidth, Hero.stillHeight, emptyAnimation, tileMap);
+                    add(hero);
+                    break;
+                }
+            if (hero!=null)
+                break;
+        }
 
         for (int i=0;i<rowNum;i++)
             for (int j=0;j<colNum;j++) {
@@ -150,10 +183,30 @@ public class GameScreen extends SpriteBatchScreen {
                                 new Animation(emptyAnimation),tileMap);
                         addEnemy(tortoise);
                         break;
+                    case MapChar.BAT:
+                        Bat bat= new Bat(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
+                                new Animation(emptyAnimation),tileMap);
+                        addEnemy(bat);
+                        break;
+                    case MapChar.FIRE_BOSS:
+                        FireBoss fireBoss= new FireBoss(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
+                                new Animation(emptyAnimation),tileMap,this);
+                        addEnemy(fireBoss);
+                        break;
                     case MapChar.GREEN_KEY:
                         Key key= new Key(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
                                 new Animation(emptyAnimation),tileMap,MapChar.GREEN_KEY);
                         add(key);
+                        break;
+                    case MapChar.YELLOW_KEY:
+                        key= new Key(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
+                                new Animation(emptyAnimation),tileMap,MapChar.YELLOW_KEY);
+                        add(key);
+                        break;
+                    case MapChar.HP_POTION:
+                        HpPotion hpPotion= new HpPotion(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
+                                new Animation(emptyAnimation),tileMap);
+                        add(hpPotion);
                         break;
                     case MapChar.PASS_GATE:
                         PassGate passGate= new PassGate(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
@@ -165,14 +218,30 @@ public class GameScreen extends SpriteBatchScreen {
                                 new Animation(emptyAnimation),tileMap);
                         addHardItem(thorn);
                         break;
-                    case MapChar.MOVE_BLOCK_VERTICAL:
+                    case MapChar.MOVE_BLOCK_UP:
                         MoveBlock moveBlock= new MoveBlock(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
-                                new Animation(emptyAnimation),tileMap,MapChar.MOVE_BLOCK_VERTICAL);
+                                new Animation(emptyAnimation),tileMap,MapChar.MOVE_BLOCK_UP);
                         addHardItem(moveBlock);
                         break;
-                    case MapChar.HERO:
-                        hero= new Hero(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),Hero.stillWidth,Hero.stillHeight,emptyAnimation,tileMap);
-                        add(hero);
+                    case MapChar.MOVE_BLOCK_DOWN:
+                        moveBlock= new MoveBlock(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
+                                new Animation(emptyAnimation),tileMap,MapChar.MOVE_BLOCK_DOWN);
+                        addHardItem(moveBlock);
+                        break;
+                    case MapChar.MOVE_BLOCK_LEFT:
+                        moveBlock= new MoveBlock(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
+                                new Animation(emptyAnimation),tileMap,MapChar.MOVE_BLOCK_LEFT);
+                        addHardItem(moveBlock);
+                        break;
+                    case MapChar.MOVE_BLOCK_RIGHT:
+                        moveBlock= new MoveBlock(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
+                                new Animation(emptyAnimation),tileMap,MapChar.MOVE_BLOCK_RIGHT);
+                        addHardItem(moveBlock);
+                        break;
+                    case MapChar.EMPLACEMENT:
+                        Emplacement emplacement= new Emplacement(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
+                                new Animation(emptyAnimation),tileMap,this);
+                        addHardItem(emplacement);
                         break;
                 }
             }
@@ -297,9 +366,14 @@ public class GameScreen extends SpriteBatchScreen {
                         addScore(Coin.score);
                         addCoin(1);
                         removeTileObject(c);
+                    }else if (actionObject instanceof HpPotion){//与HP药水
+                        HpPotion c=(HpPotion)actionObject;
+                        addScore(HpPotion.score);
+                        addHP(1);
+                        removeTileObject(c);
                     }else if (actionObject instanceof Chestnut){//与板栗相撞
                         Chestnut chestnut= (Chestnut)actionObject;
-                        if (stepOn(hero,chestnut)||hero.isBall){
+                        if (hero.whetherAttackEnemy(chestnut)){
                             hero.setForceJump(true);
                             hero.jump();
                             removeEnemy(chestnut);
@@ -308,7 +382,7 @@ public class GameScreen extends SpriteBatchScreen {
                         }
                     }else if (actionObject instanceof Tortoise){//与乌龟相撞
                         Tortoise tortoise= (Tortoise)actionObject;
-                        if (stepOn(hero,tortoise)||hero.isBall){//把乌龟踩停或撞停
+                        if (hero.whetherAttackEnemy(tortoise)){//把乌龟踩停或撞停
                             tortoise.isDefense=true;
                             tortoise.resetDefenseTime();//重置累积的防御时间
                             tortoise.stop();//横向速度置为0
@@ -328,6 +402,30 @@ public class GameScreen extends SpriteBatchScreen {
                                 tortoise.vx= hero.getVx()/ abs(hero.getVx())*Tortoise.defenseSpeed;//让乌龟运动起来
                             }
                         }
+                    }else if (actionObject instanceof Bat){//与蝙蝠相撞
+                        Bat bat= (Bat)actionObject;
+                        if (hero.whetherAttackEnemy(bat)){
+                            hero.setForceJump(true);
+                            hero.jump();
+                            removeEnemy(bat);
+                        }else {
+                            damage();
+                        }
+                    }else if (actionObject instanceof FireBoss){//与喷火怪相撞
+                        FireBoss fireBoss= (FireBoss)actionObject;
+                        if (!fireBoss.isImmune()&&(hero.whetherAttackEnemy(fireBoss))){
+                            hero.setForceJump(true);
+                            hero.jump();
+                            fireBoss.damage();
+                            if (fireBoss.isDead()){
+                                Key key= new Key(fireBoss.getX(),fireBoss.getY(),
+                                        new Animation(emptyAnimation),tileMap,MapChar.YELLOW_KEY);
+                                add(key);
+                                removeEnemy(fireBoss);
+                            }
+                        }else {
+                            damage();
+                        }
                     }else if (actionObject instanceof Key){//与钥匙相撞
                         Key k=(Key)actionObject;
                         openDoor(k.color);
@@ -338,6 +436,8 @@ public class GameScreen extends SpriteBatchScreen {
                         maps.remove(0);
                         level++;
                         setScreen(new RestartScreen(GameScreen.this));
+                    }else if (actionObject instanceof Fire){//与火焰相撞
+                        damage();
                     }
                 }
             }
@@ -380,6 +480,14 @@ public class GameScreen extends SpriteBatchScreen {
     }
     public void hitBlock(int x,int y){
         switch (tileMap.getTileID(x,y)){
+            case MapChar.HP_POTION_BLOCK:
+                tileMap.setTileID(x,y,MapChar.EMPTY_BLOCK);
+                HpPotion hpPotion= new HpPotion(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y-1),
+                        new Animation(emptyAnimation),tileMap);
+                addTileObject(hpPotion);
+                // 标注地图已脏，强制缓存刷新
+                tileMap.setDirty(true);
+                break;
             case MapChar.COIN_BLOCK:
                 tileMap.setTileID(x,y,MapChar.EMPTY_BLOCK);
                 Coin coin= new Coin(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y-1),
@@ -505,6 +613,10 @@ public class GameScreen extends SpriteBatchScreen {
             eMeetE(a, b);
         }
     }
+    private void cMeetB(Chestnut a, Bat b) {
+        eMeetE(a,b);
+    }
+
     public void tMeetT(Tortoise a, Tortoise b){//乌龟a撞乌龟b
         if (!a.isDefense&&b.isDefense) {//a行走,b防御
             Tortoise c=a;
@@ -537,6 +649,16 @@ public class GameScreen extends SpriteBatchScreen {
             eMeetE(a,b);
         }
     }
+    private void tMeetB(Tortoise a, Bat b) {
+        if (a.isDefense&&a.vx!=0){//乌龟是防御状态且横向速度不为0
+            b.isDead=true;//蝙蝠死了
+        }else{
+            eMeetE(a, b);
+        }
+    }
+    private void bMeetB(Bat a, Bat b) {
+        eMeetE(a,b);
+    }
 
     private void dealEnemyManager(){
         int len= enemyManager.size();
@@ -552,12 +674,24 @@ public class GameScreen extends SpriteBatchScreen {
                         cMeetC((Chestnut)u, (Chestnut)v);
                     } else if (v instanceof Tortoise) {//板栗撞乌龟
                         cMeetT((Chestnut)u, (Tortoise)v);
+                    }else if (v instanceof Bat){//板栗撞蝙蝠
+                        cMeetB((Chestnut)u,(Bat)v);
                     }
                 } else if (u instanceof Tortoise) {
                     if (v instanceof Chestnut) {//乌龟撞板栗
                         cMeetT((Chestnut)v, (Tortoise)u);
                     } else if (v instanceof Tortoise) {//乌龟撞乌龟
                         tMeetT((Tortoise)u, (Tortoise)v);
+                    }else if (v instanceof Bat) {//乌龟撞蝙蝠
+                        tMeetB((Tortoise)u, (Bat)v);
+                    }
+                }else if (u instanceof Bat) {
+                    if (v instanceof Chestnut) {//蝙蝠撞板栗
+                        cMeetB((Chestnut)v, (Bat) u);
+                    } else if (v instanceof Tortoise) {//蝙蝠撞乌龟
+                        tMeetB((Tortoise)v, (Bat)u);
+                    }else if (v instanceof Bat) {//蝙蝠撞蝙蝠
+                        bMeetB((Bat)u, (Bat)v);
                     }
                 }
             }
@@ -568,30 +702,38 @@ public class GameScreen extends SpriteBatchScreen {
             removeEnemy(e);
     }
 
-    private int adjustLocation(ActionObject a,ActionObject b){//固定a，调整b的位置
+    private int adjustLocation(ActionObject a,ActionObject b){//固定a，调整b的位置,返回值 0往上调，1往右调，2往下调，3往左调
         float x1= a.getX()+a.getWidth();
         float x2= a.getX()-b.getWidth();
         float y1= a.getY()+a.getHeight();
         float y2= a.getY()-b.getHeight();
         float newX,newY;
-        if (abs(x1-b.getX())>abs(x2-b.getX()))
-            newX=x2;
-        else
-            newX=x1;
-        if (abs(y1-b.getY())>abs(y2-b.getY()))
-            newY=y2;
-        else
-            newY=y1;
+        int rx,ry;
+        if (abs(x1-b.getX())>abs(x2-b.getX())) {
+            newX = x2;
+            rx=3;
+        }else {
+            newX = x1;
+            rx=1;
+        }
+        if (abs(y1-b.getY())>abs(y2-b.getY())) {
+            newY = y2;
+            ry=0;
+        }else {
+            newY = y1;
+            ry=2;
+        }
         if (abs(newX-b.getX())<abs(newY-b.getY())) {
             b.setLocation(newX, b.getY());
-            return 0;//0表示将b横向移动
+            return rx;//b横向移动
         }else {
             b.setLocation(b.getX(), newY);
-            return 1;//1表示将b纵向移动
+            return ry;//b纵向移动
         }
     }
 
     private void dealHardItemManager(){
+        ArrayList<ActionObject> removeItemManager= new ArrayList<>();//一轮判断后哪些物品要移走
         for (ActionObject e:hardItemManager)
             if (e instanceof Thorn){
                 //处理地刺
@@ -600,24 +742,36 @@ public class GameScreen extends SpriteBatchScreen {
                 if (y2>=thorn.getY()-2&&y2<=thorn.getY()+2)
                     if (hero.getX()<e.getX()+e.getWidth()-10&&e.getX()+10<hero.getX()+hero.getWidth())
                         damage();
-            }else if (e instanceof MoveBlock){
+            }else if (e instanceof MoveBlock||
+                    e instanceof Emplacement){
                 //处理移动砖块
                 if (e.isCollision(hero)){
-                    if (adjustLocation(e,hero)==0)
+                    int r= adjustLocation(e,hero);
+                    if (r==1||r==3)
                         hero.setVx(0);
-                    else {
+                    else if (r==0){
                         hero.setVy(0);
                         hero.setForceJump(true);
+                    }else{//1
+                        hero.setVy(0);
                     }
                 }
                 for (Enemy v:enemyManager)
                     if (e.isCollision(v)){
-                        if (adjustLocation(e,v)==0)
+                        int r= adjustLocation(e,v);
+                        if (r==1||r==3)
                             v.vx=-v.vx;
-                        else
+                        else//0,2
                             v.vy= 0;
                     }
+            }else if(e instanceof Fire){
+                Vector2f tile= tileMap.getTileCollision(e,e.getX(),e.getY());
+                if (tile!=null) {
+                    removeItemManager.add(e);
+                }
             }
+        for (ActionObject e:removeItemManager)
+            removeHardItem(e);
     }
 
     @Override

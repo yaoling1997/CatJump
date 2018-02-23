@@ -78,7 +78,7 @@ public class RestartScreen extends SpriteBatchScreen {
     @Override
     public void update(long l) {
         tim+=l;
-        if (tim>30) {//显示时间
+        if (tim>3000) {//显示时间
             if (gs.getHP()>0) {
                 if (gs.maps.isEmpty())//通关了
                     setScreen(new MainScreen());

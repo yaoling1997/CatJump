@@ -1,0 +1,42 @@
+40
+80
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBooo                             B
+B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBoao     oo                      B
+B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBooo     oo      C             n B
+B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBB                                B
+B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB      LLLLLLLL        BBBBBBBB
+B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBB     b                  BB      B
+B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBB                 UUUU           B
+B                  BBBBBBBBBBBBBBBBBBBBBBBBBBB                                 B
+B                  BBBBBBBBBBBBBBBBBBBBB oooo                       RRR        B
+B                  BBBBBBBBBBBBBBBBBBBBB oooo                                  B
+B                  BBBBBBBBBBBBBBBBBBBBB                                       B
+B                  BB        oooo      BBBBBBBB                                B
+B                  B                          B     b  b  b  b          UUUU   B
+B                  B                          B  b    b  b   b                 B
+B                  B   C  C  C  C  C  C       BTT   k          t   B   B  t    B
+B                  B                       B  B  BBBBBBBBBBBBBBBBBBB   BBBBBBBYB
+B                  Gkkkkkkkkkkkkkkkkkkkk  TB  B                        Bo      B
+B               BBBBBBBBBBBBBBBBBBBBBBBBBBBB  BooK                     Bo      B
+B             CBB                  B          Boo                      Bo     BB
+B         B                        B  BBBBBBBBB                     UUUBoB     B
+B         BBB               C CooooB       BBBB  B    BB        DDD    Bo B    B
+B           BBB                ooooB    t  BBBBTTB   BBB               B     BBB
+B                           BBBBBBBBB      BBBBBBB   BBB  UUUU         B  b    B
+B               BBB         BBB                 b    BBB    b       b  B       B
+B                 BBC      bBBBBBBBBBBBBBBBBBBBBBBBBBBBB  b     TTTTTTTB    B  B
+B                       B                               b       BBBBBBBB       B
+B                     BBB                                 b       oooooB      BB
+B                   BBB                                     b     oooooB     BBB
+B                                                             b            k kyB
+B               BBB                                             B              B
+B             BBB                                               BBBBBBBBBBBBBBBB
+B                                                               BBBBBBBBBBBBBBBB
+B h       BBB                                                   BBBBBBBBBBBBBBBB
+B       CBB                                                     BBBBBBBBBBBBBBBB
+B                                                               BBBBBBBBBBBBBBBB
+B BBBBBB                                               TTTTTTTTTBBBBBBBBBBBBBBBB
+B oooogBTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTBBBBBBBBBBBBBBBBBBBBBBBBB
+B                    BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB

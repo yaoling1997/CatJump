@@ -5,6 +5,7 @@ import android.util.Log;
 import com.example.yaolingjump.Macro.MyAssets;
 
 import loon.Screen;
+import loon.canvas.LColor;
 import loon.component.LButton;
 import loon.event.ActionKey;
 import loon.event.GameTouch;
@@ -16,17 +17,17 @@ import loon.utils.timer.LTimerContext;
  */
 
 public class MainScreen extends Screen {
+    private int margin=10;//按钮间隔多少像素
+    private LButton btnStart;//开始按钮
+    private LButton btnScoreboard;//积分榜按钮
+    private LButton btnExit;//退出按钮
     @Override
     public void draw(GLEx glEx) {
 
     }
-
-    @Override
-    public void onLoad() {
-        Log.i("yaoling1997","screenNum: "+getScreenCount());
-        LButton btn= new LButton(MyAssets.GAME_START){
+    private void initBtn(){
+        btnStart= new LButton(MyAssets.BTN_START){
             ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
-
             @Override
             public void doClick() {
                 if (!action.isPressed()){
@@ -36,9 +37,43 @@ public class MainScreen extends Screen {
                 }
             }
         };
-        centerOn(btn);
-        btn.setEnabled(true);
-        add(btn);
+        btnScoreboard= new LButton(MyAssets.BTN_SCOREBOARD){
+//            ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
+//            @Override
+//            public void doClick() {
+//                if (!action.isPressed()){
+//                    action.press();
+//                    //replaceScreen(new GameScreen(),MoveMethod.OUT_DOWN);
+//                    setScreen(new GameScreen());
+//                }
+//            }
+        };
+        btnExit= new LButton(MyAssets.BTN_EXIT){
+            ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
+            @Override
+            public void doClick() {
+                if (!action.isPressed()){
+                    action.press();
+                    //replaceScreen(new GameScreen(),MoveMethod.OUT_DOWN);
+                    System.exit(-1);
+                }
+            }
+        };
+
+        centerOn(btnStart);
+        btnScoreboard.setLocation(btnStart.getX(),btnStart.getY()+btnStart.height()+margin);
+        btnExit.setLocation(btnScoreboard.getX(),btnScoreboard.getY()+btnScoreboard.height()+margin);
+        btnStart.setEnabled(true);
+        btnScoreboard.setEnabled(true);
+        btnExit.setEnabled(true);
+        add(btnStart);
+        add(btnScoreboard);
+        add(btnExit);
+    }
+    @Override
+    public void onLoad() {
+        Log.i("yaoling1997","screenNum: "+getScreenCount());
+        initBtn();
     }
 
     @Override

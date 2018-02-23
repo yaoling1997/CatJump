@@ -1,5 +1,6 @@
 package com.example.yaolingjump.item;
 
+import com.example.yaolingjump.Macro.MapChar;
 import com.example.yaolingjump.Macro.MyAssets;
 
 import loon.action.map.TileMap;
@@ -17,7 +18,12 @@ public class Key extends ActionObject {
     public Key(float v, float v1, Animation animation, TileMap tileMap,char color) {
         super(v, v1, keyLength, keyLength, animation, tileMap);
         this.color=color;
-        greenKeyAnimation=Animation.getDefaultAnimation(MyAssets.GREEN_KEY,340,618,150);
+        String animPath="";
+        if (color== MapChar.GREEN_KEY)
+            animPath= MyAssets.GREEN_KEY;
+        else if (color== MapChar.YELLOW_KEY)
+            animPath= MyAssets.YELLOW_KEY;
+        greenKeyAnimation=Animation.getDefaultAnimation(animPath,340,618,150);
         setAnimation(greenKeyAnimation);
     }
     @Override

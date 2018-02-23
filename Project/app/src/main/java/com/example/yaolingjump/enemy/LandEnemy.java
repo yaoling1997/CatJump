@@ -1,5 +1,6 @@
 package com.example.yaolingjump.enemy;
 
+import com.example.yaolingjump.Macro.Macro;
 import com.example.yaolingjump.screen.GameScreen;
 
 import loon.action.map.TileMap;
@@ -7,6 +8,7 @@ import loon.action.sprite.ActionObject;
 import loon.action.sprite.Animation;
 import loon.geom.Vector2f;
 
+import static java.lang.Math.abs;
 import static java.lang.Math.max;
 
 /**
@@ -14,14 +16,26 @@ import static java.lang.Math.max;
  */
 
 public abstract class LandEnemy extends Enemy {//陆地上的敌人，在地上走的那种
-    public LandEnemy(float v, float v1, Animation animation, TileMap tileMap) {
-        super(v, v1, animation, tileMap);
+    protected float limit;//默认移动多少像素
+    private float cnt;//累积移动了多少像素
+    public LandEnemy(float v, float v1, float width,float height,Animation animation, TileMap tileMap) {
+        super(v, v1, width,height,animation, tileMap);
         vx=-speed;
         vy=0;
+        cnt=0;
+        limit= Macro.OO;
+    }
+    public LandEnemy(float v, float v1, Animation animation, TileMap tileMap) {
+        this(v, v1, GameScreen.gridLength, GameScreen.gridLength,animation, tileMap);
     }
 
     @Override
     public void update(long l) {
+        cnt+= abs(vx);
+        if (cnt>=limit){//移动像素达到上限，反向
+            cnt=0;
+            vx*=-1;
+        }
         float x=getX();
         float y=getY();
         //判断预期坐标是否可以走，有没有障碍物（瓷砖）

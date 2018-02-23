@@ -1,9 +1,11 @@
 package com.example.yaolingjump;
 
 import com.example.yaolingjump.Macro.MyAssets;
+import com.example.yaolingjump.enemy.Enemy;
 import com.example.yaolingjump.screen.GameScreen;
 
 import loon.action.map.TileMap;
+import loon.action.sprite.ActionObject;
 import loon.action.sprite.Animation;
 import loon.action.sprite.JumpObject;
 
@@ -43,7 +45,7 @@ public class Hero extends JumpObject {
         canBall=false;
         isBall=false;
         setJumperTwo(false);//不允许二级跳
-        setSpeed(5);
+        setSpeed(3.5f);
         heroAnimation_still= Animation.getDefaultAnimation(MyAssets.HERO_STILL,122,173,150);
         heroAnimation_dead= Animation.getDefaultAnimation(MyAssets.HERO_DEAD,312,297,150);
         heroAnimation_run= Animation.getDefaultAnimation(MyAssets.HERO_RUN,122,173,80);
@@ -124,5 +126,11 @@ public class Hero extends JumpObject {
     }
     public void setVy(float vy){
         this.vy=vy;
+    }
+    public boolean stepOn(ActionObject b){//碰撞的时候判断是否踩了b
+        return getY()+getHeight()<b.y()+b.getHeight()/2;
+    }
+    public boolean whetherAttackEnemy(Enemy b){//碰撞的时候判断是否攻击了敌人
+        return !isDead&&(isBall||stepOn(b));
     }
 }

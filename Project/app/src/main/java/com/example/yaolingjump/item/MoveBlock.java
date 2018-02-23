@@ -9,6 +9,7 @@ import loon.action.sprite.ActionObject;
 import loon.action.sprite.Animation;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.max;
 
 /**
  * Created on 2018/2/20.
@@ -28,18 +29,24 @@ public class MoveBlock extends ActionObject{
         setAnimation(moveBlockAnimation);
         speed=0.3f;
         cnt=0;
-        if (type== MapChar.MOVE_BLOCK_VERTICAL){
+        if (type== MapChar.MOVE_BLOCK_UP){
             vx=0;
             vy=-speed;
-        }else{
+        }else if (type== MapChar.MOVE_BLOCK_DOWN){
+            vx=0;
+            vy=speed;
+        }else if (type== MapChar.MOVE_BLOCK_LEFT){
             vx=-speed;
+            vy=0;
+        }else{
+            vx=speed;
             vy=0;
         }
     }
     @Override
     public void update(long l) {
         setLocation(getX()+vx,getY()+vy);
-        cnt+= abs(vx)+abs(vy);
+        cnt+= max(abs(vx),abs(vy));
         if (cnt>=limit){//移动像素达到上限，反向
             cnt=0;
             vx*=-1;

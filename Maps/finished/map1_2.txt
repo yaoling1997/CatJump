@@ -7,16 +7,16 @@ B                                                                              B
 B                                                                   B         BBBBBBBBBBB   BBB                 BBBBBBBB
 B                                                                 B B B      BB                      t          B      B
 B                                                           BBBBBBBBBBBBBBBBBB                       BBBBBBBBBBBB      B
-B       ook                                        B   k   BB           ooooo               BBBBBBBBBB                 B
-B     BBBBB                                     BBBBBBBBBBBB            ooooo              BBBBBBBBBB                  B
+B       ook                                        B   k   BB            o o                BBBBBBBBBB                 B
+B     BBBBB                                     BBBBBBBBBBBB             o o               BBBBBBBBBB                  B
 B                  k                    B k B                                             BB                           B
-B                  ooo                 BBBBBBBBB                          B o            BB               oooooooooo   B
-B             k                BBBBB                                        B o         BB                oooooooooo   B
+B                  o o                BBBBBBBBBB                          B o            BB               ooooo        B
+B             k                BBBBB                                        B o         BB                ooooo        B
 B                             BB                                              B        BB                              B
-B                        CKC                      C                                   BB         BBBBBBBBBBBBBBBBBBBBBBB
+B                       BCKC                      C                                   BB         BBBBBBBBBBBBBBBBBBBBBBB
 B                  BBB                                           BBBBBBBB      B     BB                                B
 B                 BB                                       B      o     BCKCB     BKBB                                 B
-B    BCB     BCB            ooo          B   oo   oo  oo   B     o o             BBooooo                               B
-B                        BCBBBBBBB       B   oo   oo  oo   B      o          B BBB ooooo     B BCBCBCBCBCBCBCBCBCBCBCBKB
+B    BCB     BCB                         B   oo       oo   B     o o             BBooooo                               B
+B                        BCBBBBBBB       B                 B      o          B BBB ooooo     B BCBCBCBCBCBCBCBCBCBCBCBKB
 B       k                             t  B     k      k    B                 B               B                        gB
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB

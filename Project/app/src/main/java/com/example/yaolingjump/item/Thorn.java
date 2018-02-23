@@ -11,7 +11,7 @@ import loon.action.sprite.Animation;
  * Created on 2018/2/20.
  */
 
-public class Thorn extends ActionObject {
+public class Thorn extends ActionObject {//地刺
     private Animation thornAnimation;
     public Thorn(float v, float v1, Animation animation, TileMap tileMap) {
         super(v, v1, GameScreen.gridLength, GameScreen.gridLength, animation, tileMap);

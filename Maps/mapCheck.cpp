@@ -11,11 +11,11 @@
 using namespace std;
 const int maxn= 5e5;
 char s[maxn];
-int n,m,coins;
+int n,m,coins,hpPotion;
 int main()
 {
 #ifndef ONLINE_JUDGE	
-	freopen("map1_2.txt","r",stdin);
+	freopen("map1_5.txt","r",stdin);
 	freopen("mapCheck.out","w",stdout);
 #endif
 	scanf("%d%d\n",&n,&m);
@@ -26,10 +26,14 @@ int main()
 			printf("wrong map!");
 			return 0;
 		}
-		for (int j=1;j<=len;j++)
+		for (int j=1;j<=len;j++){
 			if (s[j]=='o'||s[j]=='C')
 				coins++;
+			if (s[j]=='a'||s[j]=='A')
+				hpPotion++;
+		}
 	}
 	printf("coins:%d\n",coins);
+	printf("hpPotion:%d\n",hpPotion);
 	return 0;
 }
