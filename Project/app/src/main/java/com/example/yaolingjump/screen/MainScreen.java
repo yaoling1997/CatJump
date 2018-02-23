@@ -5,8 +5,6 @@ import android.util.Log;
 import com.example.yaolingjump.Macro.MyAssets;
 
 import loon.Screen;
-import loon.canvas.LColor;
-import loon.component.LButton;
 import loon.component.LPaper;
 import loon.event.ActionKey;
 import loon.event.GameTouch;
@@ -19,6 +17,7 @@ import loon.utils.timer.LTimerContext;
 
 public class MainScreen extends Screen {
     private int margin=10;//按钮间隔多少像素
+    private LPaper background;//背景
     private LPaper btnStart;//开始按钮
     private LPaper btnScoreboard;//积分榜按钮
     private LPaper btnExit;//退出按钮
@@ -26,7 +25,9 @@ public class MainScreen extends Screen {
     public void draw(GLEx glEx) {
 
     }
-    private void initBtn(){
+    private void initViews(){
+        background= new LPaper(MyAssets.MAIN_SCREEN_BACKGROUND);
+        add(background);
         btnStart= new LPaper(MyAssets.BTN_START){
             ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
             @Override
@@ -44,7 +45,8 @@ public class MainScreen extends Screen {
             public void doClick() {
                 if (!action.isPressed()){
                     action.press();
-                    setScreen(new ScoreboardScreen());
+                    replaceScreen(new ScoreboardScreen(),MoveMethod.FROM_RIGHT);
+                    //setScreen(new ScoreboardScreen());
                 }
             }
         };
@@ -72,7 +74,7 @@ public class MainScreen extends Screen {
     @Override
     public void onLoad() {
         Log.i("yaoling1997","screenNum: "+getScreenCount());
-        initBtn();
+        initViews();
     }
 
     @Override

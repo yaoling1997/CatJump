@@ -33,8 +33,8 @@ public class MyAssets {//管理assets文件夹里的资源
             "assets/word/no4.png",
             "assets/word/no5.png"
     };
-    public static final String INFO_BACKGROUND="assets/info_background.png";
-    public static final String SCOREBOARD_BACKGROUND ="assets/scoreboard_background.png";
+    public static final String INFO_BACKGROUND="assets/background/info_background.png";
+    public static final String SCOREBOARD_BACKGROUND ="assets/background/scoreboard_background.png";
     public static final String HERO_STILL ="assets/hero/hero_still.png";
     public static final String HERO_RUN="assets/hero/hero_run.png";
     public static final String HERO_DEAD="assets/hero/hero_dead.png";
@@ -49,6 +49,8 @@ public class MyAssets {//管理assets文件夹里的资源
     public static final String GREEN_KEY="assets/key/green_key.png";
     public static final String YELLOW_KEY="assets/key/yellow_key.png";
     public static final String GAME_BACKGROUND="assets/background/game_background.jpg";
+    public static final String MAIN_SCREEN_BACKGROUND="assets/background/main_screen_background.png";
+    public static final String SCOREBOARD_SCREEN_BACKGROUND="assets/background/scoreboard_screen_background.png";
     public static final String []MAPS= {
             "assets/map/map1_1.txt",
             "assets/map/map1_2.txt",

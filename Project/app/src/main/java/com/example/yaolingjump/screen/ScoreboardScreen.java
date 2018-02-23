@@ -29,6 +29,7 @@ public class ScoreboardScreen extends Screen {
     public static final int NoNum=5;
     private SharedPreferences prefs;
     private int margin=10;//间隔多少像素
+    private LPaper background;//充当背景，直接setbackground在界面切换的时候有可能背景显示不出来(游戏引擎的bug)
     private LPaper scoreboard;
     private LPaper []no;
     private int []tvNo= new int[NoNum];
@@ -40,6 +41,8 @@ public class ScoreboardScreen extends Screen {
     }
 
     private void initViews(){
+        background= new LPaper(MyAssets.SCOREBOARD_SCREEN_BACKGROUND);
+        add(background);
         scoreboard= new LPaper(MyAssets.SCOREBOARD_BACKGROUND){
             @Override
             public void paint(GLEx g) {
@@ -95,7 +98,8 @@ public class ScoreboardScreen extends Screen {
             public void doClick() {
                 if (!action.isPressed()){
                     action.press();
-                    setScreen(new MainScreen());
+                    replaceScreen(new MainScreen(),MoveMethod.OUT_RIGHT);
+                    //setScreen(new MainScreen());
                 }
             }
         };
@@ -112,7 +116,6 @@ public class ScoreboardScreen extends Screen {
 
     @Override
     public void onLoad() {
-        Log.i("yaoling1997","screenNum: "+getScreenCount());
         initViews();
         updateNo();
     }
