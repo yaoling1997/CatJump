@@ -1,6 +1,11 @@
 package com.example.yaolingjump.screen;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import com.example.yaolingjump.Macro.Macro;
 import com.example.yaolingjump.Macro.MyAssets;
+import com.example.yaolingjump.MainActivity;
 
 import loon.action.sprite.SpriteBatch;
 import loon.action.sprite.SpriteBatchScreen;
@@ -31,6 +36,19 @@ public class RestartScreen extends SpriteBatchScreen {
     @Override
     public void onPause() {
 
+    }
+    private void updateScoreboard(){//更新积分榜
+        SharedPreferences prefs= MainActivity.mainActivity.getSharedPreferences(Macro.PREFS_FILE, Context.MODE_PRIVATE);
+        int tmpScore= gs.getScore();
+        for (int i=0;i<ScoreboardScreen.NoNum;i++){
+            int oldScore=prefs.getInt(Macro.NO[i],0);
+            if (oldScore<tmpScore){
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putInt(Macro.NO[i],tmpScore);
+                editor.commit();
+                tmpScore=oldScore;
+            }
+        }
     }
 
     @Override
@@ -80,11 +98,14 @@ public class RestartScreen extends SpriteBatchScreen {
         tim+=l;
         if (tim>3000) {//显示时间
             if (gs.getHP()>0) {
-                if (gs.maps.isEmpty())//通关了
+                if (gs.maps.isEmpty()) {//通关了
+                    updateScoreboard();
                     setScreen(new MainScreen());
-                else//死了但是还有命，重玩本关
+                }else {//死了但是还有命，重玩本关
                     setScreen(gs);
+                }
             }else {//没命了
+                updateScoreboard();
                 setScreen(new MainScreen());
             }
         }

@@ -1,5 +1,7 @@
 package com.example.yaolingjump;
 
+import android.app.Activity;
+
 import com.example.yaolingjump.Macro.Macro;
 import com.example.yaolingjump.screen.GameScreen;
 import com.example.yaolingjump.screen.MainScreen;
@@ -9,7 +11,7 @@ import loon.Screen;
 import loon.android.Loon;
 
 public class MainActivity extends Loon{
-
+    public static Activity mainActivity;
     @Override
     public void onMain() {
         LSetting setting= new LSetting();
@@ -20,6 +22,7 @@ public class MainActivity extends Loon{
         setting.isFPS=true;//是否显示FPS
         setting.fontName="黑体";//字体
         setting.appName= Macro.GAME_NAME;
+        mainActivity=this;
         register(setting, new Data() {
             @Override
             public Screen onScreen() {

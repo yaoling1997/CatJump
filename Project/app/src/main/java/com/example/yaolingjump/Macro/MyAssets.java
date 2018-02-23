@@ -24,7 +24,17 @@ public class MyAssets {//管理assets文件夹里的资源
     public static final String BTN_SCOREBOARD ="assets/btn/btn_scoreboard.png";
     public static final String BTN_ABOUT ="assets/btn/btn_about.png";
     public static final String BTN_EXIT ="assets/btn/btn_exit.png";
+    public static final String BTN_BACK ="assets/btn/btn_back.png";
+    public static final String BTN_RESET ="assets/btn/btn_reset.png";
+    public static final String []NO ={
+            "assets/word/no1.png",
+            "assets/word/no2.png",
+            "assets/word/no3.png",
+            "assets/word/no4.png",
+            "assets/word/no5.png"
+    };
     public static final String INFO_BACKGROUND="assets/info_background.png";
+    public static final String SCOREBOARD_BACKGROUND ="assets/scoreboard_background.png";
     public static final String HERO_STILL ="assets/hero/hero_still.png";
     public static final String HERO_RUN="assets/hero/hero_run.png";
     public static final String HERO_DEAD="assets/hero/hero_dead.png";

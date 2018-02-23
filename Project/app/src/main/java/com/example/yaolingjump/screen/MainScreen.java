@@ -7,6 +7,7 @@ import com.example.yaolingjump.Macro.MyAssets;
 import loon.Screen;
 import loon.canvas.LColor;
 import loon.component.LButton;
+import loon.component.LPaper;
 import loon.event.ActionKey;
 import loon.event.GameTouch;
 import loon.opengl.GLEx;
@@ -18,15 +19,15 @@ import loon.utils.timer.LTimerContext;
 
 public class MainScreen extends Screen {
     private int margin=10;//按钮间隔多少像素
-    private LButton btnStart;//开始按钮
-    private LButton btnScoreboard;//积分榜按钮
-    private LButton btnExit;//退出按钮
+    private LPaper btnStart;//开始按钮
+    private LPaper btnScoreboard;//积分榜按钮
+    private LPaper btnExit;//退出按钮
     @Override
     public void draw(GLEx glEx) {
 
     }
     private void initBtn(){
-        btnStart= new LButton(MyAssets.BTN_START){
+        btnStart= new LPaper(MyAssets.BTN_START){
             ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
             @Override
             public void doClick() {
@@ -37,24 +38,22 @@ public class MainScreen extends Screen {
                 }
             }
         };
-        btnScoreboard= new LButton(MyAssets.BTN_SCOREBOARD){
-//            ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
-//            @Override
-//            public void doClick() {
-//                if (!action.isPressed()){
-//                    action.press();
-//                    //replaceScreen(new GameScreen(),MoveMethod.OUT_DOWN);
-//                    setScreen(new GameScreen());
-//                }
-//            }
-        };
-        btnExit= new LButton(MyAssets.BTN_EXIT){
+        btnScoreboard= new LPaper(MyAssets.BTN_SCOREBOARD){
             ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
             @Override
             public void doClick() {
                 if (!action.isPressed()){
                     action.press();
-                    //replaceScreen(new GameScreen(),MoveMethod.OUT_DOWN);
+                    setScreen(new ScoreboardScreen());
+                }
+            }
+        };
+        btnExit= new LPaper(MyAssets.BTN_EXIT){
+            ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
+            @Override
+            public void doClick() {
+                if (!action.isPressed()){
+                    action.press();
                     System.exit(-1);
                 }
             }
