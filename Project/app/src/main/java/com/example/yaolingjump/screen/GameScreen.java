@@ -72,7 +72,6 @@ public class GameScreen extends SpriteBatchScreen {
         HP=initHP;
         score=0;
         maps= new ArrayList<>();
-        //maps.add(MyAssets.MAPS[2]);
         for (int i=0;i<MyAssets.MAPS.length;i++)
             maps.add(MyAssets.MAPS[i]);
     }
