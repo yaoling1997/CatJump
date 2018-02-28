@@ -1,11 +1,16 @@
 package com.example.yaolingjump.screen;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.yaolingjump.Hero;
 import com.example.yaolingjump.Information;
+import com.example.yaolingjump.Macro.Macro;
 import com.example.yaolingjump.Macro.MapChar;
 import com.example.yaolingjump.Macro.MyAssets;
+import com.example.yaolingjump.MainActivity;
+import com.example.yaolingjump.MusicService;
 import com.example.yaolingjump.enemy.Bat;
 import com.example.yaolingjump.enemy.Chestnut;
 import com.example.yaolingjump.enemy.Enemy;
@@ -40,6 +45,7 @@ import loon.event.GameTouch;
 import loon.event.SysKey;
 import loon.geom.Vector2f;
 
+import static android.content.Context.MODE_PRIVATE;
 import static java.lang.Math.abs;
 
 /**
@@ -72,6 +78,7 @@ public class GameScreen extends SpriteBatchScreen {
         HP=initHP;
         score=0;
         maps= new ArrayList<>();
+        //maps.add(MyAssets.MAPS[0]);
         for (int i=0;i<MyAssets.MAPS.length;i++)
             maps.add(MyAssets.MAPS[i]);
     }
@@ -84,6 +91,24 @@ public class GameScreen extends SpriteBatchScreen {
     @Override
     public void onPause() {
 
+    }
+    private void stopBgMusic(){
+        Intent intent= new Intent(MainActivity.mainActivity,MusicService.class);
+        intent.putExtra(Macro.BG_MUSIC,Macro.CLOSE);//close
+        intent.putExtra(Macro.BG_MUSIC_SOURCE,MyAssets.BATTLE_BG_MUSIC);
+        MainActivity.mainActivity.startService(intent);
+    }
+    private void applyPrefs(){
+        stopBgMusic();
+        SharedPreferences prefs= MainActivity.mainActivity.getSharedPreferences(Macro.PREFS_FILE,MODE_PRIVATE);
+        Intent intent= new Intent(MainActivity.mainActivity,MusicService.class);
+        if (prefs.getString(Macro.BG_MUSIC,Macro.CLOSE).equals(Macro.OPEN)) {
+            intent.putExtra(Macro.BG_MUSIC,prefs.getString(Macro.BG_MUSIC,Macro.OPEN));//open or close
+        }else {
+            intent.putExtra(Macro.BG_MUSIC,prefs.getString(Macro.BG_MUSIC,Macro.CLOSE));//open or close
+        }
+        intent.putExtra(Macro.BG_MUSIC_SOURCE,MyAssets.BATTLE_BG_MUSIC);
+        MainActivity.mainActivity.startService(intent);
     }
 
     private void initAnimation(){
@@ -338,6 +363,7 @@ public class GameScreen extends SpriteBatchScreen {
 
     @Override
     public void create() {
+        applyPrefs();
         //setBackground("assets/game_background.jpg");
         enemyManager= new ArrayList<>();
         hardItemManager = new ArrayList<>();

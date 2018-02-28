@@ -22,10 +22,15 @@ public class MyAssets {//管理assets文件夹里的资源
     public static final String FIRE_BOSS="assets/enemy/fire_boss/fire_boss.png";
     public static final String BTN_START ="assets/btn/btn_start.png";
     public static final String BTN_SCOREBOARD ="assets/btn/btn_scoreboard.png";
-    public static final String BTN_ABOUT ="assets/btn/btn_about.png";
+    public static final String BTN_ABOUT ="assets/about.png";
     public static final String BTN_EXIT ="assets/btn/btn_exit.png";
     public static final String BTN_BACK ="assets/btn/btn_back.png";
     public static final String BTN_RESET ="assets/btn/btn_reset.png";
+    public static final String BTN_CONFIRM ="assets/btn/btn_confrim.png";
+    public static final String BTN_CANCEL ="assets/btn/btn_cancel.png";
+    public static final String BTN_JUMP ="assets/btn/btn_jump.png";
+    public static final String BTN_BG_MUSIC_OPEN ="assets/btn/btn_bg_music_open.png";
+    public static final String BTN_BG_MUSIC_CLOSE ="assets/btn/btn_bg_music_close.png";
     public static final String []NO ={
             "assets/word/no1.png",
             "assets/word/no2.png",
@@ -33,6 +38,11 @@ public class MyAssets {//管理assets文件夹里的资源
             "assets/word/no4.png",
             "assets/word/no5.png"
     };
+    public static final String MAIN_SCREEN_TITLE="assets/word/main_screen_title.png";
+    public static final String SCOREBOARD_SCREEN_TITLE="assets/word/scoreboard_screen_title.png";
+    public static final String ABOUT_SCREEN_TITLE="assets/word/about_screen_title.png";
+    public static final String GAME_OVER="assets/word/game_over.png";
+    public static final String LOGO="assets/word/logo.png";
     public static final String INFO_BACKGROUND="assets/background/info_background.png";
     public static final String SCOREBOARD_BACKGROUND ="assets/background/scoreboard_background.png";
     public static final String HERO_STILL ="assets/hero/hero_still.png";
@@ -58,4 +68,12 @@ public class MyAssets {//管理assets文件夹里的资源
             "assets/map/map1_4.txt",
             "assets/map/map1_5.txt"
     };
+    public static final String AVG_MESSAGE="assets/avg/message.png";
+    public static final String SCRIPT_GAME_START="assets/avg/script/game_start.txt";
+    public static final String SCRIPT_WORLD1_PASS="assets/avg/script/world1_pass.txt";
+    public static final String NAME_YAOLING="assets/avg/name/yaoling.png";
+    public static final String NAME_JIANGXIAN="assets/avg/name/jiangxian.png";
+    public static final String NAME_DESIGNER="assets/avg/name/designer.png";
+    public static final String WELCOME_BG_MUSIC = "background_music/welcome_bg_music.mp3";
+    public static final String BATTLE_BG_MUSIC = "background_music/battle_bg_music.mp3";
 }

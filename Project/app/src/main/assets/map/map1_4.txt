@@ -5,7 +5,7 @@ B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBooo                             B
 B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBoao     oo                      B
 B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBooo     oo      C             n B
 B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBB                                B
-B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB      LLLLLLLL        BBBBBBBB
+B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB     LLLLLLLLL        BBBBBBBB
 B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBB     b                  BB      B
 B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBB                 UUUU           B
 B                  BBBBBBBBBBBBBBBBBBBBBBBBBBB                                 B
@@ -19,9 +19,9 @@ B                  B   C  C  C  C  C  C       BTT   k          t   B   B  t    B
 B                  B                       B  B  BBBBBBBBBBBBBBBBBBB   BBBBBBBYB
 B                  Gkkkkkkkkkkkkkkkkkkkk  TB  B                        Bo      B
 B               BBBBBBBBBBBBBBBBBBBBBBBBBBBB  BooK                     Bo      B
-B             CBB                  B          Boo                      Bo     BB
+B             CBB                  B          Boo                      Bo     AB
 B         B                        B  BBBBBBBBB                     UUUBoB     B
-B         BBB               C CooooB       BBBB  B    BB        DDD    Bo B    B
+B         BBB               C CooooB       BBBB  B   BBB        DDD    Bo B    B
 B           BBB                ooooB    t  BBBBTTB   BBB               B     BBB
 B                           BBBBBBBBB      BBBBBBB   BBB  UUUU         B  b    B
 B               BBB         BBB                 b    BBB    b       b  B       B

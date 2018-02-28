@@ -15,7 +15,7 @@ int n,m,coins,hpPotion;
 int main()
 {
 #ifndef ONLINE_JUDGE	
-	freopen("map1_5.txt","r",stdin);
+	freopen("map1_4.txt","r",stdin);
 	freopen("mapCheck.out","w",stdout);
 #endif
 	scanf("%d%d\n",&n,&m);

@@ -11,8 +11,10 @@ import com.example.yaolingjump.MainActivity;
 import loon.Screen;
 import loon.canvas.LColor;
 import loon.component.LButton;
+import loon.component.LMessage;
 import loon.component.LPaper;
 import loon.component.LTextBar;
+import loon.component.LToast;
 import loon.event.ActionKey;
 import loon.event.GameTouch;
 import loon.font.LFont;
@@ -29,20 +31,26 @@ public class ScoreboardScreen extends Screen {
     public static final int NoNum=5;
     private SharedPreferences prefs;
     private int margin=10;//间隔多少像素
-    private LPaper background;//充当背景，直接setbackground在界面切换的时候有可能背景显示不出来(游戏引擎的bug)
+    private LPaper background;//充当背景，直接setbackground在界面切换的时候有可能背景显示不出来(游戏引擎的bug我猜)
+    private LPaper title;
     private LPaper scoreboard;
     private LPaper []no;
     private int []tvNo= new int[NoNum];
     private LPaper btnBack;
     private LPaper btnReset;
+    private boolean next_press_reset=false;
     @Override
     public void draw(GLEx glEx) {
 
     }
 
     private void initViews(){
+        //background= new LPaper(MyAssets.SCOREBOARD_SCREEN_BACKGROUND);
         background= new LPaper(MyAssets.SCOREBOARD_SCREEN_BACKGROUND);
         add(background);
+        title= new LPaper(MyAssets.SCOREBOARD_SCREEN_TITLE);
+        title.setLocation(getWidth()/2-title.getWidth()/2,margin);
+        add(title);
         scoreboard= new LPaper(MyAssets.SCOREBOARD_BACKGROUND){
             @Override
             public void paint(GLEx g) {
@@ -52,17 +60,25 @@ public class ScoreboardScreen extends Screen {
                 g.setFont(LFont.getFont(18));
                 for (int i=0;i<NoNum;i++) {
                     float x=0,y=0;
-                    if (no[i]!=null){
+                    if (no!=null&&no[i]!=null){
                         x= scoreboard.getWidth()/2;
                         y= no[i].getY()-scoreboard.getY();
                     }
                     g.drawString("  " + tvNo[i], x, y);
                 }
+                if (next_press_reset){
+                    float x=0,y=0;
+                    if (btnReset!=null){
+                        x= margin;
+                        y= btnReset.getY()-scoreboard.getY()+5;
+                    }
+                    g.drawString("再按一次真的会重置喔！",x,y);
+                }
                 g.setColor(color);
                 g.setFont(LFont.getFont(size));
             }
         };
-        centerOn(scoreboard);
+        scoreboard.setLocation(getWidth()/2-scoreboard.getWidth()/2,title.getY()+title.getHeight()+margin);
         add(scoreboard);
 
         no= new LPaper[5];
@@ -80,13 +96,16 @@ public class ScoreboardScreen extends Screen {
             public void doClick() {
                 if (!action.isPressed()){
                     action.press();
-                    prefs=MainActivity.mainActivity.getSharedPreferences(Macro.PREFS_FILE,MODE_PRIVATE);
-                    SharedPreferences.Editor editor = prefs.edit();//清空用户分数
-                    for (int i=0;i<NoNum;i++) {
-                        editor.remove(Macro.NO[i]);
+                    next_press_reset=!next_press_reset;
+                    if (!next_press_reset) {
+                        prefs = MainActivity.mainActivity.getSharedPreferences(Macro.PREFS_FILE, MODE_PRIVATE);
+                        SharedPreferences.Editor editor = prefs.edit();//清空用户分数
+                        for (int i = 0; i < NoNum; i++) {
+                            editor.remove(Macro.NO[i]);
+                        }
+                        editor.commit();
+                        updateNo();
                     }
-                    editor.commit();
-                    updateNo();
                 }
             }
         };

@@ -1,0 +1,80 @@
+﻿//在脚本中预设变量，windows写字板有毒
+set back = "assets/avg/background/game_start_background.png"
+set back_black = "assets/avg/background/black_background.png"
+set 江贤常态 = "assets/avg/jiangxian/jiangxian_normal.png"
+set 江贤尴尬 = "assets/avg/jiangxian/jiangxian_embarrassed.png"
+set 江贤无语 = "assets/avg/jiangxian/jiangxian_silent.png"
+set 江贤惊讶 = "assets/avg/jiangxian/jiangxian_surprised.png"
+set 江贤祝福 = "assets/avg/jiangxian/jiangxian_wish.png"
+set 瑶玲常态 = "assets/avg/yaoling/yaoling_normal.png"
+set 瑶玲沮丧 = "assets/avg/yaoling/yaoling_upset.png"
+set 瑶玲流泪 = "assets/avg/yaoling/yaoling_cry.png"
+set 瑶玲开心 = "assets/avg/yaoling/yaoling_laugh.png"
+set 瑶玲傲慢 = "assets/avg/yaoling/yaoling_haughty.png"
+set 瑶玲闭眼 = "assets/avg/yaoling/yaoling_eyes_closed.png"
+//在LGame脚本中允许中文变量
+fadein black
+mes 公元2018年，一场突如其来的大火烧毁了<p瑶玲/>的家，<o圆梦书/>也化为灰烬。
+mes 大反派<r黑狐狸/>趁机解除封印，率领黑暗军团卷土重来，一举攻陷天国，俘虏了天国所有狐狸。
+mes <p瑶玲/>作为唯一一只留在人间的天国狐狸得以幸存。
+gb print(back)
+cg print(瑶玲常态) 320 37
+mes (江贤的家)
+
+cg print(江贤常态) 20 0
+jiangxian_name
+mes 你真的要走么？瑶玲。
+
+cg print(瑶玲常态) to print(瑶玲沮丧)
+yaoling_name
+mes 是的江贤，很抱歉不能带你一起去。
+
+cg print(江贤常态) to print(江贤惊讶)
+jiangxian_name
+mes 可是，为什么？我们是最好的搭档啊！
+
+cg print(瑶玲沮丧) to print(瑶玲闭眼)
+yaoling_name
+mes 少壮不努力，老大徒伤悲。江贤你要以学业为重呀！
+
+cg print(江贤惊讶) to print(江贤尴尬)
+jiangxian_name
+mes 哇！瑶玲，你什么时候这么有文化内涵了。
+
+cg print(瑶玲闭眼) to print(瑶玲傲慢)
+yaoling_name
+mes 我读过的书比江贤吃过的米饭还要多呢！
+
+cg print(瑶玲傲慢) to print(瑶玲沮丧)
+
+mes 再说了，瑶玲要去的是天国，人类是不能进去的。
+
+cg print(江贤尴尬) to print(江贤惊讶)
+jiangxian_name
+mes 黑狐狸那么强大，你凭一己之力怎么可能打败他呢？
+
+cg print(瑶玲沮丧) to print(瑶玲开心)
+yaoling_name
+mes 别小瞧瑶玲，瑶玲也很厉害的！
+mes 别忘了，我可是有主角光环的呀！
+//mes 名字显示不出来什么鬼
+
+cg print(江贤惊讶) to print(江贤无语)
+jiangxian_name
+mes ......
+
+cg print(江贤无语) to print(江贤祝福)
+jiangxian_name
+mes 加油瑶玲，我会在这里默默祝福你的。
+
+cg print(瑶玲开心) to print(瑶玲流泪)
+yaoling_name
+mes 再见江贤，我会永远活在你心中的。
+
+no_name
+cg del
+//要去掉背景，貌似gb没有del命令
+gb print(back_black)
+mes <p瑶玲/>告别<y江贤/>，踏上了封印<r黑狐狸/>，解救族人的征途...
+
+exit
