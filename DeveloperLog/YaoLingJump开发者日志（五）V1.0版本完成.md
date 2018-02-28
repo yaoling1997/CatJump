@@ -33,25 +33,25 @@
 
 ####板栗仔
 &emsp;&emsp;能力最弱的怪物，只能在陆地上行走，碰到障碍物会改变方向。
-&emsp;&emsp;<img src="https://i.loli.net/2018/02/27/5a9572a281a80.png" alt="1.png" title="1.png" />
+&emsp;&emsp;<img src="https://i.loli.net/2018/02/28/5a965a8d3eee7.gif" alt="未标题-4.gif" title="未标题-4.gif" />
 
 
 ####霹雳龟
 &emsp;&emsp;生命力最顽强的怪物，只能在陆地上行走，遭遇攻击时会缩进壳里，静止一段时间后会从壳里出来。
-&emsp;&emsp;<img src="https://i.loli.net/2018/02/27/5a9572a27d477.png" alt="2.png" title="2.png" />
+&emsp;&emsp;<img src="https://i.loli.net/2018/02/28/5a9654065e7f2.gif" alt="tortoise.gif" title="tortoise.gif" />
 
 ####侠盗蝙蝠
 &emsp;&emsp;目前唯一会飞的怪物。
-&emsp;&emsp;<img src="https://i.loli.net/2018/02/27/5a9572a28031d.png" alt="3.png" title="3.png" style="zoom:50%"/>
+&emsp;&emsp;<img src="https://i.loli.net/2018/02/28/5a9656e2b6a82.gif" alt="未标题-1.gif" title="未标题-1.gif" />
 
 ####不知火舞（我总不能叫它火球怪吧，太土了）
 &emsp;&emsp;World1中的boss，会向瑶玲丢火球，一击毙命。
 
 &emsp;&emsp;当生命值较低时会变成一团持续3秒的火焰，免疫所有攻击。
-&emsp;&emsp;<img src="https://i.loli.net/2018/02/27/5a9572a28310c.png" alt="4.png" title="4.png" />
+&emsp;&emsp;<img src="https://i.loli.net/2018/02/28/5a9654065788f.gif" alt="104022CB-199.gif" title="104022CB-199.gif" />
 ####火焰
 &emsp;&emsp;撞到墙会消失，千万不要坐上去，屁股会被烧坏的！
-&emsp;&emsp;<img src="https://i.loli.net/2018/02/28/5a9602aae5274.png" alt="1.png" title="1.png" />
+&emsp;&emsp;<img src="https://i.loli.net/2018/02/28/5a96538821269.gif" alt="fire.gif" title="fire.gif" />
 ####钥匙
 &emsp;&emsp;捡到后能打开对应颜色的门。
 &emsp;&emsp;<img src="https://i.loli.net/2018/02/28/5a9600d23dd62.png" alt="yellow_key.png" title="yellow_key.png" style="zoom:20%"/>
@@ -66,7 +66,7 @@
 &emsp;&emsp;<img src="https://i.loli.net/2018/02/28/5a96015bca819.png" alt="thorn2.png" title="thorn2.png"style ="zoom:20%"/>
 ####炮台
 &emsp;&emsp;每隔一段时间会产生一个水平运动的小火焰。
-&emsp;&emsp;<img src="https://i.loli.net/2018/02/28/5a96036e11774.png" alt="QQ截图20180228091758.png" title="QQ截图20180228091758.png" style="zoom:70%"/>
+&emsp;&emsp;<img src="https://i.loli.net/2018/02/28/5a9658efcadb9.gif" alt="未标题-2.gif" title="未标题-2.gif" />
 
 ####问号砖
 &emsp;&emsp;顶一下会有意想不到的惊喜。
@@ -78,15 +78,16 @@
 
 ####传送门
 &emsp;&emsp;通往下一关的传送门。
-&emsp;&emsp;<img src="https://i.loli.net/2018/02/28/5a960214046b7.png" alt="5.png" title="5.png" />
+&emsp;&emsp;<img src="https://i.loli.net/2018/02/28/5a9659f8adcf4.gif" alt="未标题-3.gif" title="未标题-3.gif" />
 
 ####HP药剂
 &emsp;&emsp;生命值+1。
-&emsp;&emsp;<img src="https://i.loli.net/2018/02/28/5a96036e0fe71.png" alt="QQ截图20180228091819.png" title="QQ截图20180228091819.png" style="zoom:50%"/>
+&emsp;&emsp;<img src="https://i.loli.net/2018/02/28/5a9654707c8b0.gif" alt="hp_potion.gif" title="hp_potion.gif" />
 
 ####硬币
 &emsp;&emsp;集齐100个硬币会自动兑换为一条命。
-&emsp;&emsp;<img src="https://i.loli.net/2018/02/28/5a96036e140d3.png" alt="QQ截图20180228091811.png" title="QQ截图20180228091811.png" />
+&emsp;&emsp;<img src="https://i.loli.net/2018/02/28/5a965b5b562e7.gif" alt="未标题-5.gif" title="未标题-5.gif" />
+
 &emsp;&emsp;暂时只介绍这么多了orz。
 
 ##跳跃吧瑶玲下载连接
