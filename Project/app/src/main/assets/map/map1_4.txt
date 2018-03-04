@@ -1,31 +1,33 @@
-40
+42
 80
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBooo                             B
-B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBoao     oo                      B
-B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBooo     oo      C             n B
 B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBB                                B
-B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB     LLLLLLLLL        BBBBBBBB
+B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBB                                B
+B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBooo                             B
+B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBoao     oo      C               B
+B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBooo     oo                    n B
+B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBB                                B
+B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB     LLLLLLLL         BBBBBBBB
 B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBB     b                  BB      B
 B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBB                 UUUU           B
 B                  BBBBBBBBBBBBBBBBBBBBBBBBBBB                                 B
-B                  BBBBBBBBBBBBBBBBBBBBB oooo                       RRR        B
+B                  BBBBBBBBBBBBBBBBBBBBB oooo                       RR         B
 B                  BBBBBBBBBBBBBBBBBBBBB oooo                                  B
-B                  BBBBBBBBBBBBBBBBBBBBB                                       B
-B                  BB        oooo      BBBBBBBB                                B
-B                  B                          B     b  b  b  b          UUUU   B
-B                  B                          B  b    b  b   b                 B
-B                  B   C  C  C  C  C  C       BTT   k          t   B   B  t    B
-B                  B                       B  B  BBBBBBBBBBBBBBBBBBB   BBBBBBBYB
-B                  Gkkkkkkkkkkkkkkkkkkkk  TB  B                        Bo      B
-B               BBBBBBBBBBBBBBBBBBBBBBBBBBBB  BooK                     Bo      B
-B             CBB                  B          Boo                      Bo     AB
-B         B                        B  BBBBBBBBB                     UUUBoB     B
-B         BBB               C CooooB       BBBB  B   BBB        DDD    Bo B    B
-B           BBB                ooooB    t  BBBBTTB   BBB               B     BBB
-B                           BBBBBBBBB      BBBBBBB   BBB  UUUU         B  b    B
+B                  BBBBBBBBBBBBBBBBBBBBBB                                      B
+B                  BB        oooo       BBBBBBB                                B
+B                  B                          B     b  b  b  b           UUU   B
+B                  B   C  C  C  C  C  C       B  b    b  b   b                 B
+B                  B                          BTT   k          t   B   B  t    B
+B                  Bkkkkkkkkkkkkkkkkkkkk  TB  B  BBBBBBBBBBBBBBBBBBB   BBBBBBBYB
+B                  GBBBBBBBBBBBBBBBBBBBBBBBB  B o                      Bo      B
+B               BBBBB              B          B o                      Bo      B
+B             CBB                  B          B o                      Bo     SB
+B         B                 CC ooooB  BBBBBBBBB o                   UUUBoB     B
+B         BBB                  ooooB       BBBB  B    BB        DDD    Bo B    B
+B           BBB                BBBBBB   t  BBBBTTB   BBB               B     BBB
+B                           BBB                      BBB  UUUU         B  b    B
 B               BBB         BBB                 b    BBB    b       b  B       B
-B                 BBC      bBBBBBBBBBBBBBBBBBBBBBBBBBBBB  b     TTTTTTTB    B  B
+B                 BCC      bBBBBBBBBBBBBBBBBBBBBBBBBBBBB  b     TTTTTTTB    B  B
 B                       B                               b       BBBBBBBB       B
 B                     BBB                                 b       oooooB      BB
 B                   BBB                                     b     oooooB     BBB
@@ -34,9 +36,10 @@ B               BBB                                             B              B
 B             BBB                                               BBBBBBBBBBBBBBBB
 B                                                               BBBBBBBBBBBBBBBB
 B h       BBB                                                   BBBBBBBBBBBBBBBB
-B       CBB                                                     BBBBBBBBBBBBBBBB
-B                                                               BBBBBBBBBBBBBBBB
-B BBBBBB                                               TTTTTTTTTBBBBBBBBBBBBBBBB
+B       BBB                                                     BBBBBBBBBBBBBBBB
+B       B                                                       BBBBBBBBBBBBBBBB
+B BBBBBBB                                              TTTTTTTTTBBBBBBBBBBBBBBBB
 B oooogBTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTBBBBBBBBBBBBBBBBBBBBBBBBB
-B                    BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+B                                                                            aBB
+B                                                                             BB
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB

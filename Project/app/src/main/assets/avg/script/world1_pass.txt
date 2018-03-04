@@ -1,5 +1,5 @@
 //在脚本中预设变量，windows写字板有毒
-set back = "assets/avg/background/world1_pass_background.png"
+set back = "assets/avg/background/world1_background.png"
 set back_black = "assets/avg/background/black_background.png"
 set 瑶玲常态 = "assets/avg/yaoling/yaoling_normal.png"
 set 瑶玲沮丧 = "assets/avg/yaoling/yaoling_upset.png"
@@ -12,88 +12,80 @@ set 瑶玲卖萌 = "assets/avg/yaoling/yaoling_cute.png"
 set 瑶玲惊讶 = "assets/avg/yaoling/yaoling_surprised.png"
 set 瑶玲生气 = "assets/avg/yaoling/yaoling_angry.png"
 set 瑶玲大哭 = "assets/avg/yaoling/yaoling_big_cry.png"
-set 设计狮阴影 = "assets/avg/designer/designer_shadow.png"
-set 设计狮本体 = "assets/avg/designer/designer.png"
+set 瑶玲喘气 = "assets/avg/yaoling/yaoling_tired.png"
+set 瑶玲尴尬 = "assets/avg/yaoling/yaoling_embarrassed.png"
+set 瑶玲无语 = "assets/avg/yaoling/yaoling_silent.png"
+set 喷火怪 = "assets/avg/boss/fire_boss.png"
 
 //在LGame脚本中允许中文变量
 fadein black
 gb print(back)
-mes (缓缓流淌的小溪)
 
-cg print(瑶玲开心) 320 37
+cg print(瑶玲喘气) 20 37
 yaoling_name
-mes 哈哈，这么快就过关了，也太简单了点吧。
+mes 咳咳，真是个难缠的家伙，累死我了...
 
-cg print(瑶玲开心) to print(瑶玲卖萌)
-yaoling_name
-mes 来一个消灭一个，再多怪物都不怕，只因瑶玲最强大~啦啦啦~黑狐狸又算个啥？瑶玲最强大~
-
-cg del
-noname
-
-mes 哈哈哈哈哈，真是大言不惭的小狐狸。
-
-cg print(瑶玲惊讶) 20 37
-yaoling_name
-mes 什么人？谁在那里？！
-
-cg print(设计狮阴影) 220 40
-designer_name
-mes 呵呵，问俺是谁，汝且竖起耳朵听好了！
+cg print(喷火怪) 300 37
+fire_boss_name
+mes 小家伙，本王看你有两下子，暂且放你一马，说吧，到这来有什么事？
 
 yaoling_name
-mes 你是？......
+mes 据说这有能够帮助我重返天国的宝物，所以我才来到这里的。
 
-fadeout white
-designer_name
-mes 俺？
-mes 俺就是上知天文，下晓地理，神通广大，法力无边，虚拟世界任俺主宰的设计狮！
+fire_boss_name
+mes 这里哪有什么能重返天国的宝物，你怕是被别人骗了吧？
 
-cg print(瑶玲惊讶) to print(瑶玲常态)
+cg print(瑶玲喘气) to print(瑶玲常态)
 yaoling_name
-mes 你是来帮助我的？
-
-designer_name
-mes 并不是，相反俺的任务是给你制造麻烦，这些变态的关卡都是俺设计的。
+mes 不会错啊，古书上明明写的是这里。
 
 cg print(瑶玲常态) to print(瑶玲生气)
 yaoling_name
-mes 可恶，瑶玲费了好大劲才来到这里的。
-mes 把后面的关卡设计得简单点不行吗？你还想让我用头撞多少次地板？
+mes 你肯定是不想交出来才骗瑶玲的！
 
-designer_name
-mes 天将降大任于是人也，必先苦其心志，劳其筋骨，饿其体肤，空乏其身，行拂乱其所为，所以动心忍性，曾益其所不能。
-mes 宝剑锋从磨砺出，梅花香自苦寒来。只有逆境才能让你更加坚强，只有强大的对手才能让你更加强大！
-
-yaoling_name
-mes 我不管，后面的关卡必须给瑶玲弄简单点，不然瑶玲真的生气了！
-
-designer_name
-mes 这可不成，后面的关卡只会越来越难，你要加油哦！
+fire_boss_name
+mes 我好歹也是一城之主，根本用不着向你这样的小东西撒谎。
+mes 而且我在这已经生活两万年了，对这里的情况了如指掌，哪些东西有，哪些东西没有是不可能被搞错的。
 
 cg print(瑶玲生气) to print(瑶玲大哭)
 yaoling_name
-mes 呜呜...导演，瑶玲不干了，瑶玲要回家！
+mes 呜呜，瑶玲再也回不了天国了...
 
-designer_name
-mes 俺来帮你一把，送你前往另外一个世界吧！
+fire_boss_name
+mes 想回天国确实不是件易事，但也绝非不可能。
+mes 据我了解，你还可以从通天塔回到天国。
 
-cg print(瑶玲大哭) to print(瑶玲惊吓)
+cg print(瑶玲大哭) to print(瑶玲流泪)
 yaoling_name
-mes 啊，不要！
-cg del print(瑶玲惊吓)
-mes 不要啊...
+mes 通天塔，那是什么地方？
 
-designer_name
-mes 这么调皮的小狐狸是得好好教育一下呢。
-mes 其实小弟我还有很多有趣的关卡想做的，不过马上就要开学了，暂时没有精力设计这么多了。
-mes 所以俺可以正式地告诉大侠：恭喜您，通关了！
-mes 这是一款个人开发者制作的游戏，非商业用途，仅供娱乐。
-mes 设计、编码、美工、音效、测试都由俺一人完成，若有不足之处，还望大侠海涵。
-mes 若大侠觉得好玩，不妨和身边的朋友共同分享喜悦。
-mes 若觉得需要改进，欢迎提出宝贵的建议，小弟我随时聆听您的教诲。
-cg print(设计狮阴影) to print(设计狮本体)
-mes 最后恭祝大侠新春快乐，狗年大吉！
-mes 我们共同期待下个版本再相见！
+fire_boss_name
+mes 它在太平洋中心，具体位置是...(此处省略1000个字)。记住了吗？
+mes 你可以游过去或者飞过去。
 
+cg print(瑶玲流泪) to print(瑶玲尴尬)
+yaoling_name
+mes 可瑶玲既不会飞也不会游泳啊...
+
+fire_boss_name
+mes 我这地方虽然简陋了点，但是宝物还是有不少，其中一件叫空气铃，可以帮助像你这样的小老鼠在水中自由呼吸。
+mes 看你可怜兮兮的样子，就当作礼物送与你好了。
+
+cg print(瑶玲尴尬) to print(瑶玲生气)
+yaoling_name
+mes 瑶玲不是老鼠！
+
+cg print(瑶玲生气) to print(瑶玲开心)
+mes 不过还是谢谢你啦~这东西怎么用啊？
+
+fire_boss_name
+mes 自己试试就知道了。
+cg del print(喷火怪)
+mes 本王只能帮你到这了，后会有期。
+
+cg print(瑶玲开心) to print(瑶玲无语)
+yaoling_name
+mes ......
+
+fadeout black
 exit

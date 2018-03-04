@@ -9,6 +9,8 @@ import com.example.yaolingjump.Macro.Macro;
 import com.example.yaolingjump.Macro.MyAssets;
 import com.example.yaolingjump.MainActivity;
 import com.example.yaolingjump.MusicService;
+import com.example.yaolingjump.screen.avg.World1FinalLevelAVGScreen;
+import com.example.yaolingjump.screen.avg.World1PassAVGScreen;
 
 import loon.action.sprite.SpriteBatch;
 import loon.action.sprite.SpriteBatchScreen;
@@ -18,8 +20,6 @@ import loon.event.GameKey;
 import loon.event.GameTouch;
 import loon.font.LFont;
 import loon.opengl.GLEx;
-
-import static android.content.Context.MODE_PRIVATE;
 
 /**
  * Created on 2018/2/17.
@@ -69,10 +69,11 @@ public class RestartScreen extends SpriteBatchScreen {
                 int size= g.getFont().getSize();
                 g.setColor(LColor.white);
                 g.setFont(LFont.getFont(18));
-                if (gs.getHP()<=0)
-                    g.drawString("Score "+gs.getScore(),155,5);
-                else
-                    g.drawString("HP "+gs.getHP(),155,5);
+//                if (gs.getHP()<=0)
+//                    g.drawString("Score "+gs.getScore(),155,5);
+//                else
+//                    g.drawString("HP "+gs.getHP(),155,5);
+                g.drawString("HP "+gs.getHP(),155,5);
                 g.setColor(color);
                 g.setFont(LFont.getFont(size));
             }
@@ -120,8 +121,11 @@ public class RestartScreen extends SpriteBatchScreen {
                     updateScoreboard();
                     Log.i("yaoling1997","pass all levels");
                     setScreen(new World1PassAVGScreen());
-                }else {//死了但是还有命，重玩本关
-                    setScreen(gs);
+                }else {//死了但是还有命，重玩本关或者通过本关玩下一关
+                    if (gs.maps.get(0).equals(MyAssets.MAPS[4]))//若下一关是world1最后一关
+                        setScreen(new World1FinalLevelAVGScreen(gs));
+                    else
+                        setScreen(gs);
                 }
             }
         }

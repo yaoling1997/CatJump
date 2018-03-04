@@ -20,10 +20,14 @@ import com.example.yaolingjump.item.Coin;
 import com.example.yaolingjump.item.Emplacement;
 import com.example.yaolingjump.item.Fire;
 import com.example.yaolingjump.item.HpPotion;
+import com.example.yaolingjump.item.JumpBoots;
 import com.example.yaolingjump.item.Key;
 import com.example.yaolingjump.item.MoveBlock;
 import com.example.yaolingjump.item.PassGate;
+import com.example.yaolingjump.item.SpeedBoots;
+import com.example.yaolingjump.item.Spell;
 import com.example.yaolingjump.item.Thorn;
+import com.example.yaolingjump.item.Wand;
 
 import java.util.ArrayList;
 
@@ -39,6 +43,7 @@ import loon.action.sprite.SpriteBatch;
 import loon.action.sprite.SpriteBatchScreen;
 import loon.canvas.LColor;
 import loon.component.LPad;
+import loon.component.LPaper;
 import loon.event.ActionKey;
 import loon.event.GameKey;
 import loon.event.GameTouch;
@@ -63,6 +68,7 @@ public class GameScreen extends SpriteBatchScreen {
     private Animation emptyAnimation;//空动画(无奈用它的引擎必须要往构造函数里丢动画)
     private Animation backgroundAnimation;//背景动画
     private LPad pad;//玩家控制的键盘
+    public LPaper btnSpell;//一个圆形按钮
     private int score=0;//得分
     private int coin=0;//收集的硬币数
     private int HP=0;//角色当前生命值
@@ -74,13 +80,20 @@ public class GameScreen extends SpriteBatchScreen {
     private ArrayList<ActionObject> hardItemManager;//管理英雄不能通过的物品
     public ArrayList<String> maps;//
 
+    public boolean canCastSpell;//保存英雄能力信息
+    public boolean isDoubleSpeed;
+    public boolean jumperTwo;
+
     public GameScreen() {
         HP=initHP;
         score=0;
         maps= new ArrayList<>();
-        //maps.add(MyAssets.MAPS[0]);
+        //maps.add(MyAssets.MAPS[2]);
         for (int i=0;i<MyAssets.MAPS.length;i++)
             maps.add(MyAssets.MAPS[i]);
+        canCastSpell=false;
+        isDoubleSpeed=false;
+        jumperTwo=false;
     }
 
     @Override
@@ -100,15 +113,15 @@ public class GameScreen extends SpriteBatchScreen {
     }
     private void applyPrefs(){
         stopBgMusic();
-        SharedPreferences prefs= MainActivity.mainActivity.getSharedPreferences(Macro.PREFS_FILE,MODE_PRIVATE);
-        Intent intent= new Intent(MainActivity.mainActivity,MusicService.class);
-        if (prefs.getString(Macro.BG_MUSIC,Macro.CLOSE).equals(Macro.OPEN)) {
-            intent.putExtra(Macro.BG_MUSIC,prefs.getString(Macro.BG_MUSIC,Macro.OPEN));//open or close
-        }else {
-            intent.putExtra(Macro.BG_MUSIC,prefs.getString(Macro.BG_MUSIC,Macro.CLOSE));//open or close
-        }
-        intent.putExtra(Macro.BG_MUSIC_SOURCE,MyAssets.BATTLE_BG_MUSIC);
-        MainActivity.mainActivity.startService(intent);
+//        SharedPreferences prefs= MainActivity.mainActivity.getSharedPreferences(Macro.PREFS_FILE,MODE_PRIVATE);
+//        Intent intent= new Intent(MainActivity.mainActivity,MusicService.class);
+//        if (prefs.getString(Macro.BG_MUSIC,Macro.CLOSE).equals(Macro.OPEN)) {
+//            intent.putExtra(Macro.BG_MUSIC,prefs.getString(Macro.BG_MUSIC,Macro.OPEN));//open or close
+//        }else {
+//            intent.putExtra(Macro.BG_MUSIC,prefs.getString(Macro.BG_MUSIC,Macro.CLOSE));//open or close
+//        }
+//        intent.putExtra(Macro.BG_MUSIC_SOURCE,MyAssets.BATTLE_BG_MUSIC);
+//        MainActivity.mainActivity.startService(intent);
     }
 
     private void initAnimation(){
@@ -141,7 +154,20 @@ public class GameScreen extends SpriteBatchScreen {
         hardItemManager.remove(e);
         removeTileObject(e);
     }
-
+    private void restoreHeroAbilities(){//恢复英雄的能力
+        if (hero==null)
+            return;
+        Log.i("yaoling1997","restoreHeroAbilities:");
+        Log.i("yaoling1997","canCastSpell:"+canCastSpell);
+        Log.i("yaoling1997","jumperTwo:"+jumperTwo);
+        Log.i("yaoling1997","isDoubleSpeed:"+isDoubleSpeed);
+        if (canCastSpell)
+            hero.enableSpell();
+        if (jumperTwo)
+            hero.startJumperTwo();
+        if (isDoubleSpeed)
+            hero.startDoubleSpeed();
+    }
     private void initMap(){
         //读取地图
         if (!maps.isEmpty())
@@ -159,6 +185,9 @@ public class GameScreen extends SpriteBatchScreen {
                 MapChar.GREEN_DOOR,
                 MapChar.YELLOW_DOOR,
                 MapChar.THORN,
+                MapChar.WAND_BLOCK,
+                MapChar.JUMP_BOOTS_BLOCK,
+                MapChar.SPEED_BOOTS_BLOCK
         });
         //设置字符对应图片
         int tmp;
@@ -166,6 +195,9 @@ public class GameScreen extends SpriteBatchScreen {
         tmp= tileMap.putTile(MapChar.HP_POTION_BLOCK,MyAssets.QUESTION_BLOCK);
         tileMap.putTile(MapChar.COIN_BLOCK,tmp);
         tileMap.putTile(MapChar.CHESTNUT_BLOCK,tmp);
+        tileMap.putTile(MapChar.WAND_BLOCK,tmp);
+        tileMap.putTile(MapChar.JUMP_BOOTS_BLOCK,tmp);
+        tileMap.putTile(MapChar.SPEED_BOOTS_BLOCK,tmp);
         tileMap.putTile(MapChar.EMPTY_BLOCK,MyAssets.EMPTY_BLOCK);
         tileMap.putTile(MapChar.GREEN_DOOR,MyAssets.GREEN_DOOR);
         tileMap.putTile(MapChar.YELLOW_DOOR,MyAssets.YELLOW_DOOR);
@@ -181,7 +213,8 @@ public class GameScreen extends SpriteBatchScreen {
         for (int i=0;i<rowNum;i++) {//先放主角
             for (int j = 0; j < colNum; j++)
                 if (indexMap[i][j] == MapChar.HERO) {
-                    hero = new Hero(tileMap.tilesToPixelsX(j), tileMap.tilesToPixelsY(i), Hero.stillWidth, Hero.stillHeight, emptyAnimation, tileMap);
+                    hero = new Hero(tileMap.tilesToPixelsX(j), tileMap.tilesToPixelsY(i), Hero.stillWidth, Hero.stillHeight, emptyAnimation, tileMap,this);
+                    restoreHeroAbilities();
                     add(hero);
                     break;
                 }
@@ -351,6 +384,15 @@ public class GameScreen extends SpriteBatchScreen {
             }
         });
         add(pad);
+        btnSpell= new LPaper(MyAssets.BTN_SPELL){
+            @Override
+            public void doClick() {
+                hero.castSpell();
+            }
+        };
+        btnSpell.setLocation(getWidth()-10-btnSpell.getWidth(),pad.getY()+pad.getHeight()/2-btnSpell.height()/2);
+        btnSpell.setVisible(false);
+        add(btnSpell);
     }
 
     private void initInformation(){
@@ -368,6 +410,7 @@ public class GameScreen extends SpriteBatchScreen {
         enemyManager= new ArrayList<>();
         hardItemManager = new ArrayList<>();
         initAnimation();
+        initPad();
         initMap();
         //putReleases(coinAnimation,enemyAnimation);
         setBackground(LColor.black);
@@ -378,8 +421,6 @@ public class GameScreen extends SpriteBatchScreen {
 
         //初始化角色的行动
         initHeroAction();
-
-        initPad();
 
         // 地图中角色事件监听(每帧都会触发一次此监听)
         updateListener= new UpdateListener() {
@@ -396,6 +437,21 @@ public class GameScreen extends SpriteBatchScreen {
                         addScore(HpPotion.score);
                         addHP(1);
                         removeTileObject(c);
+                    }else if (actionObject instanceof Wand){//与魔杖
+                        Wand w=(Wand)actionObject;
+                        addScore(Wand.score);
+                        hero.enableSpell();//英雄可以丢技能
+                        removeTileObject(w);
+                    }else if (actionObject instanceof JumpBoots){//与轻灵之靴
+                        JumpBoots w=(JumpBoots)actionObject;
+                        addScore(JumpBoots.score);
+                        hero.startJumperTwo();
+                        removeTileObject(w);
+                    }else if (actionObject instanceof SpeedBoots){//与疾行之靴
+                        SpeedBoots w=(SpeedBoots)actionObject;
+                        addScore(SpeedBoots.score);
+                        hero.startDoubleSpeed();//开启双倍速度
+                        removeTileObject(w);
                     }else if (actionObject instanceof Chestnut){//与板栗相撞
                         Chestnut chestnut= (Chestnut)actionObject;
                         if (hero.whetherAttackEnemy(chestnut)){
@@ -529,16 +585,49 @@ public class GameScreen extends SpriteBatchScreen {
                 // 标注地图已脏，强制缓存刷新
                 tileMap.setDirty(true);
                 break;
+            case MapChar.WAND_BLOCK:
+                tileMap.setTileID(x,y,MapChar.EMPTY_BLOCK);
+                Wand wand= new Wand(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y-1),
+                        new Animation(emptyAnimation),tileMap);
+                addTileObject(wand);
+                // 标注地图已脏，强制缓存刷新
+                tileMap.setDirty(true);
+                break;
+            case MapChar.JUMP_BOOTS_BLOCK:
+                tileMap.setTileID(x,y,MapChar.EMPTY_BLOCK);
+                JumpBoots jumpBoots= new JumpBoots(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y-1),
+                        new Animation(emptyAnimation),tileMap);
+                addTileObject(jumpBoots);
+                // 标注地图已脏，强制缓存刷新
+                tileMap.setDirty(true);
+                break;
+            case MapChar.SPEED_BOOTS_BLOCK:
+                tileMap.setTileID(x,y,MapChar.EMPTY_BLOCK);
+                SpeedBoots speedBoots= new SpeedBoots(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y-1),
+                        new Animation(emptyAnimation),tileMap);
+                addTileObject(speedBoots);
+                // 标注地图已脏，强制缓存刷新
+                tileMap.setDirty(true);
+                break;
         }
     }
     public void damage(){//主角被敌人干了
-        if (hero.isDead)//无敌状态
+        if (hero.canCastSpell){
+            hero.forbidSpell();
+            hero.startImmune();
+        }
+        if (hero.isDead||hero.isImmune)//无敌状态
             return;
         addHP(-1);
         releaseActionKeys();
         pad.setListener(null);
         follow(null);
+
         hero.dead();
+        hero.forbidSpell();//不允许使用魔法
+        hero.stopJumperTwo();//不允许二级跳
+        hero.stopDoubleSpeed();//关闭二倍速
+
         RotateTo rotate= new RotateTo(180f,30f);
         //总共转多少度，每帧累加多少度
         rotate.setActionListener(new ActionListener() {
@@ -794,6 +883,27 @@ public class GameScreen extends SpriteBatchScreen {
                 if (tile!=null) {
                     removeItemManager.add(e);
                 }
+            }else if(e instanceof Spell){
+                Vector2f tile= tileMap.getTileCollision(e,e.getX(),e.getY());
+                if (tile!=null) {
+                    Log.i("yaoling1997","spell hit wall");
+                    removeItemManager.add(e);
+                    continue;
+                }
+                Spell s= (Spell)e;
+                if (s.flyTime>=s.maxFlyTime){
+                    Log.i("yaoling1997","spell time is out");
+                    removeItemManager.add(e);
+                    continue;
+                }
+                for (Enemy v:enemyManager)
+                    if (e.isCollision(v)){//魔法弹打到了敌人
+                        Log.i("yaoling1997","spell hit enemy");
+                        v.damage();
+                        removeItemManager.add(e);
+                        continue;
+                    }
+
             }
         for (ActionObject e:removeItemManager)
             removeHardItem(e);
@@ -841,7 +951,6 @@ public class GameScreen extends SpriteBatchScreen {
     public void touchDrag(GameTouch gameTouch) {
 
     }
-
     public int getScore() {
         return score;
     }

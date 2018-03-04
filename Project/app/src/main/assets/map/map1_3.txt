@@ -1,22 +1,24 @@
-20
+22
 60
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
-B h             BBBBBBBBBB  ooo                         n  B
-B              kBBBBBBBBBB  ooo                K           B
-B BBB   BBBBBBBBBBBBBBBBB   BBBBBB                    BBBBBB
-BB    BBB           ooooo       aB    BBBBBBBBB    U    oo B
-Bo BCCBooB          ooooo        B                 UU   oo B
-Bo     ooB                       B             B      B   tB
-BB      B           BBBBBB BBBBB BBBBB      BK       BBBBBBB
-BBBB  BB                 BTB         ooo   C    DDD     oo B
+B               BBBBBBBBBB                                 B
+B               BBBBBBBBBB                                 B
+B h             BBBBBBBBBB  ooo                K        n  B
+B BBB          kBBB         ooo                            B
+B       BBBBBBBBBBB         BBBBBB                    BBBBBB
+B     BBBB         Jooooo       aB    BBBBBBBBB   U     oo B
+Bo BCCBooB          ooooo        B             B  UU    oo B
+Bo     ooB                       B                    B   tB
+BB      B           BBBBBB  BBBB BBBBB      BK       BBBBBBB
+BBBB  BB                 BTTB        ooo   C    DDD     oo B
 Boo  Boo                     ooo                        oo B
 Boo  B         ooo       ooo     B          BBB       B   kB
 Boo   C    B        ooo               BB             BBBBBBB
 Boo                          BBB     BB   B         B   oo B
 B  B    B                             B   B             oo B
 BTTBBBBBB BBB  BBB       BBB     BBB  BBBBB           B    B
-B oooo    B         BBB                   B          BBBBBBB
+B oooo              BBB                   B          BBBBBBB
 B oooo                                    B  UUUUUUU BBBBBBB
 B        B                                B          BBBBBBB
-B t   t  BTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTBTTTTTTTTTTBBBBBBB
-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+B t   t  BTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTB          BBBBBBB
+BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBTTTTTTTTTTBBBBBBB

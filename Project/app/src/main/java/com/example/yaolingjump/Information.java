@@ -32,8 +32,8 @@ public class Information extends LLayer {
                 int size= g.getFont().getSize();
                 g.setColor(LColor.white);
                 g.setFont(LFont.getFont(18));
-                g.drawString("Score",100,5);
-                g.drawString(""+gs.getScore(),100,25);
+                //g.drawString("Score",100,5);
+                //g.drawString(""+gs.getScore(),100,25);
                 g.drawString("Coin",200,5);
                 g.drawString(""+gs.getCoin(),200,25);
                 g.drawString("HP",300,5);

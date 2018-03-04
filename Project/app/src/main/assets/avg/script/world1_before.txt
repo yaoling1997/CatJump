@@ -1,0 +1,28 @@
+//在脚本中预设变量，windows写字板有毒
+set back = "assets/avg/background/world1_background.png"
+set back_black = "assets/avg/background/black_background.png"
+set 江贤常态 = "assets/avg/jiangxian/jiangxian_normal.png"
+set 江贤尴尬 = "assets/avg/jiangxian/jiangxian_embarrassed.png"
+set 江贤无语 = "assets/avg/jiangxian/jiangxian_silent.png"
+set 江贤惊讶 = "assets/avg/jiangxian/jiangxian_surprised.png"
+set 江贤祝福 = "assets/avg/jiangxian/jiangxian_wish.png"
+set 瑶玲常态 = "assets/avg/yaoling/yaoling_normal.png"
+set 瑶玲沮丧 = "assets/avg/yaoling/yaoling_upset.png"
+set 瑶玲流泪 = "assets/avg/yaoling/yaoling_cry.png"
+set 瑶玲开心 = "assets/avg/yaoling/yaoling_laugh.png"
+set 瑶玲傲慢 = "assets/avg/yaoling/yaoling_haughty.png"
+set 瑶玲闭眼 = "assets/avg/yaoling/yaoling_eyes_closed.png"
+//在LGame脚本中允许中文变量
+fadein black
+
+mes 经过长途跋涉...
+gb print(back)
+mes (地下城)
+
+cg print(瑶玲开心) 20 37
+yaoling_name
+mes 这里就是地下城吧。
+mes 根据古书上的记载，在这找到传说中的宝物就能回天国了。
+mes 出发吧！
+
+exit

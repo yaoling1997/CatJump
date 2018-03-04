@@ -18,7 +18,6 @@ public class FireBoss extends LandEnemy{
     private GameScreen gs;
     private Animation runAnimation;
     private Animation defenseAnimation;
-    private int HP;
     private int directionChangeLimit;//多久改变一次方向
     private int directionChangeCnt;//多久改变一次方向累积时间
     private int bulletReadyLimit;//多久发一次炮
@@ -49,13 +48,18 @@ public class FireBoss extends LandEnemy{
         bulletLength=30;
         isDefense=false;
     }
-    public void damage(){
-        HP--;
+
+    @Override
+    public void damage() {
+        if (isDefense)
+            return;
+        super.damage();
         if (HP==5){
             isDefense=true;
             setAnimation(defenseAnimation);
         }
     }
+
     public boolean isDead(){
         return HP<=0;
     }

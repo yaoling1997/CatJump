@@ -41,7 +41,7 @@ public class Emplacement extends ActionObject {//炮台
             setMirror(false);
         }
         if (cnt>=limit){//发了
-            Log.i("yaoling1997","Emplacement update,vx= "+vx);
+            //Log.i("yaoling1997","Emplacement update,vx= "+vx);
             cnt=0;
             gs.addHardItem(new Fire(getX()+getWidth()/2,getY()+2,vx,vy,length,length,gs.getEmptyAnimation(),tiles));
         }else{

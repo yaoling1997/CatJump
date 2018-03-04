@@ -16,6 +16,7 @@ public class Enemy extends ActionObject {
     public float vx;//横向速度
     public float vy;//纵向速度
     public boolean isDead;//是否死亡
+    protected int HP=1;//敌人生命值
     public Enemy(float v, float v1, float width,float height,Animation animation, TileMap tileMap) {
         super(v, v1, width, height,animation, tileMap);
         vx=-speed;
@@ -24,6 +25,11 @@ public class Enemy extends ActionObject {
     }
     public Enemy(float v, float v1, Animation animation, TileMap tileMap) {//不带大小，默认为一个砖块大
         this(v, v1, GameScreen.gridLength, GameScreen.gridLength,animation, tileMap);
+    }
+    public void damage(){
+        HP--;
+        if (HP<=0)
+            isDead=true;
     }
 
     @Override

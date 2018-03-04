@@ -1,7 +1,6 @@
 package com.example.yaolingjump;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +9,7 @@ import com.example.yaolingjump.Macro.Macro;
 import com.example.yaolingjump.Macro.MyAssets;
 import com.example.yaolingjump.screen.GameScreen;
 import com.example.yaolingjump.screen.MainScreen;
+import com.example.yaolingjump.screen.avg.GameStartAVGScreen;
 
 import loon.LSetting;
 import loon.Screen;
@@ -24,8 +24,8 @@ public class MainActivity extends Loon{
         setting.width=480;
         setting.height=320;
         setting.logoPath= MyAssets.LOGO;
-        setting.isLogo=true;//是否在游戏进入前显示标志
-        setting.isFPS=false;//是否显示FPS
+        setting.isLogo=false;//是否在游戏进入前显示标志
+        setting.isFPS=true;//是否显示FPS
         setting.fontName="黑体";//字体
         setting.appName= Macro.GAME_NAME;
         mainActivity=this;

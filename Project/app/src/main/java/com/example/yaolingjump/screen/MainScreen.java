@@ -49,8 +49,8 @@ public class MainScreen extends Screen {
             public void doClick() {
                 if (!action.isPressed()){
                     action.press();
-                    //replaceScreen(new GameScreen(),MoveMethod.OUT_DOWN);
-                    setScreen(new GameStartAVGScreen());
+                    replaceScreen(new WorldChooseScreen(),MoveMethod.FROM_UP);
+                    //setScreen(new WorldChooseScreen());
                 }
             }
         };
@@ -65,6 +65,7 @@ public class MainScreen extends Screen {
                 }
             }
         };
+        btnScoreboard.setVisible(false);//积分榜功能停用
         btnExit= new LPaper(MyAssets.BTN_EXIT){
             ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
             @Override

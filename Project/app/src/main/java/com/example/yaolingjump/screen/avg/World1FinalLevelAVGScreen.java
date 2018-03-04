@@ -1,4 +1,4 @@
-package com.example.yaolingjump.screen;
+package com.example.yaolingjump.screen.avg;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +9,7 @@ import com.example.yaolingjump.Macro.Macro;
 import com.example.yaolingjump.Macro.MyAssets;
 import com.example.yaolingjump.MainActivity;
 import com.example.yaolingjump.MusicService;
+import com.example.yaolingjump.screen.GameScreen;
 
 import loon.action.avg.AVGCG;
 import loon.action.avg.AVGDialog;
@@ -23,30 +24,28 @@ import loon.opengl.GLEx;
 import static android.content.Context.MODE_PRIVATE;
 
 /**
- * Created on 2018/2/25.
+ * Created on 2018/2/26.
  */
 
-public class GameStartAVGScreen extends AVGScreen {
+public class World1FinalLevelAVGScreen extends AVGScreen {
+    private GameScreen gs;
     private LPaper btnJump;
     private LPaper roleName;
     private int marginH=5;
     private int marginV=5;
-    public GameStartAVGScreen(){
-        super(MyAssets.SCRIPT_GAME_START, AVGDialog.getRMXPDialog(MyAssets.AVG_MESSAGE,
+    public World1FinalLevelAVGScreen(GameScreen gs){
+        super(MyAssets.SCRIPT_WORLD1_FINAL_LEVEL, AVGDialog.getRMXPDialog(MyAssets.AVG_MESSAGE,
                 460, 150));
+        this.gs= gs;
         setScrCG(new AVGCG(this));//不知道这是干啥的，但是AVGScreen鲁棒性不强，得自己new一个
     }
     @Override
     public boolean nextScript(String mes) {
         Log.i("yaoling1997","AVG mes:"+mes);
         if (roleName!=null){
-            if (AVG.YAOLING_NAME.equalsIgnoreCase(mes)){//右上角
+            if (AVG.YAOLING_NAME.equalsIgnoreCase(mes)){//左上角
                 roleName.setVisible(true);
                 roleName.setBackground(MyAssets.NAME_YAOLING);
-                roleName.setLocation(getWidth()-roleName.getWidth()+40,marginV);
-            }else if (AVG.JIANGXIAN_NAME.equalsIgnoreCase(mes)){//左上角
-                roleName.setVisible(true);
-                roleName.setBackground(MyAssets.NAME_JIANGXIAN);
                 roleName.setLocation(marginH,marginV);
             }else if (AVG.NO_NAME.equalsIgnoreCase(mes)){//不显示名字
                 roleName.setVisible(false);
@@ -85,7 +84,7 @@ public class GameStartAVGScreen extends AVGScreen {
         Log.i("yaoling1997","behind setScreen");
         close();
         AVGDialog.clear();
-        setScreen(new GameScreen());
+        setScreen(gs);
     }
 
     @Override
@@ -134,5 +133,6 @@ public class GameStartAVGScreen extends AVGScreen {
     public void pause() {
 
     }
+
 
 }

@@ -8,9 +8,12 @@ public class MapChar {
     public static final char EMPTY=' ';//空的格子
     public static final char HP_POTION_BLOCK='A';//HP药水问号砖
     public static final char BLOCK='B';//砖块
-    public static final char COIN_BLOCK='C';//金币砖
-    public static final char CHESTNUT_BLOCK='K';//板栗砖
+    public static final char COIN_BLOCK='C';//金币问号砖
+    public static final char CHESTNUT_BLOCK='K';//板栗问号砖
     public static final char EMPTY_BLOCK='I';//空的问号砖
+    public static final char JUMP_BOOTS_BLOCK='J'; //轻灵之靴问号砖
+    public static final char SPEED_BOOTS_BLOCK='S'; //疾行之靴问号砖
+    public static final char WAND_BLOCK='W';//魔杖问号砖
     public static final char GREEN_DOOR='G';//绿色门
     public static final char THORN='T';//地刺
     public static final char MOVE_BLOCK_UP='U';//一开始向上移动的砖块

@@ -2,21 +2,21 @@
 120
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 B                                                                                                                      B
-B     h                                                                        B t                                   n B
-B                                                                              B        BBBBB BBBBBBBBBBBBBBBBBGB B    B
-B                                                                   B         BBBBBBBBBBB   BBB                 BBBBBBBB
-B                                                                 B B B      BB                      t          B      B
+B     h                                                                          t                                   n B
+B                                                                              B        BBBBB  BBBBBBBBBBBBBBBBGB      B
+B                                                                   B         BBBBBBBBBBB   BBBB                BBBBBBBB
+B                                                                B  B  B     BB                      t          B      B
 B                                                           BBBBBBBBBBBBBBBBBB                       BBBBBBBBBBBB      B
 B       ook                                        B   k   BB            o o                BBBBBBBBBB                 B
-B     BBBBB                                     BBBBBBBBBBBB             o o               BBBBBBBBBB                  B
-B                  k                    B k B                                             BB                           B
+B     BBBBB                                      BBBBBBBBBBB             o o               BBBBBBBBBB                  B
+B                  k                    B k B                                             BB            W              B
 B                  o o                BBBBBBBBBB                          B o            BB               ooooo        B
-B             k                BBBBB                                        B o         BB                ooooo        B
-B                             BB                                              B        BB                              B
-B                       BCKC                      C                                   BB         BBBBBBBBBBBBBBBBBBBBBBB
+B             k                BBBBB                                        Bo          BB                ooooo        B
+B                             BB                                             B         BB        BBBBBBBBBBBBBBBBBBBBBBB
+B                       BCKC                      C                                   BB         B                     B
 B                  BBB                                           BBBBBBBB      B     BB                                B
-B                 BB                                       B      o     BCKCB     BKBB                                 B
-B    BCB     BCB                         B   oo       oo   B     o o             BBooooo                               B
-B                        BCBBBBBBB       B                 B      o          B BBB ooooo     B BCBCBCBCBCBCBCBCBCBCBCBKB
+B                 BB                                       B      o     BCKC      BKBB                                 B
+B    BCB     BCB         BCBBBBBBB       B   oo       oo   B     o o             BBooooo     B BCBCBCBCBCBCBCBCBCBCBCBKB
+B                                        B                 B      o          B     ooooo     B                         B
 B       k                             t  B     k      k    B                 B               B                        gB
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
