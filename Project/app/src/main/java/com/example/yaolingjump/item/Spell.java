@@ -31,7 +31,7 @@ public class Spell extends ActionObject {
         this.vx= vx;
         this.vy= vy;
         currentScale=0;
-        addScale=0.05f;
+        addScale=0.5f;
         flyTime=0;
         maxFlyTime=2000;
         if (vx<0)

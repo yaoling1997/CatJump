@@ -55,9 +55,10 @@ public class Hero extends JumpObject {
     public long maxImmuneColorChangeTime;//免疫状态下多久改变一次颜色时间
     public long maxImmuneTime;//最大免疫时间
 
+    public long stillTime=0;//连续静止时间
+
     public boolean isCastingSpell;//正在释放技能
     public boolean spellCreated=false;//该次施法是否产生魔法弹
-    public long stillTime=0;//连续静止时间
     public long castSpellTime=0;//释放技能时间
     public long spellCreatedTime=22*70;//魔法弹产生时间
     public float spellSpeed=8;//魔法弹飞行速度
@@ -259,6 +260,7 @@ public class Hero extends JumpObject {
     }
     public void forbidSpell(){//使英雄不可以使用技能
         canCastSpell=false;
+        resetCastingSpell();
         gs.canCastSpell=false;
         if (gs.btnSpell!=null)
             gs.btnSpell.setVisible(false);

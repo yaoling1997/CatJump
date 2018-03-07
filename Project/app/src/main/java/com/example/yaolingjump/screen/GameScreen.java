@@ -1,7 +1,6 @@
 package com.example.yaolingjump.screen;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.yaolingjump.Hero;
@@ -16,7 +15,9 @@ import com.example.yaolingjump.enemy.Chestnut;
 import com.example.yaolingjump.enemy.Enemy;
 import com.example.yaolingjump.enemy.FireBoss;
 import com.example.yaolingjump.enemy.Tortoise;
+import com.example.yaolingjump.item.Block;
 import com.example.yaolingjump.item.Coin;
+import com.example.yaolingjump.item.Door;
 import com.example.yaolingjump.item.Emplacement;
 import com.example.yaolingjump.item.Fire;
 import com.example.yaolingjump.item.HpPotion;
@@ -28,6 +29,7 @@ import com.example.yaolingjump.item.SpeedBoots;
 import com.example.yaolingjump.item.Spell;
 import com.example.yaolingjump.item.Thorn;
 import com.example.yaolingjump.item.Wand;
+import com.example.yaolingjump.item.WorldBackground;
 
 import java.util.ArrayList;
 
@@ -41,8 +43,6 @@ import loon.action.sprite.Animation;
 import loon.action.sprite.JumpObject;
 import loon.action.sprite.SpriteBatch;
 import loon.action.sprite.SpriteBatchScreen;
-import loon.canvas.LColor;
-import loon.component.LPad;
 import loon.component.LPaper;
 import loon.event.ActionKey;
 import loon.event.GameKey;
@@ -50,7 +50,6 @@ import loon.event.GameTouch;
 import loon.event.SysKey;
 import loon.geom.Vector2f;
 
-import static android.content.Context.MODE_PRIVATE;
 import static java.lang.Math.abs;
 
 /**
@@ -61,14 +60,22 @@ public class GameScreen extends SpriteBatchScreen {
     public static final int gridLength=35;
     public static final int maxSpeed=20;//物品运动速度不能超过每帧多少像素
     public static final int coinToHP=100;//100个硬币换一条命
+
+    private int margin=10;//组件间距离
+
     private static final int initHP=3;
     private TileMap tileMap;//绘制的地图
     public Hero hero;//玩家控制的主角
 
     private Animation emptyAnimation;//空动画(无奈用它的引擎必须要往构造函数里丢动画)
     private Animation backgroundAnimation;//背景动画
-    private LPad pad;//玩家控制的键盘
+
+    public LPaper btnUp;//上按钮
+    public LPaper btnDown;//下按钮
+    public LPaper btnLeft;//左按钮
+    public LPaper btnRight;//右按钮
     public LPaper btnSpell;//一个圆形按钮
+
     private int score=0;//得分
     private int coin=0;//收集的硬币数
     private int HP=0;//角色当前生命值
@@ -85,15 +92,20 @@ public class GameScreen extends SpriteBatchScreen {
     public boolean jumperTwo;
 
     public GameScreen() {
+        if (MainActivity.mainActivity!=null){
+            MainActivity.gs=this;
+        }
         HP=initHP;
         score=0;
         maps= new ArrayList<>();
         //maps.add(MyAssets.MAPS[2]);
         for (int i=0;i<MyAssets.MAPS.length;i++)
             maps.add(MyAssets.MAPS[i]);
+
         canCastSpell=false;
         isDoubleSpeed=false;
         jumperTwo=false;
+
     }
 
     @Override
@@ -175,6 +187,8 @@ public class GameScreen extends SpriteBatchScreen {
         else {//通关了
             return;
         }
+        WorldBackground w=new WorldBackground(0,0,emptyAnimation,tileMap);
+        add(w);
         //哪些地方不能走
         tileMap.setLimit(new int[]{
                 MapChar.BLOCK,
@@ -182,9 +196,6 @@ public class GameScreen extends SpriteBatchScreen {
                 MapChar.COIN_BLOCK,
                 MapChar.CHESTNUT_BLOCK,
                 MapChar.EMPTY_BLOCK,
-                MapChar.GREEN_DOOR,
-                MapChar.YELLOW_DOOR,
-                MapChar.THORN,
                 MapChar.WAND_BLOCK,
                 MapChar.JUMP_BOOTS_BLOCK,
                 MapChar.SPEED_BOOTS_BLOCK
@@ -199,8 +210,6 @@ public class GameScreen extends SpriteBatchScreen {
         tileMap.putTile(MapChar.JUMP_BOOTS_BLOCK,tmp);
         tileMap.putTile(MapChar.SPEED_BOOTS_BLOCK,tmp);
         tileMap.putTile(MapChar.EMPTY_BLOCK,MyAssets.EMPTY_BLOCK);
-        tileMap.putTile(MapChar.GREEN_DOOR,MyAssets.GREEN_DOOR);
-        tileMap.putTile(MapChar.YELLOW_DOOR,MyAssets.YELLOW_DOOR);
         //获得地图对应的二维数组
         int [][]indexMap=tileMap.getMap();
         int colNum=tileMap.getRow();//得到宽度，列数
@@ -224,6 +233,25 @@ public class GameScreen extends SpriteBatchScreen {
 
         for (int i=0;i<rowNum;i++)
             for (int j=0;j<colNum;j++) {
+                if (indexMap[i][j]==MapChar.BLOCK){//将那些被背景遮住的砖块再画一遍，渣渣LGame
+                    add(new Block(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
+                            new Animation(emptyAnimation),tileMap,MyAssets.BLOCK));
+                }else if (
+                        indexMap[i][j]==MapChar.HP_POTION_BLOCK||
+                        indexMap[i][j]==MapChar.COIN_BLOCK||
+                        indexMap[i][j]==MapChar.CHESTNUT_BLOCK||
+                        indexMap[i][j]==MapChar.WAND_BLOCK||
+                        indexMap[i][j]==MapChar.JUMP_BOOTS_BLOCK||
+                        indexMap[i][j]==MapChar.SPEED_BOOTS_BLOCK||
+                        indexMap[i][j]==MapChar.WAND_BLOCK
+                        ){
+                    add(new Block(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
+                            new Animation(emptyAnimation),tileMap,MyAssets.QUESTION_BLOCK));
+                }else if (indexMap[i][j]==MapChar.EMPTY_BLOCK){
+                    add(new Block(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
+                            new Animation(emptyAnimation),tileMap,MyAssets.EMPTY_BLOCK));
+                }
+
                 switch (indexMap[i][j]) {
                     case MapChar.COIN:
                         Coin coin= new Coin(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
@@ -300,6 +328,16 @@ public class GameScreen extends SpriteBatchScreen {
                                 new Animation(emptyAnimation),tileMap,this);
                         addHardItem(emplacement);
                         break;
+                    case MapChar.GREEN_DOOR:
+                        Door greenDoor= new Door(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
+                                new Animation(emptyAnimation),tileMap,MapChar.GREEN_KEY);//记住是带对应钥匙的颜色
+                        addHardItem(greenDoor);
+                        break;
+                    case MapChar.YELLOW_DOOR:
+                        Door yellowDoor= new Door(tileMap.tilesToPixelsX(j),tileMap.tilesToPixelsY(i),
+                                new Animation(emptyAnimation),tileMap,MapChar.YELLOW_KEY);
+                        addHardItem(yellowDoor);
+                        break;
                 }
             }
     }
@@ -342,12 +380,12 @@ public class GameScreen extends SpriteBatchScreen {
         };
         addActionKey(SysKey.RIGHT, goRightKey);
         // 对应跳跃的键盘事件（DETECT_INITIAL_PRESS_ONLY表示在放开之前，此按键不会再次触发）
-        ActionKey jumpKey = new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY) {
-            public void act(long e) {
-                hero.jump();
-            }
-        };
-        addActionKey(SysKey.UP, jumpKey);
+//        ActionKey jumpKey = new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY) {
+//            public void act(long e) {
+//                hero.jump();
+//            }
+//        };
+//        addActionKey(SysKey.UP, jumpKey);
         // 对应向右行走的键盘事件
         ActionKey downKey= new ActionKey(){
             @Override
@@ -359,38 +397,23 @@ public class GameScreen extends SpriteBatchScreen {
     }
 
     private void initPad(){//初始化玩家操控的键盘
-        pad= new LPad(10,180);
-        pad.setListener(new LPad.ClickListener() {
-            @Override
-            public void up() {
-                pressActionKey(SysKey.UP);
-            }
-            @Override
-            public void down() {
-                pressActionKey(SysKey.DOWN);
-            }
-            @Override
-            public void left() {
-                pressActionKey(SysKey.LEFT);
-            }
-            @Override
-            public void right() {
-                pressActionKey(SysKey.RIGHT);
-            }
-            @Override
-            public void other() {
-                releaseActionKeys();
-                hero.setDown(false);
-            }
-        });
-        add(pad);
-        btnSpell= new LPaper(MyAssets.BTN_SPELL){
-            @Override
-            public void doClick() {
-                hero.castSpell();
-            }
-        };
-        btnSpell.setLocation(getWidth()-10-btnSpell.getWidth(),pad.getY()+pad.getHeight()/2-btnSpell.height()/2);
+
+        btnUp= new LPaper(MyAssets.BTN_UP);
+        btnUp.setLocation(getWidth()-btnUp.getWidth()-margin,180);
+        add(btnUp);
+        btnDown= new LPaper(MyAssets.BTN_DOWN);
+        btnDown.setLocation(btnUp.getX(),btnUp.getY()+btnUp.getHeight()+2*margin);
+        add(btnDown);
+
+        btnLeft= new LPaper(MyAssets.BTN_LEFT);
+        btnLeft.setLocation(margin,btnUp.getY()+btnUp.getHeight()-btnLeft.getHeight()/2+2*margin/2);
+        add(btnLeft);
+        btnRight= new LPaper(MyAssets.BTN_RIGHT);
+        btnRight.setLocation(btnLeft.getX()+btnLeft.getWidth()+2*margin,btnLeft.getY());
+        add(btnRight);
+
+        btnSpell= new LPaper(MyAssets.BTN_SPELL);
+        btnSpell.setLocation(btnUp.getX()-btnSpell.getWidth()-margin,btnLeft.getY()+btnLeft.getHeight()/2-btnSpell.getHeight()/2);
         btnSpell.setVisible(false);
         add(btnSpell);
     }
@@ -405,15 +428,18 @@ public class GameScreen extends SpriteBatchScreen {
 
     @Override
     public void create() {
+        if (MainActivity.mainActivity!=null) {
+            MainActivity.mainActivity.padLeft.setClickable(true);
+            MainActivity.mainActivity.padRight.setClickable(true);
+        }
         applyPrefs();
-        //setBackground("assets/game_background.jpg");
-        enemyManager= new ArrayList<>();
+        enemyManager = new ArrayList<>();
         hardItemManager = new ArrayList<>();
         initAnimation();
         initPad();
         initMap();
         //putReleases(coinAnimation,enemyAnimation);
-        setBackground(LColor.black);
+        Log.i("yaoling1997","background:"+getBackground());
         //加载地图
         putTileMap(tileMap);
         // 让地图跟随指定对象产生移动（无论插入有多少张数组地图，此跟随默认对所有地图生效）
@@ -544,25 +570,24 @@ public class GameScreen extends SpriteBatchScreen {
 
     public void openDoor(char color){
         Log.i("yaoling1997","openDoor color:"+color);
-        int [][]indexMap=tileMap.getMap();
-        int colNum=tileMap.getRow();//得到宽度，列数
-        int rowNum=tileMap.getCol();//得到高度，行数
-        Log.i("yaoling1997","rowNum"+rowNum);
-        Log.i("yaoling1997","colNum"+colNum);
-        //添加物品到窗体
-        for (int i=0;i<rowNum;i++)
-            for (int j=0;j<colNum;j++) {
-                if (indexMap[i][j]-'A'+'a'==(int)color) {
-                    tileMap.setTileID(j,i,MapChar.EMPTY);
-                    // 标注地图已脏，强制缓存刷新
-                    tileMap.setDirty(true);
-                }
+        ArrayList<ActionObject> removeItemManager= new ArrayList<>();//一轮判断后哪些物品要移走
+        for (ActionObject e:hardItemManager)
+            if (e instanceof Door){
+                Door u=(Door)e;
+                if (u.color==color)
+                    removeItemManager.add(e);
             }
+        for (ActionObject e:removeItemManager) {
+            Log.i("yaoling1997","removeDoor successful");
+            removeHardItem(e);
+        }
     }
     public void hitBlock(int x,int y){
         switch (tileMap.getTileID(x,y)){
             case MapChar.HP_POTION_BLOCK:
                 tileMap.setTileID(x,y,MapChar.EMPTY_BLOCK);
+                add(new Block(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y),
+                        new Animation(emptyAnimation),tileMap,MyAssets.EMPTY_BLOCK));
                 HpPotion hpPotion= new HpPotion(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y-1),
                         new Animation(emptyAnimation),tileMap);
                 addTileObject(hpPotion);
@@ -571,6 +596,8 @@ public class GameScreen extends SpriteBatchScreen {
                 break;
             case MapChar.COIN_BLOCK:
                 tileMap.setTileID(x,y,MapChar.EMPTY_BLOCK);
+                add(new Block(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y),
+                        new Animation(emptyAnimation),tileMap,MyAssets.EMPTY_BLOCK));
                 Coin coin= new Coin(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y-1),
                         new Animation(emptyAnimation),tileMap);
                 addTileObject(coin);
@@ -579,6 +606,8 @@ public class GameScreen extends SpriteBatchScreen {
                 break;
             case MapChar.CHESTNUT_BLOCK:
                 tileMap.setTileID(x,y,MapChar.EMPTY_BLOCK);
+                add(new Block(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y),
+                        new Animation(emptyAnimation),tileMap,MyAssets.EMPTY_BLOCK));
                 Chestnut chestnut= new Chestnut(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y-1),
                         new Animation(emptyAnimation),tileMap);
                 addEnemy(chestnut);
@@ -587,6 +616,8 @@ public class GameScreen extends SpriteBatchScreen {
                 break;
             case MapChar.WAND_BLOCK:
                 tileMap.setTileID(x,y,MapChar.EMPTY_BLOCK);
+                add(new Block(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y),
+                        new Animation(emptyAnimation),tileMap,MyAssets.EMPTY_BLOCK));
                 Wand wand= new Wand(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y-1),
                         new Animation(emptyAnimation),tileMap);
                 addTileObject(wand);
@@ -595,6 +626,8 @@ public class GameScreen extends SpriteBatchScreen {
                 break;
             case MapChar.JUMP_BOOTS_BLOCK:
                 tileMap.setTileID(x,y,MapChar.EMPTY_BLOCK);
+                add(new Block(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y),
+                        new Animation(emptyAnimation),tileMap,MyAssets.EMPTY_BLOCK));
                 JumpBoots jumpBoots= new JumpBoots(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y-1),
                         new Animation(emptyAnimation),tileMap);
                 addTileObject(jumpBoots);
@@ -603,6 +636,8 @@ public class GameScreen extends SpriteBatchScreen {
                 break;
             case MapChar.SPEED_BOOTS_BLOCK:
                 tileMap.setTileID(x,y,MapChar.EMPTY_BLOCK);
+                add(new Block(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y),
+                        new Animation(emptyAnimation),tileMap,MyAssets.EMPTY_BLOCK));
                 SpeedBoots speedBoots= new SpeedBoots(tileMap.tilesToPixelsX(x),tileMap.tilesToPixelsY(y-1),
                         new Animation(emptyAnimation),tileMap);
                 addTileObject(speedBoots);
@@ -620,7 +655,13 @@ public class GameScreen extends SpriteBatchScreen {
             return;
         addHP(-1);
         releaseActionKeys();
-        pad.setListener(null);
+        btnUp.setEnabled(false);
+        btnDown.setEnabled(false);
+        btnLeft.setEnabled(false);
+        btnRight.setEnabled(false);
+
+        //padLeft.setListener(null);
+
         follow(null);
 
         hero.dead();
@@ -845,11 +886,33 @@ public class GameScreen extends SpriteBatchScreen {
             return ry;//b纵向移动
         }
     }
-
+    private void adjustLocations(ActionObject e){
+        //处理移动砖块
+        if (e.isCollision(hero)){
+            int r= adjustLocation(e,hero);
+            if (r==1||r==3)
+                hero.setVx(0);
+            else if (r==0){
+                hero.setVy(0);
+                hero.setForceJump(true);
+            }else{//1
+                hero.setVy(0);
+            }
+        }
+        for (Enemy v:enemyManager)
+            if (e.isCollision(v)){
+                int r= adjustLocation(e,v);
+                if (r==1||r==3)
+                    v.vx=-v.vx;
+                else//0,2
+                    v.vy= 0;
+            }
+    }
     private void dealHardItemManager(){
         ArrayList<ActionObject> removeItemManager= new ArrayList<>();//一轮判断后哪些物品要移走
         for (ActionObject e:hardItemManager)
             if (e instanceof Thorn){
+                adjustLocations(e);
                 //处理地刺
                 Thorn thorn= (Thorn)e;
                 float y2=hero.getY()+hero.getHeight();
@@ -857,27 +920,9 @@ public class GameScreen extends SpriteBatchScreen {
                     if (hero.getX()<e.getX()+e.getWidth()-10&&e.getX()+10<hero.getX()+hero.getWidth())
                         damage();
             }else if (e instanceof MoveBlock||
-                    e instanceof Emplacement){
-                //处理移动砖块
-                if (e.isCollision(hero)){
-                    int r= adjustLocation(e,hero);
-                    if (r==1||r==3)
-                        hero.setVx(0);
-                    else if (r==0){
-                        hero.setVy(0);
-                        hero.setForceJump(true);
-                    }else{//1
-                        hero.setVy(0);
-                    }
-                }
-                for (Enemy v:enemyManager)
-                    if (e.isCollision(v)){
-                        int r= adjustLocation(e,v);
-                        if (r==1||r==3)
-                            v.vx=-v.vx;
-                        else//0,2
-                            v.vy= 0;
-                    }
+                    e instanceof Emplacement||
+                    e instanceof Door){
+                adjustLocations(e);
             }else if(e instanceof Fire){
                 Vector2f tile= tileMap.getTileCollision(e,e.getX(),e.getY());
                 if (tile!=null) {
@@ -911,6 +956,7 @@ public class GameScreen extends SpriteBatchScreen {
 
     @Override
     public void update(long l) {
+
         if (hero!=null){
             hero.stop();
         }

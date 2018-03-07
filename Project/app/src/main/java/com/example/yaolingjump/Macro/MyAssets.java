@@ -33,6 +33,10 @@ public class MyAssets {//管理assets文件夹里的资源
     public static final String BTN_ABOUT ="assets/about.png";
     public static final String BTN_EXIT ="assets/btn/btn_exit.png";
     public static final String BTN_BACK ="assets/btn/btn_back.png";
+    public static final String BTN_UP ="assets/btn/btn_up.png";
+    public static final String BTN_DOWN ="assets/btn/btn_down.png";
+    public static final String BTN_LEFT ="assets/btn/btn_left.png";
+    public static final String BTN_RIGHT ="assets/btn/btn_right.png";
     public static final String BTN_RESET ="assets/btn/btn_reset.png";
     public static final String BTN_CONFIRM ="assets/btn/btn_confrim.png";
     public static final String BTN_CANCEL ="assets/btn/btn_cancel.png";
@@ -76,7 +80,8 @@ public class MyAssets {//管理assets文件夹里的资源
     public static final String SCOREBOARD_BACKGROUND ="assets/background/scoreboard_background.png";
     public static final String GAME_BACKGROUND="assets/background/game_background.jpg";
     public static final String MAIN_SCREEN_BACKGROUND="assets/background/main_screen_background.png";
-    public static final String SCOREBOARD_SCREEN_BACKGROUND="assets/background/scoreboard_screen_background.png";
+    public static final String WORLD1_CHOOSE_BACKGROUND="assets/background/world1_choose_background.png";
+    public static final String WORLD2_CHOOSE_BACKGROUND="assets/background/world2_choose_background.png";
 
     public static final String []MAPS= {
             "assets/map/map1_1.txt",//0
@@ -99,7 +104,7 @@ public class MyAssets {//管理assets文件夹里的资源
     public static final String NAME_FIRE_BOSS="assets/avg/name/fire_boss.png";
     public static final String NAME_DESIGNER="assets/avg/name/designer.png";
 
-    public static final String UNDERGROUND_CITY = "assets/world/underground_city.png";
+    public static final String WORLD1_BACKGROUND="assets/avg/background/world1_background.png";
 
     public static final String WELCOME_BG_MUSIC = "background_music/welcome_bg_music.mp3";
     public static final String BATTLE_BG_MUSIC = "background_music/battle_bg_music.mp3";

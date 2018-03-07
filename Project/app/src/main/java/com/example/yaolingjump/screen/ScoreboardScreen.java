@@ -46,7 +46,7 @@ public class ScoreboardScreen extends Screen {
 
     private void initViews(){
         //background= new LPaper(MyAssets.SCOREBOARD_SCREEN_BACKGROUND);
-        background= new LPaper(MyAssets.SCOREBOARD_SCREEN_BACKGROUND);
+        background= new LPaper(MyAssets.MAIN_SCREEN_BACKGROUND);
         add(background);
         title= new LPaper(MyAssets.SCOREBOARD_SCREEN_TITLE);
         title.setLocation(getWidth()/2-title.getWidth()/2,margin);

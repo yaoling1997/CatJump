@@ -61,6 +61,10 @@ public class RestartScreen extends SpriteBatchScreen {
 
     @Override
     public void create() {
+        if (MainActivity.mainActivity!=null) {
+            MainActivity.mainActivity.padLeft.setClickable(false);
+            MainActivity.mainActivity.padRight.setClickable(false);
+        }
         tim=0;
         info= new LPaper(MyAssets.INFO_BACKGROUND){
             @Override
@@ -124,8 +128,9 @@ public class RestartScreen extends SpriteBatchScreen {
                 }else {//死了但是还有命，重玩本关或者通过本关玩下一关
                     if (gs.maps.get(0).equals(MyAssets.MAPS[4]))//若下一关是world1最后一关
                         setScreen(new World1FinalLevelAVGScreen(gs));
-                    else
+                    else {
                         setScreen(gs);
+                    }
                 }
             }
         }

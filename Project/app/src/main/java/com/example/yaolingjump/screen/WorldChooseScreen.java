@@ -19,6 +19,8 @@ public class WorldChooseScreen extends Screen {
     private LPaper background;//充当背景，直接setbackground在界面切换的时候有可能背景显示不出来(游戏引擎的bug我猜)
     private LPaper title;
     private LPaper undergroundCity;
+    private LPaper btnLeft;
+    private LPaper btnRight;
     private LPaper btnBack;
     @Override
     public void draw(GLEx glEx) {
@@ -26,13 +28,13 @@ public class WorldChooseScreen extends Screen {
     }
 
     private void initViews(){
-        background= new LPaper(MyAssets.SCOREBOARD_SCREEN_BACKGROUND);
+        background= new LPaper(MyAssets.MAIN_SCREEN_BACKGROUND);
         add(background);
         title= new LPaper(MyAssets.WORLD_CHOOSE_SCREEN_TITLE);
         title.setLocation(getWidth()/2-title.getWidth()/2,margin);
         add(title);
 
-        undergroundCity = new LPaper(MyAssets.UNDERGROUND_CITY){
+        undergroundCity = new LPaper(MyAssets.WORLD1_CHOOSE_BACKGROUND){
             ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
             @Override
             public void doClick() {
@@ -43,8 +45,35 @@ public class WorldChooseScreen extends Screen {
                 }
             }
         };
-        undergroundCity.setLocation(margin,title.getY()+title.getHeight()+margin);
+        undergroundCity.setLocation(getWidth()/2-undergroundCity.getWidth()/2,title.getY()+title.getHeight()+margin);
+        //undergroundCity.setLocation(getWidth()/2-undergroundCity.getWidth()/2,2*margin);
         add(undergroundCity);
+
+        btnLeft = new LPaper(MyAssets.BTN_LEFT){
+            ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
+            @Override
+            public void doClick() {
+                if (!action.isPressed()){
+                    action.press();
+                    /*有待完善*/
+                }
+            }
+        };
+        btnLeft.setLocation(margin,getHeight()/2-btnLeft.getHeight()/2);
+        add(btnLeft);
+
+        btnRight = new LPaper(MyAssets.BTN_RIGHT){
+            ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
+            @Override
+            public void doClick() {
+                if (!action.isPressed()){
+                    action.press();
+                    /*有待完善*/
+                }
+            }
+        };
+        btnRight.setLocation(getWidth()-btnRight.getWidth()-margin,getHeight()/2-btnRight.getHeight()/2);
+        add(btnRight);
 
         btnBack = new LPaper(MyAssets.BTN_BACK){
             ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
