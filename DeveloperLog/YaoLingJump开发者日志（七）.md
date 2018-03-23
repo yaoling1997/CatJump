@@ -10,3 +10,7 @@
 
 &emsp;&emsp;没办法，又得另起灶台，我费了好大劲用android原生组件给它实现了，现在玩起来顺畅多了。
 <img src="https://i.loli.net/2018/03/07/5a9fe20b38010.gif" alt="2_clip.gif" title="2_clip.gif" />
+
+&emsp;&emsp;由于二级跳撞到天花板貌似有掉帧的问题，我想把轻盈之靴的能力从原来的使瑶玲可以二级跳变成让瑶玲能够跳得更高。但是LGame的开发者把jumpSpeed这个属性设置为private而且还没有set方法，真的无语...
+<img src="https://i.loli.net/2018/03/08/5aa0f9af37078.png" alt="1.png" title="1.png" />
+&emsp;&emsp;没办法，只好把里面的代码扣出来弄一个MyJumpObject再把jumpSpeed属性设置为protected。

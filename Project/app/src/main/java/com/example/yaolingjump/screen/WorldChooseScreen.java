@@ -3,6 +3,8 @@ package com.example.yaolingjump.screen;
 import com.example.yaolingjump.Macro.MyAssets;
 import com.example.yaolingjump.screen.avg.GameStartAVGScreen;
 
+import java.util.ArrayList;
+
 import loon.Screen;
 import loon.component.LPaper;
 import loon.event.ActionKey;
@@ -19,22 +21,19 @@ public class WorldChooseScreen extends Screen {
     private LPaper background;//充当背景，直接setbackground在界面切换的时候有可能背景显示不出来(游戏引擎的bug我猜)
     private LPaper title;
     private LPaper undergroundCity;
-    private LPaper btnLeft;
-    private LPaper btnRight;
+    private LPaper underseaWorld;
+    private LPaper btnPreviousPage;
+    private ArrayList<LPaper> worldManager= new ArrayList<>();
+    private LPaper btnNextPage;
     private LPaper btnBack;
+    private int chosenWorld=0;//当前显示的世界
     @Override
     public void draw(GLEx glEx) {
 
     }
 
-    private void initViews(){
-        background= new LPaper(MyAssets.MAIN_SCREEN_BACKGROUND);
-        add(background);
-        title= new LPaper(MyAssets.WORLD_CHOOSE_SCREEN_TITLE);
-        title.setLocation(getWidth()/2-title.getWidth()/2,margin);
-        add(title);
-
-        undergroundCity = new LPaper(MyAssets.WORLD1_CHOOSE_BACKGROUND){
+    private LPaper addWorld(String s){
+        LPaper re = new LPaper(s){
             ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
             @Override
             public void doClick() {
@@ -45,35 +44,66 @@ public class WorldChooseScreen extends Screen {
                 }
             }
         };
-        undergroundCity.setLocation(getWidth()/2-undergroundCity.getWidth()/2,title.getY()+title.getHeight()+margin);
+        re.setLocation(getWidth()/2-re.getWidth()/2,title.getY()+title.getHeight()+margin);
         //undergroundCity.setLocation(getWidth()/2-undergroundCity.getWidth()/2,2*margin);
-        add(undergroundCity);
+        re.setVisible(false);
+        add(re);
+        worldManager.add(re);
+        return re;
+    }
+    private void showChosenWorld(){
+        if (chosenWorld<0||chosenWorld>=worldManager.size())
+            return;
+        worldManager.get(chosenWorld).setVisible(true);
+        for (int i=0;i<worldManager.size();i++)
+            if (i!=chosenWorld)
+                worldManager.get(i).setVisible(false);
+    }
+    private void updateChosenWorld(int o){
+        if (o<0||o>=worldManager.size())
+            return;
+        chosenWorld=o;
+        showChosenWorld();
+    }
+    private void initViews(){
+        background= new LPaper(MyAssets.MAIN_SCREEN_BACKGROUND);
+        add(background);
+        title= new LPaper(MyAssets.WORLD_CHOOSE_SCREEN_TITLE);
+        title.setLocation(getWidth()/2-title.getWidth()/2,margin);
+        add(title);
 
-        btnLeft = new LPaper(MyAssets.BTN_LEFT){
+        undergroundCity = addWorld(MyAssets.WORLD1_CHOOSE_BACKGROUND);
+        underseaWorld = addWorld(MyAssets.WORLD2_CHOOSE_BACKGROUND);
+
+        btnPreviousPage = new LPaper(MyAssets.BTN_PREVIOUS_PAGE){
             ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
             @Override
             public void doClick() {
                 if (!action.isPressed()){
                     action.press();
-                    /*有待完善*/
+                    if (chosenWorld>0){
+                        updateChosenWorld(chosenWorld-1);
+                    }
                 }
             }
         };
-        btnLeft.setLocation(margin,getHeight()/2-btnLeft.getHeight()/2);
-        add(btnLeft);
+        btnPreviousPage.setLocation(margin,getHeight()/2- btnPreviousPage.getHeight()/2);
+        add(btnPreviousPage);
 
-        btnRight = new LPaper(MyAssets.BTN_RIGHT){
+        btnNextPage = new LPaper(MyAssets.BTN_NEXT_PAGE){
             ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
             @Override
             public void doClick() {
                 if (!action.isPressed()){
                     action.press();
-                    /*有待完善*/
+                    if (chosenWorld<worldManager.size()-1){
+                        updateChosenWorld(chosenWorld+1);
+                    }
                 }
             }
         };
-        btnRight.setLocation(getWidth()-btnRight.getWidth()-margin,getHeight()/2-btnRight.getHeight()/2);
-        add(btnRight);
+        btnNextPage.setLocation(getWidth()- btnNextPage.getWidth()-margin,getHeight()/2- btnNextPage.getHeight()/2);
+        add(btnNextPage);
 
         btnBack = new LPaper(MyAssets.BTN_BACK){
             ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);
@@ -93,6 +123,7 @@ public class WorldChooseScreen extends Screen {
     @Override
     public void onLoad() {
         initViews();
+        showChosenWorld();
     }
 
     @Override

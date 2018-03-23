@@ -34,7 +34,7 @@ bool isBlock(char c){
 int main()
 {
 #ifndef ONLINE_JUDGE	
-	freopen("map1_4.txt","r",stdin);
+	freopen("map1_5.txt","r",stdin);
 	freopen("mapCheck.out","w",stdout);
 #endif
 	scanf("%d%d\n",&n,&m);
@@ -60,8 +60,8 @@ int main()
 				if (i>2){
 					if (!isBlock(s[i-1][j])&&
 							(isBlock(s[i-2][j])||
-							 isBlock(s[i-2][j-1]&&!isBlock(s[i-1][j-1]))||
-							 isBlock(s[i-2][j+1]&&!isBlock(s[i-1][j+1]))
+							 (isBlock(s[i-2][j-1])&&!isBlock(s[i-1][j-1]))||
+							 (isBlock(s[i-2][j+1])&&!isBlock(s[i-1][j+1]))
 							 )
 							){
 						printf("%d %d\n",i, j);

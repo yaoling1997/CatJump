@@ -2,19 +2,19 @@
 60
 BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
 B               BBBBBBBBBB                                 B
-B               BBBBBBBBBB                                 B
-B h             BBBBBBBBBB  ooo                K        n  B
+B h             BBBBBBBBBB                                 B
+B               BBBBBBBBBB  ooo                K        n  B
 B BBB          kBBB         ooo                            B
 B       BBBBBBBBBBB         BBBBBB                    BBBBBB
 B     BBBB         Jooooo       aB    BBBBBBBBB   U     oo B
 Bo BCCBooB          ooooo        B             B  UU    oo B
 Bo     ooB                       B                    B   tB
-BB      B           BBBBBB  BBBB BBBBB      BK       BBBBBBB
-BBBB  BB                 BTTB        ooo   C    DDD     oo B
+BB      B           BBBBBB  BBBB BBBBB     CBK       BBBBBBB
+BBBB  BB                 BTTB        ooo        DDD     oo B
 Boo  Boo                     ooo                        oo B
 Boo  B         ooo       ooo     B          BBB       B   kB
 Boo   C    B        ooo               BB             BBBBBBB
-Boo                          BBB     BB   B         B   oo B
+Boo                          BBB     BB   B             oo B
 B  B    B                             B   B             oo B
 BTTBBBBBB BBB  BBB       BBB     BBB  BBBBB           B    B
 B oooo              BBB                   B          BBBBBBB

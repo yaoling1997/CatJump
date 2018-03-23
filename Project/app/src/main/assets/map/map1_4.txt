@@ -9,17 +9,17 @@ B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBooo     oo                    n B
 B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBB                                B
 B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB     LLLLLLLL         BBBBBBBB
 B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBB     b                  BB      B
-B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBB                 UUUU           B
-B                  BBBBBBBBBBBBBBBBBBBBBBBBBBB                                 B
+B                  BBBBBBBBBBBBBBBBBBBBBBBBBBBB                 UU             B
+B                  BBBBBBBBBBBBBBBBBBBBBBBBBBB                   UU            B
 B                  BBBBBBBBBBBBBBBBBBBBB oooo                       RR         B
 B                  BBBBBBBBBBBBBBBBBBBBB oooo                                  B
 B                  BBBBBBBBBBBBBBBBBBBBBB                                      B
 B                  BB        oooo       BBBBBBB                                B
 B                  B                          B     b  b  b  b           UUU   B
 B                  B   C  C  C  C  C  C       B  b    b  b   b                 B
-B                  B                          BTT   k          t   B   B  t    B
-B                  Bkkkkkkkkkkkkkkkkkkkk  TB  B  BBBBBBBBBBBBBBBBBBB   BBBBBBBYB
-B                  GBBBBBBBBBBBBBBBBBBBBBBBB  B o                      Bo      B
+B                  G                          BTT   k          t   B   B  t    B
+B                  Gkkkkkkkkkkkkkkkkkkkk  TB  B  BBBBBBBBBBBBBBBBBBB   BBBBBBBYB
+B                  BBBBBBBBBBBBBBBBBBBBBBBBB  B o                      Bo      B
 B               BBBBB              B          B o                      Bo      B
 B             CBB                  B          B o                      Bo     SB
 B         B                 CC ooooB  BBBBBBBBB o                   UUUBoB     B

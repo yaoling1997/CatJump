@@ -38,6 +38,8 @@ public class MyAssets {//管理assets文件夹里的资源
     public static final String BTN_LEFT ="assets/btn/btn_left.png";
     public static final String BTN_RIGHT ="assets/btn/btn_right.png";
     public static final String BTN_RESET ="assets/btn/btn_reset.png";
+    public static final String BTN_PREVIOUS_PAGE ="assets/btn/btn_previous_page.png";
+    public static final String BTN_NEXT_PAGE ="assets/btn/btn_next_page.png";
     public static final String BTN_CONFIRM ="assets/btn/btn_confrim.png";
     public static final String BTN_CANCEL ="assets/btn/btn_cancel.png";
     public static final String BTN_JUMP ="assets/btn/btn_jump.png";

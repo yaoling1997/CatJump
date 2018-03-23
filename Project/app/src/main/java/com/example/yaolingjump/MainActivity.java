@@ -110,13 +110,9 @@ public class MainActivity extends Loon{
                     Log.i("yaoling1997","btnUp location:("+gs.btnUp.getX()/gs.getWidth()+","+gs.btnUp.getY()/gs.getHeight()+")");
                     if (gs.btnUp!=null&&isHit(gs.btnUp,x,y)){
                         Log.i("yaoling1997", "gs.btnUp");
-                        if (action==MotionEvent.ACTION_DOWN||
-                                action==MotionEvent.ACTION_POINTER_DOWN||
-                                action==MotionEvent.ACTION_POINTER_2_DOWN) {
-                            //gs.pressActionKey(SysKey.UP);
-                            Log.i("yaoling1997", "gs.hero.jump()");
-                            gs.hero.jump();
-                        }
+                        //gs.pressActionKey(SysKey.UP);
+                        Log.i("yaoling1997", "gs.hero.jump()");
+                        gs.hero.jump();
                         return super.onTouchEvent(event);
                     }else if (gs.btnDown!=null&&isHit(gs.btnDown,x,y)){
                         gs.releaseActionKeys();

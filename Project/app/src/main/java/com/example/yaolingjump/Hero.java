@@ -10,7 +10,6 @@ import com.example.yaolingjump.screen.GameScreen;
 import loon.action.map.TileMap;
 import loon.action.sprite.ActionObject;
 import loon.action.sprite.Animation;
-import loon.action.sprite.JumpObject;
 import loon.canvas.LColor;
 
 import static java.lang.Math.max;
@@ -20,7 +19,7 @@ import static java.lang.Math.min;
  * Created on 2018/2/16.
  */
 
-public class Hero extends JumpObject {
+public class Hero extends MyJumpObject {
     public static final int stillWidth =28;
     public static final int stillHeight =32;
     public static final int downWidth=28;
@@ -47,6 +46,7 @@ public class Hero extends JumpObject {
     public boolean canCastSpell;//是否能丢技能
     public boolean isBall;//是否是球形态
 
+    public boolean isStrengthenJump;//跳跃能力是否被加强
     public boolean isDoubleSpeed;//速度是否翻倍
 
     public boolean isImmune;//是否无敌
@@ -72,6 +72,7 @@ public class Hero extends JumpObject {
         canBall=false;
         canCastSpell=false;
         isBall=false;
+        isStrengthenJump=false;
         isDoubleSpeed =false;
 
         maxImmuneTime=2000;
@@ -243,13 +244,19 @@ public class Hero extends JumpObject {
         }
     }
 
-    public void startJumperTwo(){//开启二级跳
-        gs.jumperTwo=true;
-        setJumperTwo(true);
+    public void startStrengthenJump(){//加强跳跃
+        if (!isStrengthenJump) {
+            isStrengthenJump=true;
+            gs.isStrengthenJump = true;
+            jumpSpeed+=2.5f;
+        }
     }
-    public void stopJumperTwo(){//关闭二级跳
-        gs.jumperTwo=false;
-        setJumperTwo(false);
+    public void stopStrengthenJump(){//停止加强跳跃
+        if (isStrengthenJump) {
+            isStrengthenJump=false;
+            gs.isStrengthenJump = false;
+            jumpSpeed-=2.5f;
+        }
     }
 
     public void enableSpell(){//使英雄可以使用技能

@@ -89,7 +89,7 @@ public class GameScreen extends SpriteBatchScreen {
 
     public boolean canCastSpell;//保存英雄能力信息
     public boolean isDoubleSpeed;
-    public boolean jumperTwo;
+    public boolean isStrengthenJump;
 
     public GameScreen() {
         if (MainActivity.mainActivity!=null){
@@ -98,13 +98,13 @@ public class GameScreen extends SpriteBatchScreen {
         HP=initHP;
         score=0;
         maps= new ArrayList<>();
-        //maps.add(MyAssets.MAPS[2]);
+        //maps.add(MyAssets.MAPS[4]);
         for (int i=0;i<MyAssets.MAPS.length;i++)
             maps.add(MyAssets.MAPS[i]);
 
         canCastSpell=false;
         isDoubleSpeed=false;
-        jumperTwo=false;
+        isStrengthenJump =false;
 
     }
 
@@ -171,12 +171,12 @@ public class GameScreen extends SpriteBatchScreen {
             return;
         Log.i("yaoling1997","restoreHeroAbilities:");
         Log.i("yaoling1997","canCastSpell:"+canCastSpell);
-        Log.i("yaoling1997","jumperTwo:"+jumperTwo);
+        Log.i("yaoling1997","isStrengthenJump:"+ isStrengthenJump);
         Log.i("yaoling1997","isDoubleSpeed:"+isDoubleSpeed);
         if (canCastSpell)
             hero.enableSpell();
-        if (jumperTwo)
-            hero.startJumperTwo();
+        if (isStrengthenJump)
+            hero.startStrengthenJump();
         if (isDoubleSpeed)
             hero.startDoubleSpeed();
     }
@@ -198,7 +198,9 @@ public class GameScreen extends SpriteBatchScreen {
                 MapChar.EMPTY_BLOCK,
                 MapChar.WAND_BLOCK,
                 MapChar.JUMP_BOOTS_BLOCK,
-                MapChar.SPEED_BOOTS_BLOCK
+                MapChar.SPEED_BOOTS_BLOCK,
+                MapChar.GREEN_DOOR,
+                MapChar.YELLOW_DOOR
         });
         //设置字符对应图片
         int tmp;
@@ -471,7 +473,7 @@ public class GameScreen extends SpriteBatchScreen {
                     }else if (actionObject instanceof JumpBoots){//与轻灵之靴
                         JumpBoots w=(JumpBoots)actionObject;
                         addScore(JumpBoots.score);
-                        hero.startJumperTwo();
+                        hero.startStrengthenJump();
                         removeTileObject(w);
                     }else if (actionObject instanceof SpeedBoots){//与疾行之靴
                         SpeedBoots w=(SpeedBoots)actionObject;
@@ -524,12 +526,6 @@ public class GameScreen extends SpriteBatchScreen {
                             hero.setForceJump(true);
                             hero.jump();
                             fireBoss.damage();
-                            if (fireBoss.isDead()){
-                                Key key= new Key(fireBoss.getX(),fireBoss.getY(),
-                                        new Animation(emptyAnimation),tileMap,MapChar.YELLOW_KEY);
-                                add(key);
-                                removeEnemy(fireBoss);
-                            }
                         }else {
                             damage();
                         }
@@ -570,6 +566,22 @@ public class GameScreen extends SpriteBatchScreen {
 
     public void openDoor(char color){
         Log.i("yaoling1997","openDoor color:"+color);
+        //获得地图对应的二维数组
+        int [][]indexMap=tileMap.getMap();
+        int colNum=tileMap.getRow();//得到宽度，列数
+        int rowNum=tileMap.getCol();//得到高度，行数
+        Log.i("yaoling1997","rowNum"+rowNum);
+        Log.i("yaoling1997","colNum"+colNum);
+        //添加物品到窗体
+
+        for (int i=0;i<rowNum;i++) {//先放主角
+            for (int j = 0; j < colNum; j++)
+                if (indexMap[i][j] == color-'a'+'A') {
+                    tileMap.setTileID(j,i,MapChar.EMPTY);
+                    tileMap.setDirty(true);
+                }
+        }
+
         ArrayList<ActionObject> removeItemManager= new ArrayList<>();//一轮判断后哪些物品要移走
         for (ActionObject e:hardItemManager)
             if (e instanceof Door){
@@ -666,7 +678,7 @@ public class GameScreen extends SpriteBatchScreen {
 
         hero.dead();
         hero.forbidSpell();//不允许使用魔法
-        hero.stopJumperTwo();//不允许二级跳
+        hero.stopStrengthenJump();//不允许二级跳
         hero.stopDoubleSpeed();//关闭二倍速
 
         RotateTo rotate= new RotateTo(180f,30f);
@@ -848,6 +860,14 @@ public class GameScreen extends SpriteBatchScreen {
                     }else if (v instanceof Bat) {//蝙蝠撞蝙蝠
                         bMeetB((Bat)u, (Bat)v);
                     }
+                }
+            }
+            if (u instanceof FireBoss){
+                FireBoss fireBoss= (FireBoss)u;
+                if (fireBoss.isDead){
+                    Key key= new Key(fireBoss.getX(),fireBoss.getY(),
+                            new Animation(emptyAnimation),tileMap,MapChar.YELLOW_KEY);
+                    add(key);
                 }
             }
             if (u.isDead)

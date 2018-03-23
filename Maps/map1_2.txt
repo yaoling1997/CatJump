@@ -13,7 +13,7 @@ B                  k                    B k B                                   
 B                  o o                BBBBBBBBBB                          B o            BB               ooooo        B
 B             k                BBBBB                                        Bo          BB                ooooo        B
 B                             BB                                             B         BB        BBBBBBBBBBBBBBBBBBBBBBB
-B                       BCKC                      C                                   BB         B                     B
+B                       BCKC                      J                                   BB         B                     B
 B                  BBB                                           BBBBBBBB      B     BB                                B
 B                 BB                                       B      o     BCKC      BKBB                                 B
 B    BCB     BCB         BCBBBBBBB       B   oo       oo   B     o o             BBooooo     B BCBCBCBCBCBCBCBCBCBCBCBKB
