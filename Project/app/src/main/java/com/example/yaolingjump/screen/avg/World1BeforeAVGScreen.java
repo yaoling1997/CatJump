@@ -80,6 +80,7 @@ public class World1BeforeAVGScreen extends AVGScreen {
 
     @Override
     public void onExit() {
+        MainActivity.stopBgMusic();
         Log.i("yaoling1997","behind setScreen");
         close();
         AVGDialog.clear();

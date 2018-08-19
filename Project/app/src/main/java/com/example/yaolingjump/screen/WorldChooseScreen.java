@@ -73,7 +73,7 @@ public class WorldChooseScreen extends Screen {
         add(title);
 
         undergroundCity = addWorld(MyAssets.WORLD1_CHOOSE_BACKGROUND);
-        underseaWorld = addWorld(MyAssets.WORLD2_CHOOSE_BACKGROUND);
+//        underseaWorld = addWorld(MyAssets.WORLD2_CHOOSE_BACKGROUND);
 
         btnPreviousPage = new LPaper(MyAssets.BTN_PREVIOUS_PAGE){
             ActionKey action= new ActionKey(ActionKey.DETECT_INITIAL_PRESS_ONLY);

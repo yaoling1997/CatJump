@@ -116,6 +116,7 @@ public class World1PassAVGScreen extends AVGScreen {
         applyPrefs();
     }
     private void applyPrefs(){
+        MainActivity.stopBgMusic();
         SharedPreferences prefs= MainActivity.mainActivity.getSharedPreferences(Macro.PREFS_FILE,MODE_PRIVATE);
         Intent intent= new Intent(MainActivity.mainActivity,MusicService.class);
         if (prefs.getString(Macro.BG_MUSIC,Macro.CLOSE).equals(Macro.OPEN)) {

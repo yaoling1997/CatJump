@@ -9,6 +9,7 @@ import com.example.yaolingjump.Macro.Macro;
 import com.example.yaolingjump.Macro.MyAssets;
 import com.example.yaolingjump.MainActivity;
 import com.example.yaolingjump.MusicService;
+import com.example.yaolingjump.screen.avg.PassAllLevelsAVGScreen;
 import com.example.yaolingjump.screen.avg.World1FinalLevelAVGScreen;
 import com.example.yaolingjump.screen.avg.World1PassAVGScreen;
 
@@ -89,7 +90,6 @@ public class RestartScreen extends SpriteBatchScreen {
             game_over.setLocation(getWidth()/2-game_over.getWidth()/2,info.getY()+info.getHeight());
             add(game_over);
         }
-        applyPrefs();
     }
 
     @Override
@@ -124,7 +124,7 @@ public class RestartScreen extends SpriteBatchScreen {
                     Log.i("yaoling1997","score: "+gs.getScore());
                     updateScoreboard();
                     Log.i("yaoling1997","pass all levels");
-                    setScreen(new World1PassAVGScreen());
+                    setScreen(new PassAllLevelsAVGScreen());
                 }else {//死了但是还有命，重玩本关或者通过本关玩下一关
                     if (gs.maps.get(0).equals(MyAssets.MAPS[4]))//若下一关是world1最后一关
                         setScreen(new World1FinalLevelAVGScreen(gs));
@@ -134,12 +134,6 @@ public class RestartScreen extends SpriteBatchScreen {
                 }
             }
         }
-    }
-    private void applyPrefs(){
-        Intent intent= new Intent(MainActivity.mainActivity,MusicService.class);
-        intent.putExtra(Macro.BG_MUSIC,Macro.CLOSE);//close
-        intent.putExtra(Macro.BG_MUSIC_SOURCE,MyAssets.BATTLE_BG_MUSIC);
-        MainActivity.mainActivity.startService(intent);
     }
 
     @Override

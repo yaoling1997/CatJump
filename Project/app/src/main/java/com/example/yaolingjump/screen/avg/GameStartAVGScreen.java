@@ -29,29 +29,36 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class GameStartAVGScreen extends AVGScreen {
     private LPaper btnJump;
-    private LPaper roleName;
+    private LPaper yaolingName;
+    private LPaper jiangxianName;
     private int marginH=5;
     private int marginV=5;
     public GameStartAVGScreen(){
         super(MyAssets.SCRIPT_GAME_START, AVGDialog.getRMXPDialog(MyAssets.AVG_MESSAGE,
                 460, 150));
         setScrCG(new AVGCG(this));//不知道这是干啥的，但是AVGScreen鲁棒性不强，得自己new一个
+        yaolingName = new LPaper(MyAssets.NAME_YAOLING);
+        yaolingName.setLocation(getWidth()- yaolingName.getWidth()+40,marginV);
+        add(yaolingName);
+        yaolingName.setVisible(false);
+
+        jiangxianName = new LPaper(MyAssets.NAME_JIANGXIAN);
+        jiangxianName.setLocation(marginH,marginV);
+        add(jiangxianName);
+        jiangxianName.setVisible(false);
     }
     @Override
     public boolean nextScript(String mes) {
         Log.i("yaoling1997","AVG mes:"+mes);
-        if (roleName!=null){
-            if (AVG.YAOLING_NAME.equalsIgnoreCase(mes)){//右上角
-                roleName.setVisible(true);
-                roleName.setBackground(MyAssets.NAME_YAOLING);
-                roleName.setLocation(getWidth()-roleName.getWidth()+40,marginV);
-            }else if (AVG.JIANGXIAN_NAME.equalsIgnoreCase(mes)){//左上角
-                roleName.setVisible(true);
-                roleName.setBackground(MyAssets.NAME_JIANGXIAN);
-                roleName.setLocation(marginH,marginV);
-            }else if (AVG.NO_NAME.equalsIgnoreCase(mes)){//不显示名字
-                roleName.setVisible(false);
-            }
+        if (AVG.YAOLING_NAME.equalsIgnoreCase(mes)){//右上角
+            yaolingName.setVisible(true);
+            jiangxianName.setVisible(false);
+        }else if (AVG.JIANGXIAN_NAME.equalsIgnoreCase(mes)){//左上角
+            jiangxianName.setVisible(true);
+            yaolingName.setVisible(false);
+        }else if (AVG.NO_NAME.equalsIgnoreCase(mes)){//不显示名字
+            yaolingName.setVisible(false);
+            jiangxianName.setVisible(false);
         }
         return true;
     }
@@ -104,9 +111,6 @@ public class GameStartAVGScreen extends AVGScreen {
         btnJump.setLocation(getWidth()-btnJump.getWidth()-marginH,getHeight()-btnJump.getHeight()-marginV);
         add(btnJump);
 
-        roleName = new LPaper(MyAssets.NAME_YAOLING);
-        add(roleName);
-        roleName.setVisible(false);
         applyPrefs();
     }
     private void applyPrefs(){

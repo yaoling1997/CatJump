@@ -46,9 +46,14 @@ public class AboutScreen extends Screen {
                 int size= g.getFont().getSize();
                 g.setColor(LColor.maroon);
                 g.setFont(LFont.getFont(18));
-                g.drawString("版本号：V1.0",margin,margin);
-                g.drawString("本游戏非商业用途，仅供娱乐",margin,margin+20);
-                g.drawString("欢迎学弟学妹报考北京航空航天大学",margin,margin+40);
+                g.drawString("版本号：V1.1",margin,margin);
+                g.drawString("集齐100个硬币能兑换为一条命",margin,margin+20);
+                g.drawString("取消了计分板",margin,margin+40);
+                g.drawString("下调了世界1中boss的血量",margin,margin+60);
+                g.drawString("增加了魔杖和鞋子等道具",margin,margin+80);
+                g.drawString("添加了游戏背景",margin,margin+100);
+                g.drawString("本游戏非商业用途，仅供娱乐",margin,margin+120);
+//                g.drawString("欢迎学弟学妹报考北京航空航天大学",margin,margin+40);
                 g.drawString("游戏制作：李奕君",getWidth()-150-margin,getHeight()-20-margin);
                 g.setColor(color);
                 g.setFont(LFont.getFont(size));

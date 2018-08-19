@@ -29,29 +29,36 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class PassAllLevelsAVGScreen extends AVGScreen {
     private LPaper btnJump;
-    private LPaper roleName;
+    private LPaper yaolingName;
+    private LPaper designerName;
     private int marginH=5;
     private int marginV=5;
     public PassAllLevelsAVGScreen(){
         super(MyAssets.SCRIPT_PASS_ALL_LEVELS, AVGDialog.getRMXPDialog(MyAssets.AVG_MESSAGE,
                 460, 150));
         setScrCG(new AVGCG(this));//不知道这是干啥的，但是AVGScreen鲁棒性不强，得自己new一个
+        yaolingName = new LPaper(MyAssets.NAME_YAOLING);
+        yaolingName.setLocation(marginH,marginV);
+        add(yaolingName);
+        yaolingName.setVisible(false);
+
+        designerName = new LPaper(MyAssets.NAME_DESIGNER);
+        designerName.setLocation(getWidth()- designerName.getWidth(),marginV);
+        add(designerName);
+        designerName.setVisible(false);
     }
     @Override
     public boolean nextScript(String mes) {
         Log.i("yaoling1997","AVG mes:"+mes);
-        if (roleName!=null){
-            if (AVG.DESIGNER_NAME.equalsIgnoreCase(mes)){//右上角
-                roleName.setVisible(true);
-                roleName.setBackground(MyAssets.NAME_DESIGNER);
-                roleName.setLocation(getWidth()-roleName.getWidth(),marginV);
-            }else if (AVG.YAOLING_NAME.equalsIgnoreCase(mes)){//左上角
-                roleName.setVisible(true);
-                roleName.setBackground(MyAssets.NAME_YAOLING);
-                roleName.setLocation(marginH,marginV);
-            }else if (AVG.NO_NAME.equalsIgnoreCase(mes)){//不显示名字
-                roleName.setVisible(false);
-            }
+        if (AVG.DESIGNER_NAME.equalsIgnoreCase(mes)){//右上角
+            designerName.setVisible(true);
+            yaolingName.setVisible(false);
+        }else if (AVG.YAOLING_NAME.equalsIgnoreCase(mes)){//左上角
+            yaolingName.setVisible(true);
+            designerName.setVisible(false);
+        }else if (AVG.NO_NAME.equalsIgnoreCase(mes)){//不显示名字
+            yaolingName.setVisible(false);
+            designerName.setVisible(false);
         }
         return true;
     }
@@ -104,12 +111,10 @@ public class PassAllLevelsAVGScreen extends AVGScreen {
         btnJump.setLocation(getWidth()-btnJump.getWidth()-marginH,getHeight()-btnJump.getHeight()-marginV);
         add(btnJump);
 
-        roleName = new LPaper(MyAssets.NAME_YAOLING);
-        add(roleName);
-        roleName.setVisible(false);
         applyPrefs();
     }
     private void applyPrefs(){
+        MainActivity.stopBgMusic();
         SharedPreferences prefs= MainActivity.mainActivity.getSharedPreferences(Macro.PREFS_FILE,MODE_PRIVATE);
         Intent intent= new Intent(MainActivity.mainActivity,MusicService.class);
         if (prefs.getString(Macro.BG_MUSIC,Macro.CLOSE).equals(Macro.OPEN)) {

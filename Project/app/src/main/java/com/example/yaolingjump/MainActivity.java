@@ -1,5 +1,6 @@
 package com.example.yaolingjump;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -30,8 +31,8 @@ public class MainActivity extends Loon{
         setting.width=480;
         setting.height=320;
         setting.logoPath= MyAssets.LOGO;
-        setting.isLogo=false;//是否在游戏进入前显示标志
-        setting.isFPS=true;//是否显示FPS
+        setting.isLogo=true;//是否在游戏进入前显示标志
+        setting.isFPS=false;//是否显示FPS
         setting.fontName="黑体";//字体
         setting.appName= Macro.GAME_NAME;
         mainActivity=this;
@@ -156,6 +157,13 @@ public class MainActivity extends Loon{
         padRight.setLayoutParams(linearParams);
         addView(linearLayout);
     }
+    public static void stopBgMusic(){
+        Intent intent= new Intent(MainActivity.mainActivity,MusicService.class);
+        intent.putExtra(Macro.BG_MUSIC,Macro.CLOSE);//close
+        intent.putExtra(Macro.BG_MUSIC_SOURCE,MyAssets.BATTLE_BG_MUSIC);
+        MainActivity.mainActivity.startService(intent);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.i("yaoling1997","onCreate");

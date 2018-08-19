@@ -18,6 +18,7 @@ public class FireBoss extends LandEnemy{
     private GameScreen gs;
     private Animation runAnimation;
     private Animation defenseAnimation;
+    private static int initHP=6;
     private int directionChangeLimit;//多久改变一次方向
     private int directionChangeCnt;//多久改变一次方向累积时间
     private int bulletReadyLimit;//多久发一次炮
@@ -37,7 +38,7 @@ public class FireBoss extends LandEnemy{
         int len=(int)(GameScreen.gridLength*2.5);
         setSize(len,len);
         score=1000;
-        HP=10;//踩10次就死了
+        HP=initHP;//踩initHP次就死了
         directionChangeLimit=3000;
         directionChangeCnt=0;
         bulletReadyLimit=3000;
@@ -54,7 +55,7 @@ public class FireBoss extends LandEnemy{
         if (isDefense)
             return;
         super.damage();
-        if (HP==5){
+        if (HP==initHP/2){
             isDefense=true;
             setAnimation(defenseAnimation);
         }
